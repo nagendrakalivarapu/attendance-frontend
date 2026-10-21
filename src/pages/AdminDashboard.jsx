@@ -56,8 +56,11 @@ function AdminDashboard() {
                         Courses
                     </button>
 
-                    <button className="sidebar-link">
-                        <span>📝</span>
+                    <button
+                        className="sidebar-link"
+                        onClick={() => navigate("/admin/enrollments")}
+                    >
+                        <span>📚</span>
                         Enrollments
                     </button>
 

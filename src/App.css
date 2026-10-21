@@ -1276,3 +1276,58 @@ body {
   color: #7b8497;
   font-size: 12px;
 }
+.enrollment-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+  align-items: center;
+}
+
+.enrollment-toolbar .search-input {
+  flex: 1;
+}
+
+.filter-select,
+.status-select {
+  padding: 9px 12px;
+  border: 1px solid #dfe3ea;
+  border-radius: 7px;
+  background: white;
+  color: #344054;
+  font-size: 13px;
+  outline: none;
+}
+
+.status-select {
+  min-width: 105px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.status-active {
+  background: #ecfdf3;
+  color: #027a48;
+}
+
+.status-dropped {
+  background: #fff0f0;
+  color: #d92d20;
+}
+
+.status-completed {
+  background: #eef3ff;
+  color: #4164d8;
+}
+
+@media (max-width: 800px) {
+  .enrollment-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

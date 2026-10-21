@@ -10,6 +10,7 @@ import AddStudent from "./pages/AddStudent";
 import EditStudent from "./pages/EditStudent";
 import Courses from "./pages/Courses";
 import Teachers from "./pages/Teachers";
+import Enrollments from "./pages/Enrollments";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 function ProtectedRoute({ children, allowedRoles }) {
@@ -82,6 +83,14 @@ function App() {
                 element={
                     <ProtectedRoute allowedRoles={["ADMIN"]}>
                         <Teachers />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/admin/enrollments"
+                element={
+                    <ProtectedRoute allowedRoles={["ADMIN"]}>
+                        <Enrollments />
                     </ProtectedRoute>
                 }
             />
