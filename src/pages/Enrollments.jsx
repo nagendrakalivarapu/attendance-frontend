@@ -14,9 +14,12 @@ function Enrollments() {
 
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
+    const [enrolling, setEnrolling] = useState(false);
+
+    const [studentSearch, setStudentSearch] = useState("");
+    const [selectedStudents, setSelectedStudents] = useState([]);
 
     const [formData, setFormData] = useState({
-        studentId: "",
         courseId: ""
     });
 
@@ -28,12 +31,15 @@ function Enrollments() {
         try {
             setLoading(true);
 
-            const [enrollmentResponse, studentResponse, courseResponse] =
-                await Promise.all([
-                    api.get("/enrollment"),
-                    api.get("/student"),
-                    api.get("/course")
-                ]);
+            const [
+                enrollmentResponse,
+                studentResponse,
+                courseResponse
+            ] = await Promise.all([
+                api.get("/enrollment"),
+                api.get("/student"),
+                api.get("/course")
+            ]);
 
             setEnrollments(enrollmentResponse.data);
             setStudents(studentResponse.data);
@@ -47,57 +53,107 @@ function Enrollments() {
         }
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value
-        }));
-    };
-
     const handleAdd = () => {
         setFormData({
-            studentId: "",
             courseId: ""
         });
 
+        setStudentSearch("");
+        setSelectedStudents([]);
+
         setShowForm(true);
+    };
+
+    const handleStudentSelect = (studentId) => {
+        setSelectedStudents((prev) => {
+            if (prev.includes(studentId)) {
+                return prev.filter((id) => id !== studentId);
+            }
+
+            return [...prev, studentId];
+        });
+    };
+
+    const handleSelectAll = () => {
+        const filteredIds = filteredStudents.map(
+            (student) => student.id
+        );
+
+        const allSelected = filteredIds.every(
+            (id) => selectedStudents.includes(id)
+        );
+
+        if (allSelected) {
+            setSelectedStudents((prev) =>
+                prev.filter((id) => !filteredIds.includes(id))
+            );
+        } else {
+            setSelectedStudents((prev) => [
+                ...new Set([...prev, ...filteredIds])
+            ]);
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.studentId || !formData.courseId) {
-            alert("Please select both student and course.");
+        if (!formData.courseId) {
+            alert("Please select a course.");
+            return;
+        }
+
+        if (selectedStudents.length === 0) {
+            alert("Please select at least one student.");
             return;
         }
 
         try {
-            await api.post("/enrollment", {
-                studentId: Number(formData.studentId),
-                courseId: Number(formData.courseId)
-            });
+            setEnrolling(true);
 
-            alert("Student enrolled successfully.");
+            let successCount = 0;
+            let failedCount = 0;
+
+            for (const studentId of selectedStudents) {
+                try {
+                    await api.post("/enrollment", {
+                        studentId: Number(studentId),
+                        courseId: Number(formData.courseId)
+                    });
+
+                    successCount++;
+
+                } catch (error) {
+                    console.error(
+                        `Failed to enroll student ${studentId}`,
+                        error
+                    );
+
+                    failedCount++;
+                }
+            }
+
+            if (failedCount === 0) {
+                alert(
+                    `${successCount} student(s) enrolled successfully.`
+                );
+            } else {
+                alert(
+                    `${successCount} student(s) enrolled successfully.\n` +
+                    `${failedCount} student(s) could not be enrolled.`
+                );
+            }
 
             setShowForm(false);
-
-            setFormData({
-                studentId: "",
-                courseId: ""
-            });
+            setSelectedStudents([]);
+            setStudentSearch("");
 
             await loadData();
 
         } catch (error) {
-            console.error("Error creating enrollment:", error);
-
-            const message =
-                error.response?.data?.message ||
-                "Failed to create enrollment.";
-
-            alert(message);
+            console.error("Enrollment error:", error);
+            alert("Failed to process enrollments.");
+        } finally {
+            setEnrolling(false);
         }
     };
 
@@ -106,8 +162,6 @@ function Enrollments() {
             await api.put(
                 `/enrollment/${id}/status?status=${status}`
             );
-
-            alert("Enrollment status updated.");
 
             await loadData();
 
@@ -150,7 +204,6 @@ function Enrollments() {
     };
 
     const filteredEnrollments = enrollments.filter((enrollment) => {
-
         const searchText = search.toLowerCase();
 
         const matchesSearch =
@@ -174,6 +227,22 @@ function Enrollments() {
         return matchesSearch && matchesStatus;
     });
 
+    const filteredStudents = students.filter((student) => {
+        const searchText = studentSearch.toLowerCase();
+
+        return (
+            student.studentName
+                ?.toLowerCase()
+                .includes(searchText) ||
+            student.registrationNumber
+                ?.toLowerCase()
+                .includes(searchText) ||
+            student.email
+                ?.toLowerCase()
+                .includes(searchText)
+        );
+    });
+
     const activeCount = enrollments.filter(
         (e) => e.status === "ACTIVE"
     ).length;
@@ -181,6 +250,12 @@ function Enrollments() {
     const inactiveCount = enrollments.filter(
         (e) => e.status !== "ACTIVE"
     ).length;
+
+    const allFilteredStudentsSelected =
+        filteredStudents.length > 0 &&
+        filteredStudents.every((student) =>
+            selectedStudents.includes(student.id)
+        );
 
     return (
         <div className="page-container">
@@ -209,7 +284,7 @@ function Enrollments() {
                         className="btn-primary"
                         onClick={handleAdd}
                     >
-                        + Enroll Student
+                        + Enroll Students
                     </button>
 
                 </div>
@@ -220,7 +295,6 @@ function Enrollments() {
             <div className="stats-grid">
 
                 <div className="stat-card">
-
                     <div className="stat-icon">
                         📚
                     </div>
@@ -229,11 +303,9 @@ function Enrollments() {
                         <span>Total Enrollments</span>
                         <strong>{enrollments.length}</strong>
                     </div>
-
                 </div>
 
                 <div className="stat-card">
-
                     <div className="stat-icon">
                         ✅
                     </div>
@@ -242,11 +314,9 @@ function Enrollments() {
                         <span>Active</span>
                         <strong>{activeCount}</strong>
                     </div>
-
                 </div>
 
                 <div className="stat-card">
-
                     <div className="stat-icon">
                         📋
                     </div>
@@ -255,15 +325,13 @@ function Enrollments() {
                         <span>Other Status</span>
                         <strong>{inactiveCount}</strong>
                     </div>
-
                 </div>
 
             </div>
 
-            {/* Main content */}
+            {/* Main Content */}
             <div className="content-card">
 
-                {/* Search and filter */}
                 <div className="enrollment-toolbar">
 
                     <input
@@ -271,7 +339,9 @@ function Enrollments() {
                         className="search-input"
                         placeholder="Search student, registration number, course..."
                         value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                        onChange={(e) =>
+                            setSearch(e.target.value)
+                        }
                     />
 
                     <select
@@ -307,7 +377,6 @@ function Enrollments() {
 
                 </div>
 
-                {/* Table */}
                 {loading ? (
 
                     <div className="loading-message">
@@ -327,7 +396,7 @@ function Enrollments() {
                         </h3>
 
                         <p>
-                            Enroll a student into a course to get started.
+                            Enroll students into courses to get started.
                         </p>
 
                     </div>
@@ -339,7 +408,6 @@ function Enrollments() {
                         <table className="data-table">
 
                             <thead>
-
                             <tr>
                                 <th>Student</th>
                                 <th>Registration No.</th>
@@ -349,7 +417,6 @@ function Enrollments() {
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
-
                             </thead>
 
                             <tbody>
@@ -386,13 +453,11 @@ function Enrollments() {
                                         </td>
 
                                         <td>
-
                                                 <span
                                                     className={`status-badge status-${enrollment.status?.toLowerCase()}`}
                                                 >
                                                     {enrollment.status}
                                                 </span>
-
                                         </td>
 
                                         <td>
@@ -409,19 +474,13 @@ function Enrollments() {
                                                         )
                                                     }
                                                 >
-
                                                     <option value="ACTIVE">
                                                         Active
-                                                    </option>
-
-                                                    <option value="DROPPED">
-                                                        Dropped
                                                     </option>
 
                                                     <option value="COMPLETED">
                                                         Completed
                                                     </option>
-
                                                 </select>
 
                                                 <button
@@ -449,30 +508,28 @@ function Enrollments() {
                         </table>
 
                     </div>
-
                 )}
 
             </div>
 
-            {/* Add Enrollment Modal */}
+            {/* Multi Student Enrollment Modal */}
             {showForm && (
 
                 <div className="modal-overlay">
 
-                    <div className="form-modal">
+                    <div className="form-modal bulk-enrollment-modal">
 
                         <div className="modal-header">
 
                             <div>
-
                                 <h2>
-                                    Enroll Student
+                                    Enroll Students
                                 </h2>
 
                                 <p>
-                                    Add a student to a course.
+                                    Select multiple students and enroll
+                                    them into a course.
                                 </p>
-
                             </div>
 
                             <button
@@ -488,41 +545,6 @@ function Enrollments() {
 
                         <form onSubmit={handleSubmit}>
 
-                            {/* Student */}
-                            <div className="form-group">
-
-                                <label>
-                                    Student *
-                                </label>
-
-                                <select
-                                    name="studentId"
-                                    value={formData.studentId}
-                                    onChange={handleChange}
-                                    required
-                                >
-
-                                    <option value="">
-                                        Select Student
-                                    </option>
-
-                                    {students.map((student) => (
-
-                                        <option
-                                            key={student.id}
-                                            value={student.id}
-                                        >
-                                            {student.studentName}
-                                            {" — "}
-                                            {student.registrationNumber}
-                                        </option>
-
-                                    ))}
-
-                                </select>
-
-                            </div>
-
                             {/* Course */}
                             <div className="form-group">
 
@@ -533,7 +555,11 @@ function Enrollments() {
                                 <select
                                     name="courseId"
                                     value={formData.courseId}
-                                    onChange={handleChange}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            courseId: e.target.value
+                                        })
+                                    }
                                     required
                                 >
 
@@ -558,6 +584,145 @@ function Enrollments() {
 
                             </div>
 
+                            {/* Student Search */}
+                            <div className="form-group">
+
+                                <label>
+                                    Search Students
+                                </label>
+
+                                <input
+                                    type="text"
+                                    className="search-input"
+                                    placeholder="Search by name, registration number or email..."
+                                    value={studentSearch}
+                                    onChange={(e) =>
+                                        setStudentSearch(
+                                            e.target.value
+                                        )
+                                    }
+                                />
+
+                            </div>
+
+                            {/* Selection Header */}
+                            <div className="student-selection-header">
+
+                                <div>
+
+                                    <strong>
+                                        Select Students
+                                    </strong>
+
+                                    <span>
+                                        {selectedStudents.length} selected
+                                    </span>
+
+                                </div>
+
+                                <button
+                                    type="button"
+                                    className="select-all-btn"
+                                    onClick={handleSelectAll}
+                                >
+                                    {allFilteredStudentsSelected
+                                        ? "Deselect All"
+                                        : "Select All"}
+                                </button>
+
+                            </div>
+
+                            {/* Student List */}
+                            <div className="student-selection-list">
+
+                                {filteredStudents.length === 0 ? (
+
+                                    <div className="no-students">
+                                        No students found.
+                                    </div>
+
+                                ) : (
+
+                                    filteredStudents.map(
+                                        (student) => {
+
+                                            const selected =
+                                                selectedStudents.includes(
+                                                    student.id
+                                                );
+
+                                            return (
+                                                <label
+                                                    key={student.id}
+                                                    className={`student-selection-item ${
+                                                        selected
+                                                            ? "selected"
+                                                            : ""
+                                                    }`}
+                                                >
+
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={selected}
+                                                        onChange={() =>
+                                                            handleStudentSelect(
+                                                                student.id
+                                                            )
+                                                        }
+                                                    />
+
+                                                    <div className="student-selection-info">
+
+                                                        <strong>
+                                                            {student.studentName}
+                                                        </strong>
+
+                                                        <span>
+                                                            {student.registrationNumber}
+                                                            {" • "}
+                                                            {student.department}
+                                                            {" • "}
+                                                            Semester{" "}
+                                                            {student.semester}
+                                                        </span>
+
+                                                    </div>
+
+                                                </label>
+                                            );
+                                        }
+                                    )
+
+                                )}
+
+                            </div>
+
+                            {/* Selection Summary */}
+                            <div className="selection-summary">
+
+                                <span>
+                                    {selectedStudents.length} student
+                                    {selectedStudents.length !== 1
+                                        ? "s"
+                                        : ""}{" "}
+                                    selected
+                                </span>
+
+                                {formData.courseId && (
+                                    <span>
+                                        Course:{" "}
+                                        {
+                                            courses.find(
+                                                (course) =>
+                                                    String(course.id) ===
+                                                    String(formData.courseId)
+                                            )?.courseCode
+                                        }
+                                    </span>
+                                )}
+
+                            </div>
+
                             {/* Actions */}
                             <div className="modal-actions">
 
@@ -567,6 +732,7 @@ function Enrollments() {
                                     onClick={() =>
                                         setShowForm(false)
                                     }
+                                    disabled={enrolling}
                                 >
                                     Cancel
                                 </button>
@@ -574,8 +740,19 @@ function Enrollments() {
                                 <button
                                     type="submit"
                                     className="btn-primary"
+                                    disabled={
+                                        enrolling ||
+                                        selectedStudents.length === 0 ||
+                                        !formData.courseId
+                                    }
                                 >
-                                    Enroll Student
+                                    {enrolling
+                                        ? "Enrolling..."
+                                        : `Enroll ${selectedStudents.length} Student${
+                                            selectedStudents.length !== 1
+                                                ? "s"
+                                                : ""
+                                        }`}
                                 </button>
 
                             </div>
@@ -585,7 +762,6 @@ function Enrollments() {
                     </div>
 
                 </div>
-
             )}
 
         </div>

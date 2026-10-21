@@ -1331,3 +1331,121 @@ body {
     align-items: stretch;
   }
 }
+/* =================================
+   BULK ENROLLMENT
+================================= */
+
+.bulk-enrollment-modal {
+  max-width: 700px;
+}
+
+.student-selection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0 10px;
+}
+
+.student-selection-header div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.student-selection-header strong {
+  color: #172033;
+}
+
+.student-selection-header span {
+  background: #eef3ff;
+  color: #4164d8;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.select-all-btn {
+  border: none;
+  background: transparent;
+  color: #4164d8;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.select-all-btn:hover {
+  text-decoration: underline;
+}
+
+.student-selection-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #e1e5eb;
+  border-radius: 9px;
+  background: #fafbfc;
+}
+
+.student-selection-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+  border-bottom: 1px solid #edf0f4;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.student-selection-item:last-child {
+  border-bottom: none;
+}
+
+.student-selection-item:hover {
+  background: #f2f5fa;
+}
+
+.student-selection-item.selected {
+  background: #eef3ff;
+}
+
+.student-selection-item input {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  accent-color: #4f6df5;
+}
+
+.student-selection-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.student-selection-info strong {
+  color: #172033;
+  font-size: 14px;
+}
+
+.student-selection-info span {
+  color: #7b8497;
+  font-size: 12px;
+}
+
+.no-students {
+  padding: 35px;
+  text-align: center;
+  color: #7b8497;
+}
+
+.selection-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #f8f9fb;
+  border-radius: 8px;
+  color: #667085;
+  font-size: 13px;
+  font-weight: 600;
+}
