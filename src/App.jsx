@@ -1,3 +1,4 @@
+import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./pages/Login";
@@ -6,7 +7,9 @@ import TeacherDashboard from "./pages/TeacherDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
 import Students from "./pages/Students";
 import AddStudent from "./pages/AddStudent";
-
+import EditStudent from "./pages/EditStudent";
+import Courses from "./pages/Courses";
+import Teachers from "./pages/Teachers";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 function ProtectedRoute({ children, allowedRoles }) {
@@ -55,6 +58,30 @@ function App() {
                 element={
                     <ProtectedRoute allowedRoles={["ADMIN"]}>
                         <AddStudent />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/admin/students/edit/:id"
+                element={
+                    <ProtectedRoute allowedRoles={["ADMIN"]}>
+                        <EditStudent />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/admin/courses"
+                element={
+                    <ProtectedRoute allowedRoles={["ADMIN"]}>
+                        <Courses />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/admin/teachers"
+                element={
+                    <ProtectedRoute allowedRoles={["ADMIN"]}>
+                        <Teachers />
                     </ProtectedRoute>
                 }
             />

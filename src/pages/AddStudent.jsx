@@ -6,6 +6,9 @@ function AddStudent() {
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
+        fullName: "",
+        email: "",
+        password: "",
         registrationNumber: "",
         department: "",
         semester: "",
@@ -14,7 +17,6 @@ function AddStudent() {
         dateOfBirth: "",
         gender: "",
         address: "",
-        userId: "",
     });
 
     const [error, setError] = useState("");
@@ -39,12 +41,11 @@ function AddStudent() {
             const request = {
                 ...form,
                 semester: Number(form.semester),
-                userId: Number(form.userId),
             };
 
             await api.post("/student", request);
 
-            setSuccess("Student created successfully.");
+            setSuccess("Student account created successfully.");
 
             setTimeout(() => {
                 navigate("/admin/students");
@@ -55,8 +56,10 @@ function AddStudent() {
 
             setError(
                 err.response?.data?.message ||
+                err.response?.data ||
                 "Failed to create student."
             );
+
         } finally {
             setLoading(false);
         }
@@ -66,8 +69,10 @@ function AddStudent() {
         <div className="container mt-4">
 
             <div className="d-flex justify-content-between align-items-center mb-4">
+
                 <div>
                     <h2>Add Student</h2>
+
                     <p className="text-muted">
                         Create a new student account
                     </p>
@@ -79,6 +84,7 @@ function AddStudent() {
                 >
                     Back
                 </button>
+
             </div>
 
             {error && (
@@ -89,19 +95,92 @@ function AddStudent() {
 
             {success && (
                 <div className="alert alert-success">
-                    {success}
+                    ✓ {success}
                 </div>
             )}
 
             <div className="card shadow-sm">
+
                 <div className="card-body">
 
                     <form onSubmit={handleSubmit}>
 
+                        <h5 className="mb-3">
+                            Student Account
+                        </h5>
+
                         <div className="row">
 
-                            {/* Registration Number */}
+                            {/* FULL NAME */}
                             <div className="col-md-6 mb-3">
+
+                                <label className="form-label">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="fullName"
+                                    className="form-control"
+                                    placeholder="Rahul Sharma"
+                                    value={form.fullName}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                            </div>
+
+                            {/* EMAIL */}
+                            <div className="col-md-6 mb-3">
+
+                                <label className="form-label">
+                                    Email
+                                </label>
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    className="form-control"
+                                    placeholder="rahul@gmail.com"
+                                    value={form.email}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                            </div>
+
+                            {/* PASSWORD */}
+                            <div className="col-md-6 mb-4">
+
+                                <label className="form-label">
+                                    Password
+                                </label>
+
+                                <input
+                                    type="password"
+                                    name="password"
+                                    className="form-control"
+                                    placeholder="Enter password"
+                                    value={form.password}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                            </div>
+
+                        </div>
+
+                        <hr />
+
+                        <h5 className="mb-3">
+                            Student Information
+                        </h5>
+
+                        <div className="row">
+
+                            {/* REGISTRATION NUMBER */}
+                            <div className="col-md-6 mb-3">
+
                                 <label className="form-label">
                                     Registration Number
                                 </label>
@@ -110,14 +189,17 @@ function AddStudent() {
                                     type="text"
                                     name="registrationNumber"
                                     className="form-control"
+                                    placeholder="12314516"
                                     value={form.registrationNumber}
                                     onChange={handleChange}
                                     required
                                 />
+
                             </div>
 
-                            {/* Department */}
+                            {/* DEPARTMENT */}
                             <div className="col-md-6 mb-3">
+
                                 <label className="form-label">
                                     Department
                                 </label>
@@ -131,10 +213,12 @@ function AddStudent() {
                                     onChange={handleChange}
                                     required
                                 />
+
                             </div>
 
-                            {/* Semester */}
+                            {/* SEMESTER */}
                             <div className="col-md-4 mb-3">
+
                                 <label className="form-label">
                                     Semester
                                 </label>
@@ -149,10 +233,12 @@ function AddStudent() {
                                     onChange={handleChange}
                                     required
                                 />
+
                             </div>
 
-                            {/* Section */}
+                            {/* SECTION */}
                             <div className="col-md-4 mb-3">
+
                                 <label className="form-label">
                                     Section
                                 </label>
@@ -166,10 +252,12 @@ function AddStudent() {
                                     onChange={handleChange}
                                     required
                                 />
+
                             </div>
 
-                            {/* Phone */}
+                            {/* PHONE */}
                             <div className="col-md-4 mb-3">
+
                                 <label className="form-label">
                                     Phone
                                 </label>
@@ -178,14 +266,17 @@ function AddStudent() {
                                     type="tel"
                                     name="phone"
                                     className="form-control"
+                                    placeholder="9876543210"
                                     value={form.phone}
                                     onChange={handleChange}
                                     required
                                 />
+
                             </div>
 
                             {/* DOB */}
                             <div className="col-md-4 mb-3">
+
                                 <label className="form-label">
                                     Date of Birth
                                 </label>
@@ -197,10 +288,12 @@ function AddStudent() {
                                     value={form.dateOfBirth}
                                     onChange={handleChange}
                                 />
+
                             </div>
 
-                            {/* Gender */}
+                            {/* GENDER */}
                             <div className="col-md-4 mb-3">
+
                                 <label className="form-label">
                                     Gender
                                 </label>
@@ -211,35 +304,30 @@ function AddStudent() {
                                     value={form.gender}
                                     onChange={handleChange}
                                 >
-                                    <option value="">Select</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
+
+                                    <option value="">
+                                        Select
+                                    </option>
+
+                                    <option value="Male">
+                                        Male
+                                    </option>
+
+                                    <option value="Female">
+                                        Female
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
                                 </select>
+
                             </div>
 
-                            {/* User ID */}
-                            <div className="col-md-4 mb-3">
-                                <label className="form-label">
-                                    User ID
-                                </label>
-
-                                <input
-                                    type="number"
-                                    name="userId"
-                                    className="form-control"
-                                    value={form.userId}
-                                    onChange={handleChange}
-                                    required
-                                />
-
-                                <small className="text-muted">
-                                    ID of the student's user account.
-                                </small>
-                            </div>
-
-                            {/* Address */}
+                            {/* ADDRESS */}
                             <div className="col-12 mb-3">
+
                                 <label className="form-label">
                                     Address
                                 </label>
@@ -248,9 +336,11 @@ function AddStudent() {
                                     name="address"
                                     className="form-control"
                                     rows="3"
+                                    placeholder="Enter student's address"
                                     value={form.address}
                                     onChange={handleChange}
                                 />
+
                             </div>
 
                         </div>
@@ -260,12 +350,15 @@ function AddStudent() {
                             className="btn btn-primary"
                             disabled={loading}
                         >
-                            {loading ? "Creating..." : "Create Student"}
+                            {loading
+                                ? "Creating Student..."
+                                : "Create Student"}
                         </button>
 
                     </form>
 
                 </div>
+
             </div>
 
         </div>
