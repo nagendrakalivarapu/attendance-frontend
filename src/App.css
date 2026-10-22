@@ -1702,3 +1702,51 @@ body {
   color: #6b7280;
   font-size: 13px;
 }
+/* =========================================================
+   ATTENDANCE SESSION
+   ========================================================= */
+
+.attendance-session-open {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 9px;
+  border: 1px solid #bbf7d0;
+  background: #f0fdf4;
+}
+
+.attendance-open-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #166534;
+  font-size: 14px;
+}
+
+.attendance-live-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #22c55e;
+  display: inline-block;
+  animation: attendancePulse 1.5s infinite;
+}
+
+.attendance-started-time {
+  margin-top: 7px;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+@keyframes attendancePulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

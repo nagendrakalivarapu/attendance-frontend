@@ -7,6 +7,8 @@ function TeacherDashboard() {
 
     const [courses, setCourses] = useState([]);
     const [courseStudents, setCourseStudents] = useState({});
+    const [courseSessions, setCourseSessions] = useState({});
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
@@ -14,50 +16,64 @@ function TeacherDashboard() {
         loadCourses();
     }, []);
 
+    // =========================================================
+    // LOAD COURSES + STUDENTS + OPEN SESSIONS
+    // =========================================================
+
     const loadCourses = async () => {
         try {
             setLoading(true);
             setError("");
 
-            const response = await api.get("/course/my-courses");
+            // Get teacher's courses
+            const courseResponse = await api.get(
+                "/course/my-courses"
+            );
 
-            const teacherCourses = response.data;
+            const teacherCourses = courseResponse.data;
 
             setCourses(teacherCourses);
 
-            // Load students for every course
-            const studentRequests = teacherCourses.map(async (course) => {
-                try {
-                    const studentResponse = await api.get(
-                        `/enrollment/course/${course.id}`
-                    );
+            // Load students for all courses
+            const studentRequests = teacherCourses.map(
+                async (course) => {
+                    try {
+                        const response = await api.get(
+                            `/enrollment/course/${course.id}`
+                        );
 
-                    return {
-                        courseId: course.id,
-                        students: studentResponse.data,
-                    };
-                } catch (err) {
-                    console.error(
-                        `Failed to load students for course ${course.id}`,
-                        err
-                    );
+                        return {
+                            courseId: course.id,
+                            students: response.data,
+                        };
+                    } catch (err) {
+                        console.error(
+                            `Failed to load students for ${course.courseCode}`,
+                            err
+                        );
 
-                    return {
-                        courseId: course.id,
-                        students: [],
-                    };
+                        return {
+                            courseId: course.id,
+                            students: [],
+                        };
+                    }
                 }
-            });
+            );
 
-            const results = await Promise.all(studentRequests);
+            const studentResults =
+                await Promise.all(studentRequests);
 
             const studentsByCourse = {};
 
-            results.forEach((result) => {
-                studentsByCourse[result.courseId] = result.students;
+            studentResults.forEach((result) => {
+                studentsByCourse[result.courseId] =
+                    result.students;
             });
 
             setCourseStudents(studentsByCourse);
+
+            // Load currently OPEN attendance sessions
+            await loadOpenSessions(teacherCourses);
 
         } catch (err) {
             console.error(err);
@@ -71,6 +87,46 @@ function TeacherDashboard() {
         }
     };
 
+    // =========================================================
+    // LOAD OPEN ATTENDANCE SESSIONS
+    // =========================================================
+
+    const loadOpenSessions = async (teacherCourses) => {
+        const activeSessions = {};
+
+        await Promise.all(
+            teacherCourses.map(async (course) => {
+                try {
+                    const response = await api.get(
+                        `/attendance-sessions/course/${course.id}/open`
+                    );
+
+                    const session = response.data;
+
+                    if (
+                        session.status === "OPEN" &&
+                        session.courseId === course.id
+                    ) {
+                        activeSessions[course.id] =
+                            session;
+                    }
+
+                } catch (err) {
+                    // No OPEN session for this course.
+                    console.log(
+                        `No open attendance session for ${course.courseCode}`
+                    );
+                }
+            })
+        );
+
+        setCourseSessions(activeSessions);
+    };
+
+    // =========================================================
+    // START ATTENDANCE
+    // =========================================================
+
     const startAttendance = async (courseId) => {
         try {
             const response = await api.post(
@@ -80,12 +136,17 @@ function TeacherDashboard() {
                 }
             );
 
+            const session = response.data;
+
             console.log(
                 "Attendance session started:",
-                response.data
+                session
             );
 
-            alert("Attendance session started successfully!");
+            setCourseSessions((previous) => ({
+                ...previous,
+                [courseId]: session,
+            }));
 
         } catch (err) {
             console.error(err);
@@ -97,14 +158,92 @@ function TeacherDashboard() {
         }
     };
 
+    // =========================================================
+    // CLOSE ATTENDANCE
+    // =========================================================
+
+    const closeAttendance = async (courseId) => {
+        const session = courseSessions[courseId];
+
+        if (!session) {
+            return;
+        }
+
+        const confirmed = window.confirm(
+            "Are you sure you want to close this attendance session?"
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+            await api.put(
+                `/attendance-sessions/${session.id}/close`
+            );
+
+            setCourseSessions((previous) => {
+                const updated = {
+                    ...previous,
+                };
+
+                delete updated[courseId];
+
+                return updated;
+            });
+
+            alert(
+                "Attendance session closed successfully."
+            );
+
+            // Reload course/student/session data
+            await loadCourses();
+
+        } catch (err) {
+            console.error(err);
+
+            alert(
+                err.response?.data?.message ||
+                "Failed to close attendance session."
+            );
+        }
+    };
+
+    // =========================================================
+    // FORMAT TIME
+    // =========================================================
+
+    const formatTime = (dateTime) => {
+        if (!dateTime) {
+            return "--";
+        }
+
+        return new Date(dateTime).toLocaleTimeString(
+            [],
+            {
+                hour: "2-digit",
+                minute: "2-digit",
+            }
+        );
+    };
+
+    // =========================================================
+    // DASHBOARD
+    // =========================================================
+
     return (
         <div className="teacher-dashboard">
 
-            {/* Header */}
+            {/* =================================================
+                HEADER
+            ================================================= */}
+
             <div className="teacher-header">
 
                 <div>
-                    <h1>Teacher Dashboard</h1>
+                    <h1>
+                        Teacher Dashboard
+                    </h1>
 
                     <p>
                         Welcome, {user?.email}
@@ -121,13 +260,18 @@ function TeacherDashboard() {
             </div>
 
 
-            {/* My Courses */}
+            {/* =================================================
+                MY COURSES SECTION
+            ================================================= */}
+
             <div className="teacher-section">
 
                 <div className="teacher-section-header">
 
                     <div>
-                        <h2>My Courses</h2>
+                        <h2>
+                            My Courses
+                        </h2>
 
                         <p>
                             Courses assigned to you
@@ -137,14 +281,20 @@ function TeacherDashboard() {
                     <button
                         className="btn btn-outline-primary"
                         onClick={loadCourses}
+                        disabled={loading}
                     >
-                        Refresh
+                        {loading
+                            ? "Loading..."
+                            : "Refresh"}
                     </button>
 
                 </div>
 
 
-                {/* Loading */}
+                {/* =================================================
+                    LOADING
+                ================================================= */}
+
                 {loading && (
                     <div className="teacher-message">
                         Loading your courses...
@@ -152,7 +302,10 @@ function TeacherDashboard() {
                 )}
 
 
-                {/* Error */}
+                {/* =================================================
+                    ERROR
+                ================================================= */}
+
                 {!loading && error && (
                     <div className="alert alert-danger">
                         {error}
@@ -160,17 +313,26 @@ function TeacherDashboard() {
                 )}
 
 
-                {/* No courses */}
+                {/* =================================================
+                    NO COURSES
+                ================================================= */}
+
                 {!loading &&
                     !error &&
                     courses.length === 0 && (
+
                         <div className="teacher-message">
-                            No courses have been assigned to you.
+                            No courses have been assigned
+                            to you.
                         </div>
+
                     )}
 
 
-                {/* Courses */}
+                {/* =================================================
+                    COURSE GRID
+                ================================================= */}
+
                 {!loading &&
                     !error &&
                     courses.length > 0 && (
@@ -180,7 +342,18 @@ function TeacherDashboard() {
                             {courses.map((course) => {
 
                                 const students =
-                                    courseStudents[course.id] || [];
+                                    courseStudents[
+                                        course.id
+                                        ] || [];
+
+                                const session =
+                                    courseSessions[
+                                        course.id
+                                        ];
+
+                                const isOpen =
+                                    session?.status ===
+                                    "OPEN";
 
                                 return (
 
@@ -189,27 +362,43 @@ function TeacherDashboard() {
                                         key={course.id}
                                     >
 
-                                        {/* Course Header */}
+                                        {/* =================================================
+                                            COURSE HEADER
+                                        ================================================= */}
+
                                         <div className="course-card-top">
 
                                             <span className="course-code">
-                                                {course.courseCode}
+                                                {
+                                                    course.courseCode
+                                                }
                                             </span>
 
                                             <span className="course-semester">
-                                                Semester {course.semester}
+                                                Semester{" "}
+                                                {
+                                                    course.semester
+                                                }
                                             </span>
 
                                         </div>
 
 
-                                        {/* Course Name */}
+                                        {/* =================================================
+                                            COURSE NAME
+                                        ================================================= */}
+
                                         <h3>
-                                            {course.courseName}
+                                            {
+                                                course.courseName
+                                            }
                                         </h3>
 
 
-                                        {/* Course Details */}
+                                        {/* =================================================
+                                            COURSE DETAILS
+                                        ================================================= */}
+
                                         <div className="course-details">
 
                                             <div>
@@ -218,10 +407,11 @@ function TeacherDashboard() {
                                                 </span>
 
                                                 <strong>
-                                                    {course.department}
+                                                    {
+                                                        course.department
+                                                    }
                                                 </strong>
                                             </div>
-
 
                                             <div>
                                                 <span>
@@ -229,10 +419,11 @@ function TeacherDashboard() {
                                                 </span>
 
                                                 <strong>
-                                                    {course.credits}
+                                                    {
+                                                        course.credits
+                                                    }
                                                 </strong>
                                             </div>
-
 
                                             <div>
                                                 <span>
@@ -240,14 +431,19 @@ function TeacherDashboard() {
                                                 </span>
 
                                                 <strong>
-                                                    {course.totalClasses}
+                                                    {
+                                                        course.totalClasses
+                                                    }
                                                 </strong>
                                             </div>
 
                                         </div>
 
 
-                                        {/* Students Section */}
+                                        {/* =================================================
+                                            STUDENTS
+                                        ================================================= */}
+
                                         <div className="course-students">
 
                                             <div className="students-header">
@@ -257,19 +453,23 @@ function TeacherDashboard() {
                                                 </h4>
 
                                                 <span className="student-count">
-                                                    {students.length}
+                                                    {
+                                                        students.length
+                                                    }
                                                 </span>
 
                                             </div>
 
 
-                                            {/* Students */}
-                                            {students.length > 0 ? (
+                                            {students.length >
+                                            0 ? (
 
                                                 <div className="student-list">
 
                                                     {students.map(
-                                                        (enrollment) => (
+                                                        (
+                                                            enrollment
+                                                        ) => (
 
                                                             <div
                                                                 className="student-item"
@@ -294,7 +494,6 @@ function TeacherDashboard() {
 
                                                                 </div>
 
-
                                                                 <span
                                                                     className={`student-status ${
                                                                         enrollment.status?.toLowerCase()
@@ -315,8 +514,9 @@ function TeacherDashboard() {
                                             ) : (
 
                                                 <div className="no-course-students">
-                                                    No students enrolled
-                                                    in this course.
+                                                    No students
+                                                    enrolled in
+                                                    this course.
                                                 </div>
 
                                             )}
@@ -324,24 +524,77 @@ function TeacherDashboard() {
                                         </div>
 
 
-                                        {/* Start Attendance */}
-                                        <button
-                                            className="btn btn-primary w-100 mt-3"
-                                            onClick={() =>
-                                                startAttendance(
-                                                    course.id
-                                                )
-                                            }
-                                            disabled={
-                                                students.length === 0
-                                            }
-                                        >
-                                            Start Attendance
-                                        </button>
+                                        {/* =================================================
+                                            ATTENDANCE SESSION
+                                        ================================================= */}
+
+                                        {isOpen ? (
+
+                                            <div className="attendance-session-open">
+
+                                                <div className="attendance-open-header">
+
+                                                    <span className="attendance-live-dot"></span>
+
+                                                    <strong>
+                                                        Attendance
+                                                        OPEN
+                                                    </strong>
+
+                                                </div>
+
+
+                                                <div className="attendance-started-time">
+
+                                                    Started at:{" "}
+
+                                                    <strong>
+                                                        {
+                                                            formatTime(
+                                                                session.startedAt
+                                                            )
+                                                        }
+                                                    </strong>
+
+                                                </div>
+
+
+                                                <button
+                                                    className="btn btn-danger w-100 mt-3"
+                                                    onClick={() =>
+                                                        closeAttendance(
+                                                            course.id
+                                                        )
+                                                    }
+                                                >
+                                                    Close Attendance
+                                                </button>
+
+                                            </div>
+
+                                        ) : (
+
+                                            <button
+                                                className="btn btn-primary w-100 mt-3"
+                                                onClick={() =>
+                                                    startAttendance(
+                                                        course.id
+                                                    )
+                                                }
+                                                disabled={
+                                                    students.length ===
+                                                    0
+                                                }
+                                            >
+                                                Start Attendance
+                                            </button>
+
+                                        )}
 
                                     </div>
 
                                 );
+
                             })}
 
                         </div>
