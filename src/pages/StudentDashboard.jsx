@@ -2,11 +2,17 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 
+const PROFILE_IMAGE_BASE_URL =
+    "http://localhost:8080/uploads/profile-pictures/";
+
 function StudentDashboard() {
     const { logout } = useAuth();
 
     const [student, setStudent] = useState(null);
     const [courses, setCourses] = useState([]);
+    const [attendanceSummary, setAttendanceSummary] = useState(null);
+    const [courseAttendance, setCourseAttendance] = useState([]);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
@@ -16,14 +22,22 @@ function StudentDashboard() {
                 setLoading(true);
                 setError("");
 
-                const [studentResponse, coursesResponse] =
-                    await Promise.all([
-                        api.get("/student/me"),
-                        api.get("/enrollment/my-courses"),
-                    ]);
+                const [
+                    studentResponse,
+                    coursesResponse,
+                    attendanceSummaryResponse,
+                    courseAttendanceResponse,
+                ] = await Promise.all([
+                    api.get("/student/me"),
+                    api.get("/enrollment/my-courses"),
+                    api.get("/attendance/me/summary"),
+                    api.get("/attendance/me/courses"),
+                ]);
 
                 setStudent(studentResponse.data);
                 setCourses(coursesResponse.data);
+                setAttendanceSummary(attendanceSummaryResponse.data);
+                setCourseAttendance(courseAttendanceResponse.data);
 
             } catch (err) {
                 console.error("Failed to load dashboard:", err);
@@ -44,11 +58,7 @@ function StudentDashboard() {
         return (
             <div className="student-dashboard">
                 <div className="student-loading">
-                    <div
-                        className="spinner-border"
-                        role="status"
-                    ></div>
-
+                    <div className="student-loading-spinner"></div>
                     <p>Loading your dashboard...</p>
                 </div>
             </div>
@@ -59,32 +69,52 @@ function StudentDashboard() {
         return (
             <div className="student-dashboard">
                 <div className="student-error">
-
-                    <h3>
-                        Unable to load dashboard
-                    </h3>
-
+                    <h3>Unable to load dashboard</h3>
                     <p>{error}</p>
 
                     <button
-                        className="btn btn-danger"
-                        onClick={logout}
+                        className="student-retry-btn"
+                        onClick={() => window.location.reload()}
                     >
-                        Logout
+                        Retry
                     </button>
-
                 </div>
             </div>
         );
     }
 
+    if (!student) {
+        return (
+            <div className="student-dashboard">
+                <div className="student-error">
+                    <h3>Student information not found</h3>
+                    <p>Please contact the administrator.</p>
+                </div>
+            </div>
+        );
+    }
+
+    const attendancePercentage =
+        attendanceSummary?.attendancePercentage ?? 0;
+
+    const totalSessions =
+        attendanceSummary?.totalSessions ?? 0;
+
+    const presentCount =
+        attendanceSummary?.presentCount ?? 0;
+
+    const absentCount =
+        attendanceSummary?.absentCount ?? 0;
+
     return (
         <div className="student-dashboard">
 
-            {/* Header */}
+            {/* ================= HEADER ================= */}
+
             <div className="student-dashboard-header">
 
-                <div>
+                <div className="student-welcome">
+
                     <p className="student-dashboard-label">
                         STUDENT DASHBOARD
                     </p>
@@ -94,8 +124,10 @@ function StudentDashboard() {
                     </h1>
 
                     <p className="student-dashboard-subtitle">
-                        Here's an overview of your academic profile.
+                        Here's an overview of your academic information
+                        and attendance.
                     </p>
+
                 </div>
 
                 <button
@@ -108,56 +140,220 @@ function StudentDashboard() {
             </div>
 
 
-            {/* Student Quick Stats */}
-            <div className="student-stat-grid">
+            {/* ================= PROFILE / QUICK INFO ================= */}
 
-                <div className="student-stat-card">
-                    <span className="student-stat-label">
-                        Registration Number
-                    </span>
+            <div className="student-dashboard-card student-profile-card">
 
-                    <strong>
-                        {student.registrationNumber}
-                    </strong>
-                </div>
+                <div className="student-profile-header">
 
-                <div className="student-stat-card">
-                    <span className="student-stat-label">
-                        Department
-                    </span>
+                    <div className="student-profile-left">
 
-                    <strong>
-                        {student.department}
-                    </strong>
-                </div>
+                        {student.profilePicture ? (
+                            <img
+                                src={`${PROFILE_IMAGE_BASE_URL}${student.profilePicture}`}
+                                alt={student.studentName}
+                                className="student-profile-image"
+                            />
+                        ) : (
+                            <div className="student-profile-icon">
+                                {student.studentName
+                                    ?.charAt(0)
+                                    ?.toUpperCase()}
+                            </div>
+                        )}
 
-                <div className="student-stat-card">
-                    <span className="student-stat-label">
-                        Semester
-                    </span>
+                        <div>
+                            <p className="student-card-label">
+                                STUDENT
+                            </p>
 
-                    <strong>
-                        {student.semester}
-                    </strong>
-                </div>
+                            <h2>
+                                {student.studentName}
+                            </h2>
 
-                <div className="student-stat-card">
-                    <span className="student-stat-label">
-                        Enrolled Courses
-                    </span>
+                            <p className="student-profile-email">
+                                {student.email}
+                            </p>
+                        </div>
 
-                    <strong>
-                        {courses.length}
-                    </strong>
+                    </div>
+
+                    <div
+                        className={
+                            student.faceRegistered
+                                ? "student-face-status registered"
+                                : "student-face-status pending"
+                        }
+                    >
+                        <span className="student-status-dot"></span>
+
+                        {student.faceRegistered
+                            ? "Face Recognition Registered"
+                            : "Face Recognition Pending"}
+                    </div>
+
                 </div>
 
             </div>
 
 
-            {/* Main Content */}
+            {/* ================= QUICK STATS ================= */}
+
+            <div className="student-stat-grid">
+
+                <div className="student-stat-card">
+
+                    <span className="student-stat-label">
+                        REGISTRATION NUMBER
+                    </span>
+
+                    <strong>
+                        {student.registrationNumber}
+                    </strong>
+
+                </div>
+
+
+                <div className="student-stat-card">
+
+                    <span className="student-stat-label">
+                        DEPARTMENT
+                    </span>
+
+                    <strong>
+                        {student.department}
+                    </strong>
+
+                </div>
+
+
+                <div className="student-stat-card">
+
+                    <span className="student-stat-label">
+                        SEMESTER
+                    </span>
+
+                    <strong>
+                        {student.semester}
+                    </strong>
+
+                </div>
+
+
+                <div className="student-stat-card">
+
+                    <span className="student-stat-label">
+                        ENROLLED COURSES
+                    </span>
+
+                    <strong>
+                        {courses.length}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            {/* ================= ATTENDANCE OVERVIEW ================= */}
+
+            <div className="student-dashboard-card">
+
+                <div className="student-card-header">
+
+                    <div>
+                        <p className="student-card-label">
+                            ATTENDANCE
+                        </p>
+
+                        <h2>
+                            Attendance Overview
+                        </h2>
+                    </div>
+
+                    <div className="student-attendance-percentage">
+                        {attendancePercentage.toFixed(0)}%
+                    </div>
+
+                </div>
+
+
+                <div className="student-attendance-progress">
+
+                    <div className="student-progress-track">
+
+                        <div
+                            className="student-progress-fill"
+                            style={{
+                                width: `${Math.min(
+                                    Math.max(attendancePercentage, 0),
+                                    100
+                                )}%`,
+                            }}
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div className="student-attendance-stats">
+
+                    <div className="student-attendance-stat">
+
+                        <span>Total Sessions</span>
+
+                        <strong>
+                            {totalSessions}
+                        </strong>
+
+                    </div>
+
+
+                    <div className="student-attendance-stat">
+
+                        <span>Present</span>
+
+                        <strong>
+                            {presentCount}
+                        </strong>
+
+                    </div>
+
+
+                    <div className="student-attendance-stat">
+
+                        <span>Absent</span>
+
+                        <strong>
+                            {absentCount}
+                        </strong>
+
+                    </div>
+
+
+                    <div className="student-attendance-stat">
+
+                        <span>Attendance</span>
+
+                        <strong>
+                            {attendancePercentage.toFixed(1)}%
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {/* ================= MAIN GRID ================= */}
+
             <div className="student-dashboard-grid">
 
-                {/* Personal Information */}
+
+                {/* ================= PERSONAL INFORMATION ================= */}
+
                 <div className="student-dashboard-card">
 
                     <div className="student-card-header">
@@ -172,57 +368,107 @@ function StudentDashboard() {
                             </h2>
                         </div>
 
-                        <div className="student-profile-icon">
-                            {student.studentName
-                                ?.charAt(0)
-                                .toUpperCase()}
-                        </div>
-
                     </div>
 
 
                     <div className="student-info-grid">
 
                         <div className="student-info-item">
+
                             <span>Full Name</span>
+
                             <strong>
                                 {student.studentName}
                             </strong>
+
                         </div>
 
+
                         <div className="student-info-item">
+
                             <span>Email</span>
+
                             <strong>
                                 {student.email}
                             </strong>
+
                         </div>
 
+
                         <div className="student-info-item">
+
                             <span>Phone</span>
+
                             <strong>
                                 {student.phone || "Not provided"}
                             </strong>
+
                         </div>
 
-                        <div className="student-info-item">
-                            <span>Section</span>
-                            <strong>
-                                {student.section}
-                            </strong>
-                        </div>
 
                         <div className="student-info-item">
-                            <span>Date of Birth</span>
-                            <strong>
-                                {student.dateOfBirth || "Not provided"}
-                            </strong>
-                        </div>
 
-                        <div className="student-info-item">
                             <span>Gender</span>
+
                             <strong>
                                 {student.gender || "Not provided"}
                             </strong>
+
+                        </div>
+
+
+                        <div className="student-info-item">
+
+                            <span>Date of Birth</span>
+
+                            <strong>
+                                {student.dateOfBirth || "Not provided"}
+                            </strong>
+
+                        </div>
+
+
+                        <div className="student-info-item">
+
+                            <span>Section</span>
+
+                            <strong>
+                                {student.section}
+                            </strong>
+
+                        </div>
+
+
+                        <div className="student-info-item">
+
+                            <span>Department</span>
+
+                            <strong>
+                                {student.department}
+                            </strong>
+
+                        </div>
+
+
+                        <div className="student-info-item">
+
+                            <span>Semester</span>
+
+                            <strong>
+                                {student.semester}
+                            </strong>
+
+                        </div>
+
+
+                        <div className="student-info-item student-info-full">
+
+                            <span>Address</span>
+
+                            <strong>
+                                {student.address || "Not provided"}
+                            </strong>
+
                         </div>
 
                     </div>
@@ -230,7 +476,8 @@ function StudentDashboard() {
                 </div>
 
 
-                {/* Face Registration */}
+                {/* ================= FACE RECOGNITION ================= */}
+
                 <div className="student-dashboard-card student-face-card">
 
                     <div className="student-card-header">
@@ -241,67 +488,165 @@ function StudentDashboard() {
                             </p>
 
                             <h2>
-                                Face Registration
+                                Face Recognition
                             </h2>
-                        </div>
-
-                        <div className="face-icon">
-                            {student.faceRegistered ? "✓" : "!"}
                         </div>
 
                     </div>
 
 
-                    {student.faceRegistered ? (
+                    <div
+                        className={
+                            student.faceRegistered
+                                ? "student-face-status-box registered"
+                                : "student-face-status-box pending"
+                        }
+                    >
 
-                        <div className="face-status success">
+                        <div className="student-face-icon">
+                            {student.faceRegistered ? "✓" : "!"}
+                        </div>
 
-                            <div className="face-status-icon">
-                                ✓
-                            </div>
+                        <div>
 
-                            <div>
-                                <h3>
-                                    Face Registered
-                                </h3>
+                            <strong>
+                                {student.faceRegistered
+                                    ? "Face Registered"
+                                    : "Registration Pending"}
+                            </strong>
 
-                                <p>
-                                    Your face is registered successfully
-                                    and ready for attendance.
-                                </p>
-                            </div>
+                            <p>
+                                {student.faceRegistered
+                                    ? "Your face is registered and can be used for attendance."
+                                    : "Please contact the administrator to register your face."}
+                            </p>
 
                         </div>
 
-                    ) : (
-
-                        <div className="face-status pending">
-
-                            <div className="face-status-icon">
-                                !
-                            </div>
-
-                            <div>
-                                <h3>
-                                    Face Not Registered
-                                </h3>
-
-                                <p>
-                                    Your face has not been registered yet.
-                                    Please contact your administrator.
-                                </p>
-                            </div>
-
-                        </div>
-
-                    )}
+                    </div>
 
                 </div>
 
             </div>
 
 
-            {/* My Courses */}
+            {/* ================= COURSE ATTENDANCE ================= */}
+
+            <div className="student-dashboard-card">
+
+                <div className="student-card-header">
+
+                    <div>
+                        <p className="student-card-label">
+                            ATTENDANCE
+                        </p>
+
+                        <h2>
+                            Course Attendance
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                {courseAttendance.length === 0 ? (
+
+                    <div className="student-empty-state">
+
+                        <p>
+                            No attendance records available yet.
+                        </p>
+
+                    </div>
+
+                ) : (
+
+                    <div className="student-course-attendance-list">
+
+                        {courseAttendance.map((course) => (
+
+                            <div
+                                className="student-course-attendance"
+                                key={course.courseId}
+                            >
+
+                                <div className="student-course-attendance-info">
+
+                                    <div>
+
+                                        <h3>
+                                            {course.courseCode}
+                                        </h3>
+
+                                        <p>
+                                            {course.courseName}
+                                        </p>
+
+                                    </div>
+
+                                    <strong>
+                                        {course.attendancePercentage.toFixed(1)}%
+                                    </strong>
+
+                                </div>
+
+
+                                <div className="student-progress-track">
+
+                                    <div
+                                        className="student-progress-fill"
+                                        style={{
+                                            width: `${Math.min(
+                                                Math.max(
+                                                    course.attendancePercentage,
+                                                    0
+                                                ),
+                                                100
+                                            )}%`,
+                                        }}
+                                    ></div>
+
+                                </div>
+
+
+                                <div className="student-course-attendance-stats">
+
+                                    <span>
+                                        Sessions:{" "}
+                                        <strong>
+                                            {course.totalSessions}
+                                        </strong>
+                                    </span>
+
+                                    <span>
+                                        Present:{" "}
+                                        <strong>
+                                            {course.presentCount}
+                                        </strong>
+                                    </span>
+
+                                    <span>
+                                        Absent:{" "}
+                                        <strong>
+                                            {course.absentCount}
+                                        </strong>
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        ))}
+
+                    </div>
+
+                )}
+
+            </div>
+
+
+            {/* ================= MY COURSES ================= */}
+
             <div className="student-courses-section">
 
                 <div className="student-section-header">
@@ -326,104 +671,116 @@ function StudentDashboard() {
 
                 {courses.length === 0 ? (
 
-                    <div className="student-no-courses">
-                        <div className="no-courses-icon">
-                            📚
-                        </div>
-
-                        <h3>
-                            No courses enrolled
-                        </h3>
+                    <div className="student-dashboard-card student-empty-state">
 
                         <p>
-                            You currently don't have any active course
-                            enrollments.
+                            You are not enrolled in any courses yet.
                         </p>
+
                     </div>
 
                 ) : (
 
                     <div className="student-course-grid">
 
-                        {courses.map((course) => (
+                        {courses.map((course) => {
 
-                            <div
-                                className="student-course-card"
-                                key={course.id}
-                            >
+                            const attendance = courseAttendance.find(
+                                (item) =>
+                                    item.courseId === course.courseId
+                            );
 
-                                <div className="student-course-top">
+                            return (
 
-                                    <span className="student-course-code">
-                                        {course.courseCode}
-                                    </span>
+                                <div
+                                    className="student-course-card"
+                                    key={course.id}
+                                >
 
-                                    <span
-                                        className={`student-course-status ${
-                                            course.status?.toLowerCase()
-                                        }`}
-                                    >
-                                        {course.status}
-                                    </span>
+                                    <div className="student-course-card-top">
+
+                                        <span className="student-course-code">
+                                            {course.courseCode}
+                                        </span>
+
+                                        <span className="student-course-status">
+                                            {course.status}
+                                        </span>
+
+                                    </div>
+
+
+                                    <h3>
+                                        {course.courseName}
+                                    </h3>
+
+
+                                    <div className="student-course-details">
+
+                                        <div>
+                                            <span>Department</span>
+                                            <strong>
+                                                {course.department || student.department}
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <span>Semester</span>
+                                            <strong>
+                                                {course.semester || student.semester}
+                                            </strong>
+                                        </div>
+
+                                    </div>
+
+
+                                    {attendance && (
+
+                                        <div className="student-course-card-attendance">
+
+                                            <div>
+
+                                                <span>
+                                                    Attendance
+                                                </span>
+
+                                                <strong>
+                                                    {attendance.attendancePercentage.toFixed(1)}%
+                                                </strong>
+
+                                            </div>
+
+
+                                            <div className="student-progress-track">
+
+                                                <div
+                                                    className="student-progress-fill"
+                                                    style={{
+                                                        width: `${Math.min(
+                                                            Math.max(
+                                                                attendance.attendancePercentage,
+                                                                0
+                                                            ),
+                                                            100
+                                                        )}%`,
+                                                    }}
+                                                ></div>
+
+                                            </div>
+
+                                        </div>
+
+                                    )}
 
                                 </div>
 
+                            );
 
-                                <h3>
-                                    {course.courseName}
-                                </h3>
-
-
-                                <div className="student-course-details">
-
-                                    <div>
-                                        <span>
-                                            Registration Number
-                                        </span>
-
-                                        <strong>
-                                            {course.registrationNumber}
-                                        </strong>
-                                    </div>
-
-                                    <div>
-                                        <span>
-                                            Enrollment Date
-                                        </span>
-
-                                        <strong>
-                                            {course.enrollmentDate}
-                                        </strong>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        ))}
+                        })}
 
                     </div>
 
                 )}
-
-            </div>
-
-
-            {/* Attendance */}
-            <div className="student-coming-soon">
-
-                <h2>
-                    Attendance
-                </h2>
-
-                <p>
-                    Your attendance records and live attendance
-                    sessions will appear here.
-                </p>
-
-                <span>
-                    Coming next 🚀
-                </span>
 
             </div>
 
