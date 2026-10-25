@@ -2846,3 +2846,385 @@ body {
      flex-direction: column;
    }
  }
+/* =========================================================
+   TEACHER ATTENDANCE HISTORY
+   ========================================================= */
+
+.teacher-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.teacher-history-page {
+    min-height: 100vh;
+    padding: 36px clamp(20px, 4vw, 56px) 56px;
+    background: #f8fafc;
+}
+
+.teacher-history-header {
+    max-width: 1400px;
+    margin: 0 auto 28px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.teacher-history-back-link {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #2563eb;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.teacher-history-back-link:hover {
+    text-decoration: underline;
+}
+
+.teacher-history-header h1 {
+    margin: 0;
+    color: #101828;
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 750;
+}
+
+.teacher-history-header p {
+    margin: 8px 0 0;
+    color: #667085;
+}
+
+.teacher-history-summary-grid {
+    max-width: 1400px;
+    margin: 0 auto 24px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.teacher-history-summary-card,
+.teacher-history-card {
+    background: #ffffff;
+    border: 1px solid #eaecf0;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04);
+}
+
+.teacher-history-summary-card {
+    padding: 20px 22px;
+}
+
+.teacher-history-summary-card span {
+    display: block;
+    color: #667085;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.teacher-history-summary-card strong {
+    display: block;
+    margin-top: 8px;
+    color: #101828;
+    font-size: 28px;
+}
+
+.teacher-history-layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(330px, 0.85fr) minmax(0, 1.55fr);
+    gap: 20px;
+    align-items: start;
+}
+
+.teacher-history-card {
+    overflow: hidden;
+}
+
+.teacher-history-card-header {
+    padding: 22px 24px;
+    border-bottom: 1px solid #eaecf0;
+}
+
+.teacher-history-card-header h2 {
+    margin: 0;
+    color: #101828;
+    font-size: 19px;
+}
+
+.teacher-history-card-header p {
+    margin: 5px 0 0;
+    color: #667085;
+    font-size: 13px;
+}
+
+.teacher-session-list {
+    padding: 8px;
+    max-height: 650px;
+    overflow-y: auto;
+}
+
+.teacher-session-item {
+    width: 100%;
+    padding: 16px;
+    margin: 0;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.18s ease;
+}
+
+.teacher-session-item:hover {
+    background: #f8fafc;
+    border-color: #eaecf0;
+}
+
+.teacher-session-item.selected {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+.teacher-session-item-main,
+.teacher-session-meta,
+.teacher-session-counts {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.teacher-session-course {
+    min-width: 0;
+}
+
+.teacher-session-course strong {
+    display: block;
+    color: #101828;
+    font-size: 15px;
+}
+
+.teacher-session-course span {
+    display: block;
+    margin-top: 3px;
+    color: #667085;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.teacher-session-meta {
+    margin-top: 12px;
+    color: #667085;
+    font-size: 12px;
+}
+
+.teacher-session-counts {
+    justify-content: flex-start;
+    margin-top: 11px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.present-count {
+    color: #067647;
+}
+
+.absent-count {
+    color: #b42318;
+}
+
+.teacher-session-status,
+.teacher-attendance-status {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 0.02em;
+}
+
+.teacher-session-status.open,
+.teacher-attendance-status.present {
+    color: #067647;
+    background: #ecfdf3;
+}
+
+.teacher-session-status.closed,
+.teacher-attendance-status.absent {
+    color: #b42318;
+    background: #fef3f2;
+}
+
+.teacher-history-details {
+    min-width: 0;
+}
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.teacher-details-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.teacher-details-date {
+    flex-shrink: 0;
+    text-align: right;
+}
+
+.teacher-details-date strong,
+.teacher-details-date span {
+    display: block;
+}
+
+.teacher-details-date strong {
+    color: #344054;
+    font-size: 14px;
+}
+
+.teacher-details-date span {
+    margin-top: 4px;
+    color: #98a2b3;
+    font-size: 12px;
+}
+
+.teacher-attendance-table-wrap {
+    overflow-x: auto;
+}
+
+.teacher-attendance-table thead th {
+    padding: 14px 20px;
+    color: #667085;
+    background: #f8fafc;
+    border-bottom: 1px solid #eaecf0;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.teacher-attendance-table tbody td {
+    padding: 15px 20px;
+    color: #475467;
+    border-color: #f2f4f7;
+    font-size: 14px;
+}
+
+.teacher-attendance-table tbody td strong {
+    color: #101828;
+}
+
+.teacher-history-state {
+    max-width: 1400px;
+    min-height: 240px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #667085;
+}
+
+.teacher-history-state.compact {
+    min-height: 180px;
+    padding: 24px;
+}
+
+.teacher-history-alert {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.teacher-history-empty {
+    max-width: 620px;
+    margin: 60px auto;
+    padding: 42px 24px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px dashed #d0d5dd;
+    border-radius: 16px;
+}
+
+.teacher-history-empty.compact {
+    margin: 28px;
+    max-width: none;
+    padding: 38px 20px;
+}
+
+.teacher-history-empty-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #067647;
+    background: #ecfdf3;
+    font-weight: 800;
+}
+
+.teacher-history-empty h2,
+.teacher-history-empty h3 {
+    margin: 0;
+    color: #101828;
+}
+
+.teacher-history-empty p {
+    margin: 8px 0 20px;
+    color: #667085;
+}
+
+@media (max-width: 1050px) {
+    .teacher-history-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .teacher-session-list {
+        max-height: none;
+    }
+}
+
+@media (max-width: 800px) {
+    .teacher-history-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .teacher-history-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 560px) {
+    .teacher-history-page {
+        padding: 24px 16px 40px;
+    }
+
+    .teacher-history-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .details-header {
+        flex-direction: column;
+    }
+
+    .teacher-details-date {
+        text-align: left;
+    }
+
+    .teacher-header-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

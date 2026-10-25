@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 
@@ -250,12 +251,21 @@ function TeacherDashboard() {
                     </p>
                 </div>
 
-                <button
-                    className="btn btn-danger"
-                    onClick={logout}
-                >
-                    Logout
-                </button>
+                <div className="teacher-header-actions">
+                    <Link
+                        to="/teacher/attendance-history"
+                        className="btn btn-outline-primary"
+                    >
+                        Attendance History
+                    </Link>
+
+                    <button
+                        className="btn btn-danger"
+                        onClick={logout}
+                    >
+                        Logout
+                    </button>
+                </div>
 
             </div>
 

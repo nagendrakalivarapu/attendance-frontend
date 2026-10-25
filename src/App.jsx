@@ -4,6 +4,7 @@ import StudentAttendance from "./pages/StudentAttendance";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
+import TeacherAttendanceHistory from "./pages/TeacherAttendanceHistory";
 import StudentDashboard from "./pages/StudentDashboard";
 import Students from "./pages/Students";
 import AddStudent from "./pages/AddStudent";
@@ -100,6 +101,15 @@ function App() {
               element={
                 <ProtectedRoute allowedRoles={["TEACHER"]}>
                   <TeacherDashboard />
+                </ProtectedRoute>
+              }
+          />
+
+          <Route
+              path="/teacher/attendance-history"
+              element={
+                <ProtectedRoute allowedRoles={["TEACHER"]}>
+                  <TeacherAttendanceHistory />
                 </ProtectedRoute>
               }
           />
