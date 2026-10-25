@@ -1,11 +1,10 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
+import StudentAttendance from "./pages/StudentAttendance";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
-import StudentAttendance from "./pages/StudentAttendance";
 import Students from "./pages/Students";
 import AddStudent from "./pages/AddStudent";
 import EditStudent from "./pages/EditStudent";
