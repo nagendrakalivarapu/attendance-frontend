@@ -1,10 +1,10 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import StudentAttendance from "./pages/StudentAttendance";
+import StudentAttendanceHistory from "./pages/StudentAttendanceHistory";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
-import TeacherAttendanceHistory from "./pages/TeacherAttendanceHistory";
 import StudentDashboard from "./pages/StudentDashboard";
 import Students from "./pages/Students";
 import AddStudent from "./pages/AddStudent";
@@ -106,15 +106,6 @@ function App() {
           />
 
           <Route
-              path="/teacher/attendance-history"
-              element={
-                <ProtectedRoute allowedRoles={["TEACHER"]}>
-                  <TeacherAttendanceHistory />
-                </ProtectedRoute>
-              }
-          />
-
-          <Route
               path="/student"
               element={
                 <ProtectedRoute allowedRoles={["STUDENT"]}>
@@ -127,6 +118,14 @@ function App() {
                 element={
                     <ProtectedRoute allowedRoles={["STUDENT"]}>
                         <StudentAttendance />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/student/attendance-history"
+                element={
+                    <ProtectedRoute allowedRoles={["STUDENT"]}>
+                        <StudentAttendanceHistory />
                     </ProtectedRoute>
                 }
             />

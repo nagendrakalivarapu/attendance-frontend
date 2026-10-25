@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 
@@ -7,6 +8,7 @@ const PROFILE_IMAGE_BASE_URL =
 
 function StudentDashboard() {
     const { logout } = useAuth();
+    const navigate = useNavigate();
 
     const [student, setStudent] = useState(null);
     const [courses, setCourses] = useState([]);
@@ -130,12 +132,20 @@ function StudentDashboard() {
 
                 </div>
 
-                <button
-                    className="student-logout-btn"
-                    onClick={logout}
-                >
-                    Logout
-                </button>
+                <div className="student-header-actions">
+                    <button
+                        className="student-history-nav-btn"
+                        onClick={() => navigate("/student/attendance-history")}
+                    >
+                        Attendance History
+                    </button>
+                    <button
+                        className="student-logout-btn"
+                        onClick={logout}
+                    >
+                        Logout
+                    </button>
+                </div>
 
             </div>
 
