@@ -28,7 +28,13 @@ function AdminAttendanceReports() {
 
             const response = await api.get("/course");
 
-            setCourses(response.data || []);
+            const courseData = response.data || [];
+
+            setCourses(courseData);
+
+            if (courseData.length > 0 && !selectedCourseId) {
+                setSelectedCourseId(String(courseData[0].id));
+            }
         } catch (error) {
             console.error("Failed to load courses:", error);
 
@@ -58,8 +64,8 @@ function AdminAttendanceReports() {
                         `/attendance/course/${selectedCourseId}/analytics`,
                         {
                             params: {
-                                threshold
-                            }
+                                threshold,
+                            },
                         }
                     ),
 
@@ -67,10 +73,10 @@ function AdminAttendanceReports() {
                         `/attendance/course/${selectedCourseId}/student-report`,
                         {
                             params: {
-                                threshold
-                            }
+                                threshold,
+                            },
                         }
-                    )
+                    ),
                 ]);
 
             setAnalytics(analyticsResponse.data);
@@ -122,11 +128,13 @@ function AdminAttendanceReports() {
     ).length;
 
     const getPercentageClass = (percentage) => {
-        if (percentage >= threshold) {
+        const value = Number(percentage || 0);
+
+        if (value >= threshold) {
             return "attendance-report-good";
         }
 
-        if (percentage >= threshold - 10) {
+        if (value >= threshold - 10) {
             return "attendance-report-warning";
         }
 
@@ -140,6 +148,7 @@ function AdminAttendanceReports() {
 
         return name
             .split(" ")
+            .filter(Boolean)
             .map((part) => part.charAt(0))
             .join("")
             .substring(0, 2)
@@ -168,17 +177,17 @@ function AdminAttendanceReports() {
 
                 </div>
 
-
                 <nav className="sidebar-nav">
 
                     <button
                         className="sidebar-link"
-                        onClick={() => navigate("/admin")}
+                        onClick={() =>
+                            navigate("/admin")
+                        }
                     >
                         <span>📊</span>
                         Dashboard
                     </button>
-
 
                     <button
                         className="sidebar-link"
@@ -190,7 +199,6 @@ function AdminAttendanceReports() {
                         Students
                     </button>
 
-
                     <button
                         className="sidebar-link"
                         onClick={() =>
@@ -200,7 +208,6 @@ function AdminAttendanceReports() {
                         <span>👨‍🏫</span>
                         Teachers
                     </button>
-
 
                     <button
                         className="sidebar-link"
@@ -212,7 +219,6 @@ function AdminAttendanceReports() {
                         Courses
                     </button>
 
-
                     <button
                         className="sidebar-link"
                         onClick={() =>
@@ -222,7 +228,6 @@ function AdminAttendanceReports() {
                         <span>📝</span>
                         Enrollments
                     </button>
-
 
                     <button
                         className="sidebar-link active"
@@ -264,14 +269,38 @@ function AdminAttendanceReports() {
 
                     </div>
 
-                    <button
-                        className="attendance-report-back-button"
-                        onClick={() =>
-                            navigate("/admin")
-                        }
+                    <div
+                        style={{
+                            display: "flex",
+                            gap: "10px",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                        }}
                     >
-                        ← Dashboard
-                    </button>
+
+                        {/* NEW LOW ATTENDANCE BUTTON */}
+
+                        <button
+                            className="attendance-report-generate-button"
+                            onClick={() =>
+                                navigate(
+                                    "/admin/attendance/low"
+                                )
+                            }
+                        >
+                            ⚠ Low Attendance
+                        </button>
+
+                        <button
+                            className="attendance-report-back-button"
+                            onClick={() =>
+                                navigate("/admin")
+                            }
+                        >
+                            ← Dashboard
+                        </button>
+
+                    </div>
 
                 </header>
 
@@ -327,6 +356,7 @@ function AdminAttendanceReports() {
                             value={threshold}
                             onChange={handleThresholdChange}
                         >
+
                             <option value={60}>
                                 60%
                             </option>
@@ -354,6 +384,7 @@ function AdminAttendanceReports() {
                             <option value={90}>
                                 90%
                             </option>
+
                         </select>
 
                     </div>
@@ -378,12 +409,15 @@ function AdminAttendanceReports() {
                     <button
                         className="attendance-report-refresh-button"
                         onClick={() => {
+
                             void loadCourses();
 
                             if (selectedCourseId) {
                                 void loadAttendanceReport();
                             }
+
                         }}
+                        disabled={loadingCourses}
                     >
                         ↻ Refresh
                     </button>
@@ -404,6 +438,7 @@ function AdminAttendanceReports() {
                         </span>
 
                         <div>
+
                             <strong>
                                 Unable to load report
                             </strong>
@@ -411,6 +446,7 @@ function AdminAttendanceReports() {
                             <p>
                                 {error}
                             </p>
+
                         </div>
 
                     </div>
@@ -533,6 +569,7 @@ function AdminAttendanceReports() {
                                     </div>
 
                                     <div>
+
                                         <span>
                                             Total Students
                                         </span>
@@ -542,6 +579,7 @@ function AdminAttendanceReports() {
                                                 analytics.totalStudents
                                             }
                                         </strong>
+
                                     </div>
 
                                 </div>
@@ -554,6 +592,7 @@ function AdminAttendanceReports() {
                                     </div>
 
                                     <div>
+
                                         <span>
                                             Closed Sessions
                                         </span>
@@ -563,6 +602,7 @@ function AdminAttendanceReports() {
                                                 analytics.totalSessions
                                             }
                                         </strong>
+
                                     </div>
 
                                 </div>
@@ -575,6 +615,7 @@ function AdminAttendanceReports() {
                                     </div>
 
                                     <div>
+
                                         <span>
                                             Present
                                         </span>
@@ -584,6 +625,7 @@ function AdminAttendanceReports() {
                                                 analytics.totalPresent
                                             }
                                         </strong>
+
                                     </div>
 
                                 </div>
@@ -596,6 +638,7 @@ function AdminAttendanceReports() {
                                     </div>
 
                                     <div>
+
                                         <span>
                                             Absent
                                         </span>
@@ -605,6 +648,7 @@ function AdminAttendanceReports() {
                                                 analytics.totalAbsent
                                             }
                                         </strong>
+
                                     </div>
 
                                 </div>
@@ -617,6 +661,7 @@ function AdminAttendanceReports() {
                                     </div>
 
                                     <div>
+
                                         <span>
                                             Low Attendance
                                         </span>
@@ -626,6 +671,7 @@ function AdminAttendanceReports() {
                                                 analytics.lowAttendanceStudents
                                             }
                                         </strong>
+
                                     </div>
 
                                 </div>
@@ -644,6 +690,7 @@ function AdminAttendanceReports() {
                                     </div>
 
                                     <div>
+
                                         <span>
                                             Students Meeting Requirement
                                         </span>
@@ -651,6 +698,7 @@ function AdminAttendanceReports() {
                                         <strong>
                                             {goodAttendanceCount}
                                         </strong>
+
                                     </div>
 
                                 </div>
@@ -663,6 +711,7 @@ function AdminAttendanceReports() {
                                     </div>
 
                                     <div>
+
                                         <span>
                                             Students Below Requirement
                                         </span>
@@ -670,9 +719,35 @@ function AdminAttendanceReports() {
                                         <strong>
                                             {lowAttendanceCount}
                                         </strong>
+
                                     </div>
 
                                 </div>
+
+                            </section>
+
+
+                            {/* QUICK REPORT ACTIONS */}
+
+                            <section
+                                style={{
+                                    display: "flex",
+                                    gap: "12px",
+                                    marginTop: "20px",
+                                    flexWrap: "wrap",
+                                }}
+                            >
+
+                                <button
+                                    className="attendance-report-generate-button"
+                                    onClick={() =>
+                                        navigate(
+                                            "/admin/attendance/low"
+                                        )
+                                    }
+                                >
+                                    ⚠ View Low Attendance Students
+                                </button>
 
                             </section>
 
@@ -784,11 +859,13 @@ function AdminAttendanceReports() {
                                                             <div className="attendance-student-cell">
 
                                                                 <div className="attendance-student-avatar">
+
                                                                     {
                                                                         getInitials(
                                                                             student.studentName
                                                                         )
                                                                     }
+
                                                                 </div>
 
                                                                 <div>
@@ -813,9 +890,11 @@ function AdminAttendanceReports() {
                                                         <td>
 
                                                                 <span className="attendance-registration">
+
                                                                     {
                                                                         student.registrationNumber
                                                                     }
+
                                                                 </span>
 
                                                         </td>
@@ -831,9 +910,11 @@ function AdminAttendanceReports() {
                                                         <td>
 
                                                                 <span className="present-number">
+
                                                                     {
                                                                         student.presentCount
                                                                     }
+
                                                                 </span>
 
                                                         </td>
@@ -842,9 +923,11 @@ function AdminAttendanceReports() {
                                                         <td>
 
                                                                 <span className="absent-number">
+
                                                                     {
                                                                         student.absentCount
                                                                     }
+
                                                                 </span>
 
                                                         </td>
@@ -877,11 +960,14 @@ function AdminAttendanceReports() {
                                                                         style={{
                                                                             width: `${Math.min(
                                                                                 Math.max(
-                                                                                    student.attendancePercentage || 0,
+                                                                                    Number(
+                                                                                        student.attendancePercentage ||
+                                                                                        0
+                                                                                    ),
                                                                                     0
                                                                                 ),
                                                                                 100
-                                                                            )}%`
+                                                                            )}%`,
                                                                         }}
                                                                     />
 

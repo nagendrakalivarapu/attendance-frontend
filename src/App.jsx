@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminAttendanceReports from "./pages/AdminAttendanceReports";
+import AdminLowAttendance from "./pages/AdminLowAttendance";
 
 import TeacherDashboard from "./pages/TeacherDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
@@ -194,6 +195,15 @@ function App() {
                             allowedRoles={["ADMIN"]}
                         >
                             <AdminAttendanceReports />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/attendance/low"
+                    element={
+                        <ProtectedRoute allowedRoles={["ADMIN"]}>
+                            <AdminLowAttendance />
                         </ProtectedRoute>
                     }
                 />
