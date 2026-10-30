@@ -4356,3 +4356,364 @@ body {
     align-items: flex-start;
   }
 }
+
+
+/* =========================================
+   ADMIN DASHBOARD - RECENT ATTENDANCE
+   ========================================= */
+
+.admin-recent-attendance-section {
+  margin-top: 5px;
+}
+
+.admin-attendance-trend {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.admin-attendance-trend-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.admin-attendance-trend-header strong {
+  display: block;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.admin-attendance-trend-header small {
+  display: block;
+  margin-top: 4px;
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+.admin-attendance-trend-header > span {
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.admin-attendance-trend-chart {
+  height: 170px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-attendance-trend-bar {
+  position: relative;
+  flex: 1;
+  min-width: 35px;
+  max-width: 90px;
+  height: 145px;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  background: #f3f4f6;
+  cursor: pointer;
+  padding: 0 6px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.admin-attendance-trend-bar:hover {
+  background: #e5e7eb;
+  transform: translateY(-2px);
+}
+
+.admin-attendance-trend-fill {
+  display: block;
+  width: 100%;
+  min-height: 3px;
+  border-radius: 7px 7px 0 0;
+  background: #2563eb;
+  transition: height 0.4s ease;
+}
+
+.admin-attendance-trend-bar small {
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  transform: translateX(-50%);
+  color: #374151;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+/* Recent sessions table */
+
+.admin-recent-sessions-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.admin-recent-sessions-table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+}
+
+.admin-recent-sessions-table th {
+  background: #f9fafb;
+  color: #6b7280;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: left;
+  padding: 13px 14px;
+  white-space: nowrap;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-recent-sessions-table td {
+  padding: 14px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #374151;
+  font-size: 12px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.admin-recent-sessions-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-recent-sessions-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.admin-recent-sessions-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.admin-recent-sessions-table td strong {
+  display: block;
+  color: #111827;
+  font-size: 12px;
+}
+
+.admin-recent-sessions-table td small {
+  display: block;
+  margin-top: 3px;
+  color: #9ca3af;
+  font-size: 10px;
+}
+
+/* Session status */
+
+.admin-session-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.admin-session-status.open {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.admin-session-status.closed {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.admin-session-status.unknown {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* View history */
+
+.admin-session-view-button {
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 7px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.admin-session-view-button:hover {
+  background: #dbeafe;
+  border-color: #93c5fd;
+}
+
+.admin-session-view-button:active {
+  transform: translateY(1px);
+}
+
+/* Disabled refresh buttons */
+
+.attendance-refresh-button:disabled,
+.admin-session-view-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   ADMIN DASHBOARD RESPONSIVE
+   ========================================= */
+
+@media (max-width: 1100px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .attendance-overview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-attendance-trend-chart {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    width: 220px;
+  }
+
+  .admin-main {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+    padding: 22px 20px;
+  }
+
+  .admin-topbar {
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .admin-profile {
+    display: none;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .attendance-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .attendance-percentage-card {
+    grid-column: auto;
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-attendance-trend {
+    padding: 15px;
+  }
+
+  .admin-attendance-trend-chart {
+    height: 145px;
+    gap: 7px;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+
+  .admin-attendance-trend-bar {
+    height: 120px;
+    min-width: 28px;
+    padding: 0 3px;
+  }
+
+  .admin-attendance-trend-bar small {
+    font-size: 9px;
+  }
+
+  .admin-attendance-trend-header {
+    align-items: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-sidebar {
+    position: static;
+    width: 100%;
+    min-height: auto;
+  }
+
+  .admin-layout {
+    display: block;
+  }
+
+  .admin-main {
+    margin-left: 0;
+    width: 100%;
+    padding: 20px 15px;
+  }
+
+  .sidebar-nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sidebar-bottom {
+    display: flex;
+    gap: 8px;
+  }
+
+  .sidebar-bottom .sidebar-link {
+    flex: 1;
+  }
+
+  .welcome-card {
+    padding: 22px;
+  }
+
+  .welcome-icon {
+    display: none;
+  }
+
+  .section-header {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .admin-attendance-trend-chart {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 5px;
+  }
+
+  .admin-attendance-trend-bar {
+    flex: 0 0 38px;
+  }
+}
+

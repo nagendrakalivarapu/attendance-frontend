@@ -28,10 +28,15 @@ function AdminDashboard() {
 
     const [statusLoading, setStatusLoading] = useState(true);
 
+    const [recentSessions, setRecentSessions] = useState([]);
+    const [recentSessionsLoading, setRecentSessionsLoading] = useState(true);
+    const [recentSessionsError, setRecentSessionsError] = useState("");
+
     useEffect(() => {
         void loadDashboardStats();
         void loadAttendanceDashboard();
         void checkSystemStatus();
+        void loadRecentSessions();
     }, []);
 
     const loadDashboardStats = async () => {
@@ -94,6 +99,50 @@ function AdminDashboard() {
         }
     };
 
+    const loadRecentSessions = async () => {
+        try {
+            setRecentSessionsLoading(true);
+            setRecentSessionsError("");
+
+            const response = await api.get("/attendance-sessions/admin/history");
+            const sessions = Array.isArray(response.data) ? response.data : [];
+
+            setRecentSessions(sessions.slice(0, 6));
+        } catch (error) {
+            console.error("Failed to load recent attendance sessions:", error);
+            setRecentSessionsError(
+                error.response?.data?.message ||
+                "Failed to load recent attendance sessions."
+            );
+        } finally {
+            setRecentSessionsLoading(false);
+        }
+    };
+
+    const formatDate = (value) => {
+        if (!value) return "—";
+        return new Date(`${value}T00:00:00`).toLocaleDateString();
+    };
+
+    const formatDateTime = (value) => {
+        if (!value) return "—";
+        return new Date(value).toLocaleString();
+    };
+
+    const getSessionPercentage = (session) => {
+        const value = Number(session?.attendancePercentage);
+        if (Number.isFinite(value)) return value;
+
+        const present = Number(session?.presentCount || 0);
+        const absent = Number(session?.absentCount || 0);
+        const total = present + absent;
+        return total > 0 ? (present / total) * 100 : 0;
+    };
+
+    const getTrendHeight = (session) => {
+        return `${Math.min(Math.max(getSessionPercentage(session), 0), 100)}%`;
+    };
+
     const checkSystemStatus = async () => {
         setStatusLoading(true);
 
@@ -149,6 +198,7 @@ function AdminDashboard() {
             loadDashboardStats(),
             loadAttendanceDashboard(),
             checkSystemStatus(),
+            loadRecentSessions(),
         ]);
     };
 
@@ -827,6 +877,142 @@ function AdminDashboard() {
                             </div>
 
                         )}
+
+                </section>
+
+                {/* ================================
+                    RECENT ATTENDANCE SESSIONS
+                ================================= */}
+
+                <section className="dashboard-section admin-recent-attendance-section">
+
+                    <div className="section-header">
+                        <div>
+                            <h3>Recent Attendance Sessions</h3>
+                            <p>Latest attendance activity across the system</p>
+                        </div>
+
+                        <button
+                            className="attendance-refresh-button"
+                            onClick={() => void loadRecentSessions()}
+                            disabled={recentSessionsLoading}
+                        >
+                            {recentSessionsLoading ? "Loading..." : "↻ Refresh"}
+                        </button>
+                    </div>
+
+                    {recentSessionsError && (
+                        <div className="attendance-dashboard-error">
+                            <strong>Unable to load recent sessions</strong>
+                            <p>{recentSessionsError}</p>
+                            <button
+                                className="attendance-retry-button"
+                                onClick={() => void loadRecentSessions()}
+                            >
+                                Try Again
+                            </button>
+                        </div>
+                    )}
+
+                    {!recentSessionsLoading && !recentSessionsError && recentSessions.length === 0 && (
+                        <div className="attendance-dashboard-message">
+                            <strong>No attendance sessions found</strong>
+                            <small>Recent sessions will appear here when attendance is started.</small>
+                        </div>
+                    )}
+
+                    {!recentSessionsLoading && !recentSessionsError && recentSessions.length > 0 && (
+                        <>
+                            <div className="admin-attendance-trend">
+                                <div className="admin-attendance-trend-header">
+                                    <div>
+                                        <strong>Recent Attendance Trend</strong>
+                                        <small>Attendance percentage for the latest sessions</small>
+                                    </div>
+                                    <span>100%</span>
+                                </div>
+
+                                <div className="admin-attendance-trend-chart">
+                                    {recentSessions.map((session) => {
+                                        const percentage = getSessionPercentage(session);
+                                        return (
+                                            <button
+                                                key={session.sessionId}
+                                                type="button"
+                                                className="admin-attendance-trend-bar"
+                                                title={`${session.courseCode || "Course"}: ${percentage.toFixed(2)}%`}
+                                                onClick={() => navigate("/admin/attendance/history")}
+                                            >
+                                                <span
+                                                    className="admin-attendance-trend-fill"
+                                                    style={{ height: getTrendHeight(session) }}
+                                                />
+                                                <small>{Math.round(percentage)}%</small>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            <div className="admin-recent-sessions-table-wrap">
+                                <table className="admin-recent-sessions-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Session</th>
+                                        <th>Course</th>
+                                        <th>Teacher</th>
+                                        <th>Date</th>
+                                        <th>Present</th>
+                                        <th>Absent</th>
+                                        <th>Attendance</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {recentSessions.map((session) => {
+                                        const percentage = getSessionPercentage(session);
+                                        const status = session.status || "UNKNOWN";
+
+                                        return (
+                                            <tr key={session.sessionId}>
+                                                <td>#{session.sessionId}</td>
+                                                <td>
+                                                    <strong>{session.courseCode || "—"}</strong>
+                                                    <small>{session.courseName || ""}</small>
+                                                </td>
+                                                <td>{session.teacherName || "—"}</td>
+                                                <td>
+                                                    <strong>{formatDate(session.attendanceDate)}</strong>
+                                                    <small>{formatDateTime(session.startedAt)}</small>
+                                                </td>
+                                                <td>{session.presentCount ?? 0}</td>
+                                                <td>{session.absentCount ?? 0}</td>
+                                                <td>
+                                                    <strong>{percentage.toFixed(2)}%</strong>
+                                                </td>
+                                                <td>
+                                                        <span className={`admin-session-status ${status.toLowerCase()}`}>
+                                                            {status}
+                                                        </span>
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        type="button"
+                                                        className="admin-session-view-button"
+                                                        onClick={() => navigate("/admin/attendance/history")}
+                                                    >
+                                                        View History
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </>
+                    )}
 
                 </section>
 
