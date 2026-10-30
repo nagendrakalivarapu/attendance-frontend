@@ -7,13 +7,67 @@ function AdminDashboard() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
 
+    const [dashboardStats, setDashboardStats] = useState({
+        students: 0,
+        teachers: 0,
+        courses: 0,
+    });
+
+    const [statsLoading, setStatsLoading] = useState(true);
+    const [statsError, setStatsError] = useState("");
+
     const [attendanceDashboard, setAttendanceDashboard] = useState(null);
     const [attendanceLoading, setAttendanceLoading] = useState(true);
     const [attendanceError, setAttendanceError] = useState("");
 
+    const [systemStatus, setSystemStatus] = useState({
+        backend: "checking",
+        database: "checking",
+        faceApi: "checking",
+    });
+
+    const [statusLoading, setStatusLoading] = useState(true);
+
     useEffect(() => {
+        void loadDashboardStats();
         void loadAttendanceDashboard();
+        void checkSystemStatus();
     }, []);
+
+    const loadDashboardStats = async () => {
+        try {
+            setStatsLoading(true);
+            setStatsError("");
+
+            const [studentsResponse, teachersResponse, coursesResponse] =
+                await Promise.all([
+                    api.get("/student"),
+                    api.get("/teacher"),
+                    api.get("/course"),
+                ]);
+
+            setDashboardStats({
+                students: Array.isArray(studentsResponse.data)
+                    ? studentsResponse.data.length
+                    : 0,
+                teachers: Array.isArray(teachersResponse.data)
+                    ? teachersResponse.data.length
+                    : 0,
+                courses: Array.isArray(coursesResponse.data)
+                    ? coursesResponse.data.length
+                    : 0,
+            });
+        } catch (error) {
+            console.error("Failed to load dashboard statistics:", error);
+
+            setStatsError(
+                error.response?.data?.message ||
+                "Failed to load dashboard statistics."
+            );
+        } finally {
+            setStatsLoading(false);
+        }
+    };
 
     const loadAttendanceDashboard = async () => {
         try {
@@ -40,6 +94,96 @@ function AdminDashboard() {
         }
     };
 
+    const checkSystemStatus = async () => {
+        setStatusLoading(true);
+
+        let backendStatus = "offline";
+        let databaseStatus = "offline";
+        let faceApiStatus = "offline";
+
+        try {
+            // A successful authenticated backend request confirms
+            // that Spring Boot is reachable.
+            const response = await api.get("/student");
+            backendStatus = response.status >= 200 && response.status < 300
+                ? "online"
+                : "offline";
+
+            // The student/course data requests above are served through
+            // Spring Boot and require database access, so a successful
+            // response also indicates that the database is reachable
+            // through the backend.
+            databaseStatus = "online";
+        } catch (error) {
+            console.error("Backend status check failed:", error);
+
+            // If the backend is unavailable, database status cannot be
+            // independently verified from the browser.
+            backendStatus = "offline";
+            databaseStatus = "unknown";
+        }
+
+        try {
+            // FastAPI health endpoint.
+            const response = await fetch("http://127.0.0.1:8000/face/health", {
+                method: "GET",
+            });
+
+            faceApiStatus = response.ok ? "online" : "offline";
+        } catch (error) {
+            console.error("Face Recognition API status check failed:", error);
+            faceApiStatus = "offline";
+        }
+
+        setSystemStatus({
+            backend: backendStatus,
+            database: databaseStatus,
+            faceApi: faceApiStatus,
+        });
+
+        setStatusLoading(false);
+    };
+
+    const refreshDashboard = async () => {
+        await Promise.all([
+            loadDashboardStats(),
+            loadAttendanceDashboard(),
+            checkSystemStatus(),
+        ]);
+    };
+
+    const getStatusLabel = (status) => {
+        if (status === "checking") {
+            return "Checking...";
+        }
+
+        if (status === "online") {
+            return "Online";
+        }
+
+        if (status === "unknown") {
+            return "Unknown";
+        }
+
+        return "Offline";
+    };
+
+    const getStatusClass = (status) => {
+        if (status === "online") {
+            return "status-online";
+        }
+
+        if (status === "checking") {
+            return "status-checking";
+        }
+
+        if (status === "unknown") {
+            return "status-unknown";
+        }
+
+        return "status-offline";
+    };
+
     return (
         <div className="admin-layout">
 
@@ -62,7 +206,6 @@ function AdminDashboard() {
 
                 </div>
 
-
                 <nav className="sidebar-nav">
 
                     <button
@@ -73,7 +216,6 @@ function AdminDashboard() {
                         Dashboard
                     </button>
 
-
                     <button
                         className="sidebar-link"
                         onClick={() => navigate("/admin/students")}
@@ -81,7 +223,6 @@ function AdminDashboard() {
                         <span>👨‍🎓</span>
                         Students
                     </button>
-
 
                     <button
                         className="sidebar-link"
@@ -91,7 +232,6 @@ function AdminDashboard() {
                         Teachers
                     </button>
 
-
                     <button
                         className="sidebar-link"
                         onClick={() => navigate("/admin/courses")}
@@ -100,7 +240,6 @@ function AdminDashboard() {
                         Courses
                     </button>
 
-
                     <button
                         className="sidebar-link"
                         onClick={() => navigate("/admin/enrollments")}
@@ -108,7 +247,6 @@ function AdminDashboard() {
                         <span>📝</span>
                         Enrollments
                     </button>
-
 
                     <button
                         className="sidebar-link"
@@ -120,14 +258,15 @@ function AdminDashboard() {
 
                 </nav>
 
-
                 <div className="sidebar-bottom">
 
-                    <button className="sidebar-link">
-                        <span>⚙️</span>
-                        Settings
+                    <button
+                        className="sidebar-link"
+                        onClick={() => refreshDashboard()}
+                    >
+                        <span>🔄</span>
+                        Refresh Dashboard
                     </button>
-
 
                     <button
                         className="sidebar-link logout-link"
@@ -140,7 +279,6 @@ function AdminDashboard() {
                 </div>
 
             </aside>
-
 
             {/* ================================
                 MAIN CONTENT
@@ -161,7 +299,6 @@ function AdminDashboard() {
                             Manage your Smart Attendance System
                         </p>
                     </div>
-
 
                     <div className="admin-profile">
 
@@ -185,7 +322,6 @@ function AdminDashboard() {
 
                 </header>
 
-
                 {/* ================================
                     WELCOME CARD
                 ================================= */}
@@ -206,13 +342,11 @@ function AdminDashboard() {
 
                     </div>
 
-
                     <div className="welcome-icon">
                         🎓
                     </div>
 
                 </section>
-
 
                 {/* ================================
                     STATISTICS
@@ -235,17 +369,22 @@ function AdminDashboard() {
                             </span>
 
                             <h2>
-                                3
+                                {statsLoading
+                                    ? "..."
+                                    : statsError
+                                        ? "--"
+                                        : dashboardStats.students}
                             </h2>
 
                             <small>
-                                Registered students
+                                {statsError
+                                    ? "Unable to load"
+                                    : "Registered students"}
                             </small>
 
                         </div>
 
                     </div>
-
 
                     {/* Teachers */}
 
@@ -262,17 +401,22 @@ function AdminDashboard() {
                             </span>
 
                             <h2>
-                                1
+                                {statsLoading
+                                    ? "..."
+                                    : statsError
+                                        ? "--"
+                                        : dashboardStats.teachers}
                             </h2>
 
                             <small>
-                                Active teachers
+                                {statsError
+                                    ? "Unable to load"
+                                    : "Active teachers"}
                             </small>
 
                         </div>
 
                     </div>
-
 
                     {/* Courses */}
 
@@ -289,17 +433,22 @@ function AdminDashboard() {
                             </span>
 
                             <h2>
-                                2
+                                {statsLoading
+                                    ? "..."
+                                    : statsError
+                                        ? "--"
+                                        : dashboardStats.courses}
                             </h2>
 
                             <small>
-                                Available courses
+                                {statsError
+                                    ? "Unable to load"
+                                    : "Available courses"}
                             </small>
 
                         </div>
 
                     </div>
-
 
                     {/* Attendance */}
 
@@ -337,6 +486,24 @@ function AdminDashboard() {
 
                 </section>
 
+                {statsError && (
+                    <div className="attendance-dashboard-error">
+                        <strong>
+                            Unable to load dashboard counts
+                        </strong>
+
+                        <p>
+                            {statsError}
+                        </p>
+
+                        <button
+                            className="attendance-retry-button"
+                            onClick={() => void loadDashboardStats()}
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                )}
 
                 {/* ================================
                     ATTENDANCE OVERVIEW
@@ -359,7 +526,6 @@ function AdminDashboard() {
 
                         </div>
 
-
                         {!attendanceLoading &&
                             !attendanceError && (
 
@@ -375,7 +541,6 @@ function AdminDashboard() {
                             )}
 
                     </div>
-
 
                     {/* Loading */}
 
@@ -398,7 +563,6 @@ function AdminDashboard() {
                         </div>
 
                     )}
-
 
                     {/* Error */}
 
@@ -431,7 +595,6 @@ function AdminDashboard() {
                             </div>
 
                         )}
-
 
                     {/* Attendance Data */}
 
@@ -469,7 +632,6 @@ function AdminDashboard() {
 
                                 </div>
 
-
                                 {/* Open Sessions */}
 
                                 <div className="attendance-overview-card open">
@@ -497,7 +659,6 @@ function AdminDashboard() {
                                     </div>
 
                                 </div>
-
 
                                 {/* Closed Sessions */}
 
@@ -527,7 +688,6 @@ function AdminDashboard() {
 
                                 </div>
 
-
                                 {/* Attendance Records */}
 
                                 <div className="attendance-overview-card">
@@ -555,7 +715,6 @@ function AdminDashboard() {
                                     </div>
 
                                 </div>
-
 
                                 {/* Present */}
 
@@ -585,7 +744,6 @@ function AdminDashboard() {
 
                                 </div>
 
-
                                 {/* Absent */}
 
                                 <div className="attendance-overview-card absent">
@@ -614,7 +772,6 @@ function AdminDashboard() {
 
                                 </div>
 
-
                                 {/* Overall Percentage */}
 
                                 <div className="attendance-percentage-card">
@@ -640,13 +797,11 @@ function AdminDashboard() {
 
                                         </div>
 
-
                                         <div className="attendance-percentage-icon">
                                             📊
                                         </div>
 
                                     </div>
-
 
                                     {/* Progress Bar */}
 
@@ -675,7 +830,6 @@ function AdminDashboard() {
 
                 </section>
 
-
                 {/* ================================
                     QUICK ACTIONS
                 ================================= */}
@@ -697,7 +851,6 @@ function AdminDashboard() {
                         </div>
 
                     </div>
-
 
                     <div className="quick-actions">
 
@@ -733,7 +886,6 @@ function AdminDashboard() {
 
                         </button>
 
-
                         {/* Teachers */}
 
                         <button
@@ -766,7 +918,6 @@ function AdminDashboard() {
 
                         </button>
 
-
                         {/* Courses */}
 
                         <button
@@ -797,7 +948,6 @@ function AdminDashboard() {
                             </span>
 
                         </button>
-
 
                         {/* Attendance */}
 
@@ -835,7 +985,6 @@ function AdminDashboard() {
 
                 </section>
 
-
                 {/* ================================
                     SYSTEM STATUS
                 ================================= */}
@@ -856,8 +1005,15 @@ function AdminDashboard() {
 
                         </div>
 
-                    </div>
+                        <button
+                            className="attendance-refresh-button"
+                            onClick={() => void checkSystemStatus()}
+                            disabled={statusLoading}
+                        >
+                            {statusLoading ? "Checking..." : "↻ Check Status"}
+                        </button>
 
+                    </div>
 
                     <div className="status-grid">
 
@@ -865,7 +1021,9 @@ function AdminDashboard() {
 
                         <div className="status-card">
 
-                            <div className="status-dot"></div>
+                            <div
+                                className={`status-dot ${systemStatus.backend}`}
+                            ></div>
 
                             <div>
 
@@ -879,18 +1037,21 @@ function AdminDashboard() {
 
                             </div>
 
-                            <span className="status-online">
-                                Online
+                            <span
+                                className={getStatusClass(systemStatus.backend)}
+                            >
+                                {getStatusLabel(systemStatus.backend)}
                             </span>
 
                         </div>
-
 
                         {/* MySQL */}
 
                         <div className="status-card">
 
-                            <div className="status-dot"></div>
+                            <div
+                                className={`status-dot ${systemStatus.database}`}
+                            ></div>
 
                             <div>
 
@@ -904,18 +1065,21 @@ function AdminDashboard() {
 
                             </div>
 
-                            <span className="status-online">
-                                Online
+                            <span
+                                className={getStatusClass(systemStatus.database)}
+                            >
+                                {getStatusLabel(systemStatus.database)}
                             </span>
 
                         </div>
-
 
                         {/* Face Recognition */}
 
                         <div className="status-card">
 
-                            <div className="status-dot"></div>
+                            <div
+                                className={`status-dot ${systemStatus.faceApi}`}
+                            ></div>
 
                             <div>
 
@@ -929,8 +1093,10 @@ function AdminDashboard() {
 
                             </div>
 
-                            <span className="status-online">
-                                Online
+                            <span
+                                className={getStatusClass(systemStatus.faceApi)}
+                            >
+                                {getStatusLabel(systemStatus.faceApi)}
                             </span>
 
                         </div>

@@ -15,6 +15,8 @@ import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminAttendanceReports from "./pages/AdminAttendanceReports";
 import AdminLowAttendance from "./pages/AdminLowAttendance";
+import AdminAttendanceHistory from "./pages/AdminAttendanceHistory";
+
 
 import TeacherDashboard from "./pages/TeacherDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
@@ -204,6 +206,15 @@ function App() {
                     element={
                         <ProtectedRoute allowedRoles={["ADMIN"]}>
                             <AdminLowAttendance />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/attendance/history"
+                    element={
+                        <ProtectedRoute allowedRoles={["ADMIN"]}>
+                            <AdminAttendanceHistory />
                         </ProtectedRoute>
                     }
                 />

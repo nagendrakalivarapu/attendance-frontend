@@ -269,7 +269,12 @@ function AdminAttendanceReports() {
 
                     </div>
 
+                    {/* =====================================
+                        ATTENDANCE NAVIGATION
+                    ===================================== */}
+
                     <div
+                        className="attendance-report-navigation"
                         style={{
                             display: "flex",
                             gap: "10px",
@@ -277,8 +282,6 @@ function AdminAttendanceReports() {
                             flexWrap: "wrap",
                         }}
                     >
-
-                        {/* NEW LOW ATTENDANCE BUTTON */}
 
                         <button
                             className="attendance-report-generate-button"
@@ -289,6 +292,17 @@ function AdminAttendanceReports() {
                             }
                         >
                             ⚠ Low Attendance
+                        </button>
+
+                        <button
+                            className="attendance-report-refresh-button"
+                            onClick={() =>
+                                navigate(
+                                    "/admin/attendance/history"
+                                )
+                            }
+                        >
+                            🕘 Attendance History
                         </button>
 
                         <button
@@ -306,175 +320,211 @@ function AdminAttendanceReports() {
 
 
                 {/* =========================================
-                    FILTERS
+                    CONTENT
                 ========================================= */}
 
-                <section className="attendance-report-filter-card">
+                <section className="admin-content">
 
-                    <div className="attendance-report-filter">
 
-                        <label>
-                            Select Course
-                        </label>
+                    {/* =====================================
+                        FILTERS
+                    ===================================== */}
 
-                        <select
-                            value={selectedCourseId}
-                            onChange={handleCourseChange}
-                            disabled={loadingCourses}
-                        >
+                    <section className="attendance-report-filter-card">
 
-                            <option value="">
-                                {loadingCourses
-                                    ? "Loading courses..."
-                                    : "Select a course"}
-                            </option>
+                        <div className="attendance-report-filter">
 
-                            {courses.map((course) => (
+                            <label>
+                                Select Course
+                            </label>
 
-                                <option
-                                    key={course.id}
-                                    value={course.id}
-                                >
-                                    {course.courseCode} -{" "}
-                                    {course.courseName}
+                            <select
+                                value={selectedCourseId}
+                                onChange={handleCourseChange}
+                                disabled={loadingCourses}
+                            >
+
+                                <option value="">
+                                    {loadingCourses
+                                        ? "Loading courses..."
+                                        : "Select a course"}
                                 </option>
 
-                            ))}
+                                {courses.map((course) => (
 
-                        </select>
+                                    <option
+                                        key={course.id}
+                                        value={course.id}
+                                    >
+                                        {course.courseCode} -{" "}
+                                        {course.courseName}
+                                    </option>
 
-                    </div>
+                                ))}
 
-
-                    <div className="attendance-report-filter">
-
-                        <label>
-                            Required Attendance
-                        </label>
-
-                        <select
-                            value={threshold}
-                            onChange={handleThresholdChange}
-                        >
-
-                            <option value={60}>
-                                60%
-                            </option>
-
-                            <option value={65}>
-                                65%
-                            </option>
-
-                            <option value={70}>
-                                70%
-                            </option>
-
-                            <option value={75}>
-                                75%
-                            </option>
-
-                            <option value={80}>
-                                80%
-                            </option>
-
-                            <option value={85}>
-                                85%
-                            </option>
-
-                            <option value={90}>
-                                90%
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <button
-                        className="attendance-report-generate-button"
-                        onClick={() =>
-                            void loadAttendanceReport()
-                        }
-                        disabled={
-                            !selectedCourseId ||
-                            loadingReport
-                        }
-                    >
-                        {loadingReport
-                            ? "Loading..."
-                            : "Generate Report"}
-                    </button>
-
-
-                    <button
-                        className="attendance-report-refresh-button"
-                        onClick={() => {
-
-                            void loadCourses();
-
-                            if (selectedCourseId) {
-                                void loadAttendanceReport();
-                            }
-
-                        }}
-                        disabled={loadingCourses}
-                    >
-                        ↻ Refresh
-                    </button>
-
-                </section>
-
-
-                {/* =========================================
-                    ERROR
-                ========================================= */}
-
-                {error && (
-
-                    <div className="attendance-report-error">
-
-                        <span>
-                            ⚠️
-                        </span>
-
-                        <div>
-
-                            <strong>
-                                Unable to load report
-                            </strong>
-
-                            <p>
-                                {error}
-                            </p>
+                            </select>
 
                         </div>
 
-                    </div>
 
-                )}
+                        <div className="attendance-report-filter">
+
+                            <label>
+                                Required Attendance
+                            </label>
+
+                            <select
+                                value={threshold}
+                                onChange={handleThresholdChange}
+                            >
+
+                                <option value={60}>
+                                    60%
+                                </option>
+
+                                <option value={65}>
+                                    65%
+                                </option>
+
+                                <option value={70}>
+                                    70%
+                                </option>
+
+                                <option value={75}>
+                                    75%
+                                </option>
+
+                                <option value={80}>
+                                    80%
+                                </option>
+
+                                <option value={85}>
+                                    85%
+                                </option>
+
+                                <option value={90}>
+                                    90%
+                                </option>
+
+                            </select>
+
+                        </div>
 
 
-                {/* =========================================
-                    EMPTY STATE
-                ========================================= */}
+                        <button
+                            className="attendance-report-generate-button"
+                            onClick={() =>
+                                void loadAttendanceReport()
+                            }
+                            disabled={
+                                !selectedCourseId ||
+                                loadingReport
+                            }
+                        >
+                            {loadingReport
+                                ? "Loading..."
+                                : "Generate Report"}
+                        </button>
 
-                {!selectedCourseId &&
-                    !loadingCourses && (
 
-                        <div className="attendance-report-empty">
+                        <button
+                            className="attendance-report-refresh-button"
+                            onClick={() => {
 
-                            <div className="attendance-report-empty-icon">
-                                📊
+                                void loadCourses();
+
+                                if (selectedCourseId) {
+                                    void loadAttendanceReport();
+                                }
+
+                            }}
+                            disabled={
+                                loadingCourses ||
+                                loadingReport
+                            }
+                        >
+                            ↻ Refresh
+                        </button>
+
+                    </section>
+
+
+                    {/* =====================================
+                        ERROR
+                    ===================================== */}
+
+                    {error && (
+
+                        <div className="attendance-report-error">
+
+                            <span>
+                                ⚠️
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Unable to load report
+                                </strong>
+
+                                <p>
+                                    {error}
+                                </p>
+
                             </div>
 
-                            <h3>
-                                Select a Course
-                            </h3>
+                        </div>
+
+                    )}
+
+
+                    {/* =====================================
+                        EMPTY STATE
+                    ===================================== */}
+
+                    {!selectedCourseId &&
+                        !loadingCourses && (
+
+                            <div className="attendance-report-empty">
+
+                                <div className="attendance-report-empty-icon">
+                                    📊
+                                </div>
+
+                                <h3>
+                                    Select a Course
+                                </h3>
+
+                                <p>
+                                    Choose a course above to view
+                                    detailed attendance analytics
+                                    and student performance.
+                                </p>
+
+                            </div>
+
+                        )}
+
+
+                    {/* =====================================
+                        LOADING
+                    ===================================== */}
+
+                    {loadingReport && (
+
+                        <div className="attendance-report-loading">
+
+                            <div className="attendance-loading-spinner">
+                                ⟳
+                            </div>
+
+                            <strong>
+                                Generating attendance report...
+                            </strong>
 
                             <p>
-                                Choose a course above to view
-                                detailed attendance analytics
-                                and student performance.
+                                Calculating student attendance
+                                statistics.
                             </p>
 
                         </div>
@@ -482,539 +532,531 @@ function AdminAttendanceReports() {
                     )}
 
 
-                {/* =========================================
-                    LOADING
-                ========================================= */}
+                    {/* =====================================
+                        REPORT
+                    ===================================== */}
 
-                {loadingReport && (
+                    {!loadingReport &&
+                        analytics && (
 
-                    <div className="attendance-report-loading">
+                            <>
 
-                        <div className="attendance-loading-spinner">
-                            ⟳
-                        </div>
+                                {/* =================================
+                                    COURSE HEADER
+                                ================================= */}
 
-                        <strong>
-                            Generating attendance report...
-                        </strong>
-
-                        <p>
-                            Calculating student attendance
-                            statistics.
-                        </p>
-
-                    </div>
-
-                )}
-
-
-                {/* =========================================
-                    REPORT
-                ========================================= */}
-
-                {!loadingReport &&
-                    analytics && (
-
-                        <>
-
-                            {/* Course Header */}
-
-                            <section className="attendance-report-course-header">
-
-                                <div>
-
-                                    <div className="attendance-report-course-code">
-                                        {analytics.courseCode}
-                                    </div>
-
-                                    <h3>
-                                        {analytics.courseName}
-                                    </h3>
-
-                                    <p>
-                                        Required attendance:
-                                        {" "}
-                                        <strong>
-                                            {threshold}%
-                                        </strong>
-                                    </p>
-
-                                </div>
-
-                                <div className="attendance-report-overall">
-
-                                    <span>
-                                        Overall Attendance
-                                    </span>
-
-                                    <strong>
-                                        {
-                                            analytics.averageAttendancePercentage
-                                        }%
-                                    </strong>
-
-                                </div>
-
-                            </section>
-
-
-                            {/* Statistics */}
-
-                            <section className="attendance-report-stat-grid">
-
-                                <div className="attendance-report-stat-card">
-
-                                    <div className="report-stat-icon blue">
-                                        👨‍🎓
-                                    </div>
+                                <section className="attendance-report-course-header">
 
                                     <div>
 
-                                        <span>
-                                            Total Students
-                                        </span>
-
-                                        <strong>
-                                            {
-                                                analytics.totalStudents
-                                            }
-                                        </strong>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div className="attendance-report-stat-card">
-
-                                    <div className="report-stat-icon purple">
-                                        📅
-                                    </div>
-
-                                    <div>
-
-                                        <span>
-                                            Closed Sessions
-                                        </span>
-
-                                        <strong>
-                                            {
-                                                analytics.totalSessions
-                                            }
-                                        </strong>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div className="attendance-report-stat-card present">
-
-                                    <div className="report-stat-icon green">
-                                        ✓
-                                    </div>
-
-                                    <div>
-
-                                        <span>
-                                            Present
-                                        </span>
-
-                                        <strong>
-                                            {
-                                                analytics.totalPresent
-                                            }
-                                        </strong>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div className="attendance-report-stat-card absent">
-
-                                    <div className="report-stat-icon red">
-                                        ✕
-                                    </div>
-
-                                    <div>
-
-                                        <span>
-                                            Absent
-                                        </span>
-
-                                        <strong>
-                                            {
-                                                analytics.totalAbsent
-                                            }
-                                        </strong>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div className="attendance-report-stat-card warning">
-
-                                    <div className="report-stat-icon orange">
-                                        ⚠
-                                    </div>
-
-                                    <div>
-
-                                        <span>
-                                            Low Attendance
-                                        </span>
-
-                                        <strong>
-                                            {
-                                                analytics.lowAttendanceStudents
-                                            }
-                                        </strong>
-
-                                    </div>
-
-                                </div>
-
-                            </section>
-
-
-                            {/* Summary */}
-
-                            <section className="attendance-report-summary-grid">
-
-                                <div className="attendance-summary-good">
-
-                                    <div className="summary-icon">
-                                        ✓
-                                    </div>
-
-                                    <div>
-
-                                        <span>
-                                            Students Meeting Requirement
-                                        </span>
-
-                                        <strong>
-                                            {goodAttendanceCount}
-                                        </strong>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div className="attendance-summary-low">
-
-                                    <div className="summary-icon">
-                                        ⚠
-                                    </div>
-
-                                    <div>
-
-                                        <span>
-                                            Students Below Requirement
-                                        </span>
-
-                                        <strong>
-                                            {lowAttendanceCount}
-                                        </strong>
-
-                                    </div>
-
-                                </div>
-
-                            </section>
-
-
-                            {/* QUICK REPORT ACTIONS */}
-
-                            <section
-                                style={{
-                                    display: "flex",
-                                    gap: "12px",
-                                    marginTop: "20px",
-                                    flexWrap: "wrap",
-                                }}
-                            >
-
-                                <button
-                                    className="attendance-report-generate-button"
-                                    onClick={() =>
-                                        navigate(
-                                            "/admin/attendance/low"
-                                        )
-                                    }
-                                >
-                                    ⚠ View Low Attendance Students
-                                </button>
-
-                            </section>
-
-
-                            {/* Student Report */}
-
-                            <section className="attendance-report-table-card">
-
-                                <div className="attendance-report-table-header">
-
-                                    <div>
+                                        <div className="attendance-report-course-code">
+                                            {analytics.courseCode}
+                                        </div>
 
                                         <h3>
-                                            Student Attendance Report
+                                            {analytics.courseName}
                                         </h3>
 
                                         <p>
-                                            Individual attendance
-                                            performance for{" "}
-                                            {selectedCourse?.courseName ||
-                                                analytics.courseName}
+                                            Required attendance:
+                                            {" "}
+                                            <strong>
+                                                {threshold}%
+                                            </strong>
                                         </p>
 
                                     </div>
 
-                                    <span className="attendance-report-count">
-                                        {studentReports.length} Students
-                                    </span>
+                                    <div className="attendance-report-overall">
 
-                                </div>
+                                        <span>
+                                            Overall Attendance
+                                        </span>
+
+                                        <strong>
+                                            {
+                                                analytics.averageAttendancePercentage
+                                            }%
+                                        </strong>
+
+                                    </div>
+
+                                </section>
 
 
-                                {studentReports.length === 0 ? (
+                                {/* =================================
+                                    STATISTICS
+                                ================================= */}
 
-                                    <div className="attendance-report-no-data">
+                                <section className="attendance-report-stat-grid">
 
-                                        <div>
-                                            📭
+                                    <div className="attendance-report-stat-card">
+
+                                        <div className="report-stat-icon blue">
+                                            👨‍🎓
                                         </div>
 
-                                        <h4>
-                                            No Student Records
-                                        </h4>
+                                        <div>
 
-                                        <p>
-                                            There are no enrolled
-                                            students or attendance
-                                            records for this course.
-                                        </p>
+                                            <span>
+                                                Total Students
+                                            </span>
+
+                                            <strong>
+                                                {
+                                                    analytics.totalStudents
+                                                }
+                                            </strong>
+
+                                        </div>
 
                                     </div>
 
-                                ) : (
 
-                                    <div className="attendance-report-table-wrapper">
+                                    <div className="attendance-report-stat-card">
 
-                                        <table className="attendance-report-table">
+                                        <div className="report-stat-icon purple">
+                                            📅
+                                        </div>
 
-                                            <thead>
+                                        <div>
 
-                                            <tr>
+                                            <span>
+                                                Closed Sessions
+                                            </span>
 
-                                                <th>
-                                                    Student
-                                                </th>
+                                            <strong>
+                                                {
+                                                    analytics.totalSessions
+                                                }
+                                            </strong>
 
-                                                <th>
-                                                    Registration No.
-                                                </th>
+                                        </div>
 
-                                                <th>
-                                                    Sessions
-                                                </th>
-
-                                                <th>
-                                                    Present
-                                                </th>
-
-                                                <th>
-                                                    Absent
-                                                </th>
-
-                                                <th>
-                                                    Attendance
-                                                </th>
-
-                                                <th>
-                                                    Status
-                                                </th>
-
-                                            </tr>
-
-                                            </thead>
+                                    </div>
 
 
-                                            <tbody>
+                                    <div className="attendance-report-stat-card present">
 
-                                            {studentReports.map(
-                                                (student) => (
+                                        <div className="report-stat-icon green">
+                                            ✓
+                                        </div>
 
-                                                    <tr
-                                                        key={
-                                                            student.studentId
-                                                        }
-                                                    >
+                                        <div>
 
-                                                        <td>
+                                            <span>
+                                                Present
+                                            </span>
 
-                                                            <div className="attendance-student-cell">
+                                            <strong>
+                                                {
+                                                    analytics.totalPresent
+                                                }
+                                            </strong>
 
-                                                                <div className="attendance-student-avatar">
+                                        </div>
 
-                                                                    {
-                                                                        getInitials(
-                                                                            student.studentName
-                                                                        )
-                                                                    }
-
-                                                                </div>
-
-                                                                <div>
-
-                                                                    <strong>
-                                                                        {
-                                                                            student.studentName
-                                                                        }
-                                                                    </strong>
-
-                                                                    <small>
-                                                                        Student
-                                                                    </small>
-
-                                                                </div>
-
-                                                            </div>
-
-                                                        </td>
+                                    </div>
 
 
-                                                        <td>
+                                    <div className="attendance-report-stat-card absent">
 
-                                                                <span className="attendance-registration">
+                                        <div className="report-stat-icon red">
+                                            ✕
+                                        </div>
 
-                                                                    {
-                                                                        student.registrationNumber
-                                                                    }
+                                        <div>
 
-                                                                </span>
+                                            <span>
+                                                Absent
+                                            </span>
 
-                                                        </td>
+                                            <strong>
+                                                {
+                                                    analytics.totalAbsent
+                                                }
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
 
 
-                                                        <td>
-                                                            {
-                                                                student.totalSessions
+                                    <div className="attendance-report-stat-card warning">
+
+                                        <div className="report-stat-icon orange">
+                                            ⚠
+                                        </div>
+
+                                        <div>
+
+                                            <span>
+                                                Low Attendance
+                                            </span>
+
+                                            <strong>
+                                                {
+                                                    analytics.lowAttendanceStudents
+                                                }
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+
+                                </section>
+
+
+                                {/* =================================
+                                    SUMMARY
+                                ================================= */}
+
+                                <section className="attendance-report-summary-grid">
+
+                                    <div className="attendance-summary-good">
+
+                                        <div className="summary-icon">
+                                            ✓
+                                        </div>
+
+                                        <div>
+
+                                            <span>
+                                                Students Meeting Requirement
+                                            </span>
+
+                                            <strong>
+                                                {goodAttendanceCount}
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div className="attendance-summary-low">
+
+                                        <div className="summary-icon">
+                                            ⚠
+                                        </div>
+
+                                        <div>
+
+                                            <span>
+                                                Students Below Requirement
+                                            </span>
+
+                                            <strong>
+                                                {lowAttendanceCount}
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+
+                                </section>
+
+
+                                {/* =================================
+                                    QUICK ACTIONS
+                                ================================= */}
+
+                                <section
+                                    className="attendance-report-quick-actions"
+                                    style={{
+                                        display: "flex",
+                                        gap: "12px",
+                                        marginTop: "20px",
+                                        flexWrap: "wrap",
+                                    }}
+                                >
+
+                                    <button
+                                        className="attendance-report-generate-button"
+                                        onClick={() =>
+                                            navigate(
+                                                "/admin/attendance/low"
+                                            )
+                                        }
+                                    >
+                                        ⚠ View Low Attendance
+                                    </button>
+
+                                    <button
+                                        className="attendance-report-refresh-button"
+                                        onClick={() =>
+                                            navigate(
+                                                "/admin/attendance/history"
+                                            )
+                                        }
+                                    >
+                                        🕘 View Attendance History
+                                    </button>
+
+                                </section>
+
+
+                                {/* =================================
+                                    STUDENT REPORT
+                                ================================= */}
+
+                                <section className="attendance-report-table-card">
+
+                                    <div className="attendance-report-table-header">
+
+                                        <div>
+
+                                            <h3>
+                                                Student Attendance Report
+                                            </h3>
+
+                                            <p>
+                                                Individual attendance
+                                                performance for{" "}
+                                                {selectedCourse?.courseName ||
+                                                    analytics.courseName}
+                                            </p>
+
+                                        </div>
+
+                                        <span className="attendance-report-count">
+                                            {studentReports.length} Students
+                                        </span>
+
+                                    </div>
+
+
+                                    {studentReports.length === 0 ? (
+
+                                        <div className="attendance-report-no-data">
+
+                                            <div>
+                                                📭
+                                            </div>
+
+                                            <h4>
+                                                No Student Records
+                                            </h4>
+
+                                            <p>
+                                                There are no enrolled
+                                                students or attendance
+                                                records for this course.
+                                            </p>
+
+                                        </div>
+
+                                    ) : (
+
+                                        <div className="attendance-report-table-wrapper">
+
+                                            <table className="attendance-report-table">
+
+                                                <thead>
+
+                                                <tr>
+
+                                                    <th>
+                                                        Student
+                                                    </th>
+
+                                                    <th>
+                                                        Registration No.
+                                                    </th>
+
+                                                    <th>
+                                                        Sessions
+                                                    </th>
+
+                                                    <th>
+                                                        Present
+                                                    </th>
+
+                                                    <th>
+                                                        Absent
+                                                    </th>
+
+                                                    <th>
+                                                        Attendance
+                                                    </th>
+
+                                                    <th>
+                                                        Status
+                                                    </th>
+
+                                                </tr>
+
+                                                </thead>
+
+
+                                                <tbody>
+
+                                                {studentReports.map(
+                                                    (student) => (
+
+                                                        <tr
+                                                            key={
+                                                                student.studentId
                                                             }
-                                                        </td>
+                                                        >
+
+                                                            <td>
+
+                                                                <div className="attendance-student-cell">
+
+                                                                    <div className="attendance-student-avatar">
+
+                                                                        {
+                                                                            getInitials(
+                                                                                student.studentName
+                                                                            )
+                                                                        }
+
+                                                                    </div>
+
+                                                                    <div>
+
+                                                                        <strong>
+                                                                            {
+                                                                                student.studentName
+                                                                            }
+                                                                        </strong>
+
+                                                                        <small>
+                                                                            Student
+                                                                        </small>
+
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </td>
 
 
-                                                        <td>
+                                                            <td>
 
-                                                                <span className="present-number">
+                                                                    <span className="attendance-registration">
+                                                                        {
+                                                                            student.registrationNumber
+                                                                        }
+                                                                    </span>
 
-                                                                    {
-                                                                        student.presentCount
-                                                                    }
-
-                                                                </span>
-
-                                                        </td>
+                                                            </td>
 
 
-                                                        <td>
-
-                                                                <span className="absent-number">
-
-                                                                    {
-                                                                        student.absentCount
-                                                                    }
-
-                                                                </span>
-
-                                                        </td>
+                                                            <td>
+                                                                {
+                                                                    student.totalSessions
+                                                                }
+                                                            </td>
 
 
-                                                        <td>
+                                                            <td>
 
-                                                            <div className="attendance-percentage-cell">
+                                                                    <span className="present-number">
+                                                                        {
+                                                                            student.presentCount
+                                                                        }
+                                                                    </span>
 
-                                                                <strong
-                                                                    className={
-                                                                        getPercentageClass(
-                                                                            student.attendancePercentage
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    {
-                                                                        student.attendancePercentage
-                                                                    }%
-                                                                </strong>
+                                                            </td>
 
-                                                                <div className="mini-progress">
 
-                                                                    <div
+                                                            <td>
+
+                                                                    <span className="absent-number">
+                                                                        {
+                                                                            student.absentCount
+                                                                        }
+                                                                    </span>
+
+                                                            </td>
+
+
+                                                            <td>
+
+                                                                <div className="attendance-percentage-cell">
+
+                                                                    <strong
                                                                         className={
                                                                             getPercentageClass(
                                                                                 student.attendancePercentage
                                                                             )
                                                                         }
-                                                                        style={{
-                                                                            width: `${Math.min(
-                                                                                Math.max(
-                                                                                    Number(
-                                                                                        student.attendancePercentage ||
+                                                                    >
+                                                                        {
+                                                                            student.attendancePercentage
+                                                                        }%
+                                                                    </strong>
+
+                                                                    <div className="mini-progress">
+
+                                                                        <div
+                                                                            className={
+                                                                                getPercentageClass(
+                                                                                    student.attendancePercentage
+                                                                                )
+                                                                            }
+                                                                            style={{
+                                                                                width: `${Math.min(
+                                                                                    Math.max(
+                                                                                        Number(
+                                                                                            student.attendancePercentage ||
+                                                                                            0
+                                                                                        ),
                                                                                         0
                                                                                     ),
-                                                                                    0
-                                                                                ),
-                                                                                100
-                                                                            )}%`,
-                                                                        }}
-                                                                    />
+                                                                                    100
+                                                                                )}%`,
+                                                                            }}
+                                                                        />
+
+                                                                    </div>
 
                                                                 </div>
 
-                                                            </div>
-
-                                                        </td>
+                                                            </td>
 
 
-                                                        <td>
+                                                            <td>
 
-                                                            {student.status ===
-                                                            "LOW_ATTENDANCE" ? (
+                                                                {student.status ===
+                                                                "LOW_ATTENDANCE" ? (
 
-                                                                <span className="attendance-status-badge low">
-                                                                        ⚠ Low Attendance
-                                                                    </span>
+                                                                    <span className="attendance-status-badge low">
+                                                                            ⚠ Low Attendance
+                                                                        </span>
 
-                                                            ) : (
+                                                                ) : (
 
-                                                                <span className="attendance-status-badge good">
-                                                                        ✓ Good
-                                                                    </span>
+                                                                    <span className="attendance-status-badge good">
+                                                                            ✓ Good
+                                                                        </span>
 
-                                                            )}
+                                                                )}
 
-                                                        </td>
+                                                            </td>
 
-                                                    </tr>
+                                                        </tr>
 
-                                                )
-                                            )}
+                                                    )
+                                                )}
 
-                                            </tbody>
+                                                </tbody>
 
-                                        </table>
+                                            </table>
 
-                                    </div>
+                                        </div>
 
-                                )}
+                                    )}
 
-                            </section>
+                                </section>
 
-                        </>
+                            </>
 
-                    )}
+                        )}
+
+                </section>
 
             </main>
 
