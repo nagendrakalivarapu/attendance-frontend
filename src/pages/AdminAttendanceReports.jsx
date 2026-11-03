@@ -306,6 +306,15 @@ function AdminAttendanceReports() {
                         </button>
 
                         <button
+                            className="attendance-report-generate-button"
+                            onClick={() =>
+                                navigate("/admin/attendance/email")
+                            }
+                        >
+                            ✉ Send Attendance Report
+                        </button>
+
+                        <button
                             className="attendance-report-back-button"
                             onClick={() =>
                                 navigate("/admin")
@@ -791,6 +800,17 @@ function AdminAttendanceReports() {
                                         }
                                     >
                                         🕘 View Attendance History
+                                    </button>
+
+                                    <button
+                                        className="attendance-report-generate-button"
+                                        onClick={() =>
+                                            navigate(
+                                                "/admin/attendance/email"
+                                            )
+                                        }
+                                    >
+                                        ✉ Send Attendance Report
                                     </button>
 
                                 </section>
