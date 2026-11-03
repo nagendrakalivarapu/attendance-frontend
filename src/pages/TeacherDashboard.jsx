@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 function TeacherDashboard() {
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
     const [courses, setCourses] = useState([]);
+    const [attendanceHistory, setAttendanceHistory] = useState([]);
+    const [historyLoading, setHistoryLoading] = useState(false);
+    const [historyError, setHistoryError] = useState("");
     const [courseStudents, setCourseStudents] = useState({});
     const [courseSessions, setCourseSessions] = useState({});
 
@@ -14,7 +19,36 @@ function TeacherDashboard() {
 
     useEffect(() => {
         loadCourses();
+        loadAttendanceHistory();
     }, []);
+
+    // =========================================================
+    // LOAD ATTENDANCE HISTORY
+    // =========================================================
+
+    const loadAttendanceHistory = async () => {
+        try {
+            setHistoryLoading(true);
+            setHistoryError("");
+
+            const response = await api.get(
+                "/attendance-sessions/my-history"
+            );
+
+            setAttendanceHistory(
+                Array.isArray(response.data) ? response.data : []
+            );
+        } catch (err) {
+            console.error("Failed to load attendance history:", err);
+
+            setHistoryError(
+                err.response?.data?.message ||
+                "Unable to load attendance history."
+            );
+        } finally {
+            setHistoryLoading(false);
+        }
+    };
 
     // =========================================================
     // LOAD COURSES + STUDENTS + OPEN SESSIONS
@@ -250,12 +284,43 @@ function TeacherDashboard() {
                     </p>
                 </div>
 
-                <button
-                    className="btn btn-danger"
-                    onClick={logout}
-                >
-                    Logout
-                </button>
+                <div className="teacher-header-actions">
+                    <button
+                        type="button"
+                        className="teacher-nav-button"
+                        onClick={() => navigate("/teacher")}
+                    >
+                        Dashboard
+                    </button>
+
+                    <button
+                        type="button"
+                        className="teacher-nav-button"
+                        onClick={() =>
+                            document
+                                .getElementById("teacher-attendance-history")
+                                ?.scrollIntoView({ behavior: "smooth" })
+                        }
+                    >
+                        Attendance History
+                    </button>
+
+                    <button
+                        type="button"
+                        className="teacher-nav-button secondary"
+                        onClick={loadAttendanceHistory}
+                        disabled={historyLoading}
+                    >
+                        {historyLoading ? "Loading..." : "Refresh History"}
+                    </button>
+
+                    <button
+                        className="btn btn-danger"
+                        onClick={logout}
+                    >
+                        Logout
+                    </button>
+                </div>
 
             </div>
 
@@ -602,6 +667,96 @@ function TeacherDashboard() {
                     )}
 
             </div>
+
+            {/* =========================================================
+                ATTENDANCE HISTORY
+            ========================================================= */}
+
+            <section
+                id="teacher-attendance-history"
+                className="teacher-section teacher-history-section"
+            >
+                <div className="teacher-section-header">
+                    <div>
+                        <h2>Attendance History</h2>
+                        <p>Review your completed and active attendance sessions.</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        className="teacher-history-refresh-button"
+                        onClick={loadAttendanceHistory}
+                        disabled={historyLoading}
+                    >
+                        {historyLoading ? "Loading..." : "Refresh"}
+                    </button>
+                </div>
+
+                {historyError ? (
+                    <div className="teacher-history-error">
+                        <strong>Unable to load history</strong>
+                        <p>{historyError}</p>
+                        <button
+                            type="button"
+                            onClick={loadAttendanceHistory}
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                ) : attendanceHistory.length === 0 ? (
+                    <div className="teacher-message">
+                        No attendance sessions have been recorded yet.
+                    </div>
+                ) : (
+                    <div className="teacher-history-table-wrapper">
+                        <table className="teacher-history-table">
+                            <thead>
+                                <tr>
+                                    <th>Session</th>
+                                    <th>Course</th>
+                                    <th>Date</th>
+                                    <th>Students</th>
+                                    <th>Present</th>
+                                    <th>Absent</th>
+                                    <th>Attendance</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {attendanceHistory.slice(0, 20).map((session) => (
+                                    <tr key={session.sessionId || session.id}>
+                                        <td>#{session.sessionId || session.id}</td>
+                                        <td>
+                                            <strong>{session.courseCode || "—"}</strong>
+                                            <small>{session.courseName || "—"}</small>
+                                        </td>
+                                        <td>{session.attendanceDate || "—"}</td>
+                                        <td>{session.totalStudents ?? 0}</td>
+                                        <td className="teacher-history-present">
+                                            {session.presentCount ?? 0}
+                                        </td>
+                                        <td className="teacher-history-absent">
+                                            {session.absentCount ?? 0}
+                                        </td>
+                                        <td>
+                                            {Number(session.attendancePercentage ?? 0).toFixed(1)}%
+                                        </td>
+                                        <td>
+                                            <span
+                                                className={`teacher-history-status ${
+                                                    String(session.status || "").toLowerCase()
+                                                }`}
+                                            >
+                                                {session.status || "UNKNOWN"}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+            </section>
 
         </div>
     );

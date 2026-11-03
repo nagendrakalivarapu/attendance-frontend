@@ -157,10 +157,18 @@ function AdminLowAttendance() {
 
                     <button
                         className="admin-nav-item"
-                        onClick={() => navigate("/admin")}
+                        onClick={() => navigate("/admin/attendance")}
                     >
-                        <span>⚙️</span>
-                        Settings
+                        <span>📊</span>
+                        Attendance Reports
+                    </button>
+
+                    <button
+                        className="admin-nav-item"
+                        onClick={() => navigate("/admin/attendance/history")}
+                    >
+                        <span>🕘</span>
+                        Attendance History
                     </button>
                 </nav>
 
@@ -183,14 +191,28 @@ function AdminLowAttendance() {
                         <p>Identify students below the required attendance threshold.</p>
                     </div>
 
-                    <div className="admin-topbar-user">
-                        <div className="admin-user-avatar">
-                            {user?.email?.charAt(0)?.toUpperCase() || "A"}
-                        </div>
+                    <div className="admin-topbar-actions">
+                        <button
+                            className="attendance-report-back-button"
+                            onClick={() => navigate("/admin/attendance")}
+                        >
+                            Reports
+                        </button>
+                        <button
+                            className="attendance-report-back-button"
+                            onClick={() => navigate("/admin/attendance/history")}
+                        >
+                            History
+                        </button>
+                        <div className="admin-topbar-user">
+                            <div className="admin-user-avatar">
+                                {user?.email?.charAt(0)?.toUpperCase() || "A"}
+                            </div>
 
-                        <div>
-                            <strong>Administrator</strong>
-                            <span>{user?.email}</span>
+                            <div>
+                                <strong>Administrator</strong>
+                                <span>{user?.email}</span>
+                            </div>
                         </div>
                     </div>
                 </header>

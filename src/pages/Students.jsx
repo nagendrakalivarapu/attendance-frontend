@@ -321,18 +321,50 @@ function Students() {
                 </div>
 
 
-                <div className="d-flex gap-2">
+                <div className="d-flex gap-2 flex-wrap justify-content-end">
+
+                    <button
+                        className="btn btn-outline-secondary"
+                        onClick={() => navigate("/admin")}
+                    >
+                        Dashboard
+                    </button>
+
+                    <button
+                        className="btn btn-outline-secondary"
+                        onClick={() => navigate("/admin/teachers")}
+                    >
+                        Teachers
+                    </button>
+
+                    <button
+                        className="btn btn-outline-secondary"
+                        onClick={() => navigate("/admin/courses")}
+                    >
+                        Courses
+                    </button>
+
+                    <button
+                        className="btn btn-outline-secondary"
+                        onClick={() => navigate("/admin/enrollments")}
+                    >
+                        Enrollments
+                    </button>
+
+                    <button
+                        className="btn btn-outline-secondary"
+                        onClick={() => navigate("/admin/attendance")}
+                    >
+                        Attendance
+                    </button>
 
                     <button
                         className="btn btn-outline-secondary"
                         onClick={loadStudents}
                         disabled={loading}
                     >
-
                         ↻ Refresh
-
                     </button>
-
 
                     <button
                         className="btn btn-primary"
@@ -342,9 +374,7 @@ function Students() {
                             )
                         }
                     >
-
                         + Add Student
-
                     </button>
 
                 </div>

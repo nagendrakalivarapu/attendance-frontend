@@ -134,6 +134,12 @@ function StudentDashboard() {
 
                 <div className="student-header-actions">
                     <button
+                        className="student-attendance-nav-btn"
+                        onClick={() => navigate("/student/attendance")}
+                    >
+                        Mark Attendance
+                    </button>
+                    <button
                         className="student-history-nav-btn"
                         onClick={() => navigate("/student/attendance-history")}
                     >

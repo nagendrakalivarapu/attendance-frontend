@@ -303,7 +303,10 @@ function Courses() {
                         Students
                     </button>
 
-                    <button className="sidebar-link">
+                    <button
+                        className="sidebar-link"
+                        onClick={() => navigate("/admin/teachers")}
+                    >
                         <span>👨‍🏫</span>
                         Teachers
                     </button>
@@ -313,12 +316,18 @@ function Courses() {
                         Courses
                     </button>
 
-                    <button className="sidebar-link">
+                    <button
+                        className="sidebar-link"
+                        onClick={() => navigate("/admin/enrollments")}
+                    >
                         <span>📝</span>
                         Enrollments
                     </button>
 
-                    <button className="sidebar-link">
+                    <button
+                        className="sidebar-link"
+                        onClick={() => navigate("/admin/attendance")}
+                    >
                         <span>📅</span>
                         Attendance
                     </button>
@@ -328,9 +337,12 @@ function Courses() {
 
                 <div className="sidebar-bottom">
 
-                    <button className="sidebar-link">
+                    <button
+                        className="sidebar-link"
+                        onClick={() => navigate("/admin")}
+                    >
                         <span>⚙️</span>
-                        Settings
+                        Dashboard
                     </button>
 
                 </div>

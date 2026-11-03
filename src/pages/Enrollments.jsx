@@ -281,6 +281,34 @@ function Enrollments() {
                     </button>
 
                     <button
+                        className="btn-secondary"
+                        onClick={() => navigate("/admin/students")}
+                    >
+                        Students
+                    </button>
+
+                    <button
+                        className="btn-secondary"
+                        onClick={() => navigate("/admin/teachers")}
+                    >
+                        Teachers
+                    </button>
+
+                    <button
+                        className="btn-secondary"
+                        onClick={() => navigate("/admin/courses")}
+                    >
+                        Courses
+                    </button>
+
+                    <button
+                        className="btn-secondary"
+                        onClick={() => navigate("/admin/attendance")}
+                    >
+                        Attendance
+                    </button>
+
+                    <button
                         className="btn-primary"
                         onClick={handleAdd}
                     >

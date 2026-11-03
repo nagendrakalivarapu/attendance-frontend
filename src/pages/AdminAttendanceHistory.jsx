@@ -281,6 +281,17 @@ function AdminAttendanceHistory() {
                         </button>
 
                         <button
+                            className="attendance-report-back-button"
+                            onClick={() =>
+                                navigate(
+                                    "/admin/attendance/low"
+                                )
+                            }
+                        >
+                            Low Attendance
+                        </button>
+
+                        <button
                             className="attendance-report-refresh-button"
                             onClick={() =>
                                 void loadHistory()

@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 export default function StudentAttendance() {
+
+    const navigate = useNavigate();
 
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
@@ -359,6 +362,31 @@ export default function StudentAttendance() {
                         attendance for an active class.
                     </p>
 
+                </div>
+
+                <div className="student-attendance-header-actions">
+                    <button
+                        type="button"
+                        className="student-attendance-nav-button secondary"
+                        onClick={() => navigate("/student")}
+                    >
+                        Dashboard
+                    </button>
+                    <button
+                        type="button"
+                        className="student-attendance-nav-button secondary"
+                        onClick={() => navigate("/student/attendance-history")}
+                    >
+                        Attendance History
+                    </button>
+                    <button
+                        type="button"
+                        className="student-attendance-nav-button"
+                        onClick={() => loadAttendanceData()}
+                        disabled={loading}
+                    >
+                        Refresh
+                    </button>
                 </div>
 
             </div>

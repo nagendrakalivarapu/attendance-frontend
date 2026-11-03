@@ -194,14 +194,20 @@ function EditStudent() {
 
                 </div>
 
-                <button
-                    className="btn btn-secondary"
-                    onClick={() =>
-                        navigate("/admin/students")
-                    }
-                >
-                    Back
-                </button>
+                <div className="page-header-actions">
+                    <button
+                        className="btn btn-secondary"
+                        onClick={() => navigate("/admin")}
+                    >
+                        Dashboard
+                    </button>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={() => navigate("/admin/students")}
+                    >
+                        Students
+                    </button>
+                </div>
 
             </div>
 

@@ -73,13 +73,22 @@ function StudentAttendanceHistory() {
                     </p>
                 </div>
 
-                <button
-                    type="button"
-                    className="student-history-back-btn"
-                    onClick={() => navigate("/student")}
-                >
-                    ← Dashboard
-                </button>
+                <div className="student-attendance-history-actions">
+                    <button
+                        type="button"
+                        className="student-history-back-btn"
+                        onClick={() => navigate("/student/attendance")}
+                    >
+                        Mark Attendance
+                    </button>
+                    <button
+                        type="button"
+                        className="student-history-back-btn"
+                        onClick={() => navigate("/student")}
+                    >
+                        ← Dashboard
+                    </button>
+                </div>
             </div>
 
             {error && (

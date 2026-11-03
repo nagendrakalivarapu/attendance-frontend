@@ -4717,3 +4717,273 @@ body {
   }
 }
 
+
+
+/* =========================================
+   NAVIGATION / UX UPGRADES
+   ========================================= */
+
+.page-header-actions,
+.teacher-header-actions,
+.student-header-actions,
+.student-attendance-header-actions,
+.student-attendance-history-actions,
+.admin-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.login-password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.login-password-field input {
+  width: 100%;
+  padding-right: 72px;
+}
+
+.login-password-toggle {
+  position: absolute;
+  right: 8px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+  border-radius: 6px;
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-password-toggle:hover {
+  background: #f3f4f6;
+}
+
+.teacher-nav-button,
+.teacher-history-refresh-button,
+.student-attendance-nav-button,
+.student-history-back-button {
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+  padding: 9px 13px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.teacher-nav-button:hover,
+.teacher-history-refresh-button:hover,
+.student-attendance-nav-button:hover,
+.student-history-back-button:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+  background: #eff6ff;
+}
+
+.teacher-nav-button.secondary,
+.student-attendance-nav-button.secondary {
+  background: #f9fafb;
+}
+
+.teacher-nav-button:disabled,
+.teacher-history-refresh-button:disabled,
+.student-attendance-nav-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.teacher-history-section {
+  margin-top: 25px;
+}
+
+.teacher-history-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.teacher-history-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+}
+
+.teacher-history-table th {
+  background: #f8fafc;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 10px;
+  padding: 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.teacher-history-table td {
+  padding: 13px 12px;
+  border-top: 1px solid #eef2f7;
+  font-size: 12px;
+  color: #334155;
+  white-space: nowrap;
+}
+
+.teacher-history-table td strong,
+.teacher-history-table td small {
+  display: block;
+}
+
+.teacher-history-table td small {
+  margin-top: 3px;
+  color: #94a3b8;
+  font-size: 10px;
+}
+
+.teacher-history-present {
+  color: #15803d !important;
+  font-weight: 700;
+}
+
+.teacher-history-absent {
+  color: #dc2626 !important;
+  font-weight: 700;
+}
+
+.teacher-history-status {
+  display: inline-flex;
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.teacher-history-status.open {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.teacher-history-status.closed {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.teacher-history-status.unknown {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.teacher-history-error {
+  padding: 20px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.teacher-history-error p {
+  margin: 5px 0 12px;
+  font-size: 12px;
+}
+
+.teacher-history-error button {
+  border: none;
+  background: #dc2626;
+  color: #fff;
+  border-radius: 7px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.student-attendance-nav-btn {
+  border: 1px solid #2563eb;
+  background: #2563eb;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.student-attendance-nav-btn:hover {
+  background: #1d4ed8;
+}
+
+.student-attendance-header-actions {
+  justify-content: flex-end;
+}
+
+.student-attendance-nav-button {
+  border: 1px solid #2563eb;
+  background: #2563eb;
+  color: #fff;
+  padding: 9px 13px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.student-attendance-nav-button.secondary {
+  background: #fff;
+  color: #374151;
+  border-color: #d1d5db;
+}
+
+.student-attendance-nav-button:hover {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+.student-attendance-nav-button.secondary:hover {
+  background: #f3f4f6;
+  color: #2563eb;
+  border-color: #2563eb;
+}
+
+.student-attendance-history-actions {
+  justify-content: flex-end;
+}
+
+@media (max-width: 900px) {
+  .teacher-header,
+  .student-dashboard-header,
+  .student-attendance-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .teacher-header-actions,
+  .student-header-actions,
+  .student-attendance-header-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .page-header-actions,
+  .teacher-header-actions,
+  .student-header-actions,
+  .student-attendance-header-actions,
+  .student-attendance-history-actions,
+  .admin-topbar-actions {
+    width: 100%;
+  }
+
+  .teacher-nav-button,
+  .teacher-history-refresh-button,
+  .student-attendance-nav-button,
+  .student-history-back-button,
+  .login-password-toggle {
+    min-height: 38px;
+  }
+}
