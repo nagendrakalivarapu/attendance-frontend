@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
 /* =========================================
     SMART ATTENDANCE SYSTEM
     Main Application Styles
@@ -5524,7 +5526,6 @@ body {
    Paper background / white bordered surfaces / petrol accent
    ========================================================= */
 
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
 
 :root {
   --sa-ink: #0f1f2e;
@@ -6478,5 +6479,247 @@ textarea:focus {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: .01ms !important;
+  }
+}
+
+/* =========================================================
+   GLOBAL UI / ACCESSIBILITY UPGRADES
+   ========================================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.28);
+  outline-offset: 2px;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+}
+
+img {
+  max-width: 100%;
+}
+
+.admin-layout,
+.admin-main,
+.page-container,
+.teacher-dashboard,
+.student-dashboard {
+  overflow-x: hidden;
+}
+
+.table-wrapper,
+.course-table-wrapper,
+.student-selection-list,
+.student-list {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.table-wrapper::-webkit-scrollbar,
+.course-table-wrapper::-webkit-scrollbar,
+.student-selection-list::-webkit-scrollbar,
+.student-list::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb,
+.course-table-wrapper::-webkit-scrollbar-thumb,
+.student-selection-list::-webkit-scrollbar-thumb,
+.student-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-edit:disabled,
+.btn-delete:disabled,
+.course-add-button:disabled,
+.course-refresh-button:disabled,
+.course-clear-button:disabled,
+.course-save-button:disabled,
+.course-cancel-button:disabled,
+.attendance-refresh-button:disabled,
+.attendance-retry-button:disabled,
+.student-logout-btn:disabled {
+  opacity: 0.55;
+  transform: none;
+}
+
+/* =========================================================
+   RESPONSIVE SAFETY NET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .student-stat-grid,
+  .student-attendance-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .attendance-overview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .course-filter-card {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .course-filter-card .course-search-box {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-sidebar {
+    width: 220px;
+  }
+
+  .admin-main {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+    padding: 24px;
+  }
+
+  .student-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .student-dashboard {
+    padding: 28px;
+  }
+}
+
+@media (max-width: 700px) {
+  .stats-grid,
+  .student-stat-grid,
+  .student-attendance-grid,
+  .attendance-overview-grid,
+  .quick-actions,
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .course-form-grid,
+  .form-grid,
+  .student-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .course-field.full-width,
+  .form-group.full-width {
+    grid-column: auto;
+  }
+
+  .course-filter-card {
+    grid-template-columns: 1fr;
+  }
+
+  .course-filter-card .course-search-box {
+    grid-column: auto;
+  }
+
+  .student-dashboard,
+  .teacher-dashboard,
+  .page-container {
+    padding: 20px;
+  }
+
+  .student-dashboard-header,
+  .student-profile-header,
+  .teacher-header,
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .student-logout-btn {
+    width: 100%;
+  }
+
+  .student-card-header,
+  .attendance-percentage-content {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .student-dashboard-card,
+  .student-info-section,
+  .student-face-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-main {
+    padding: 16px;
+  }
+
+  .student-dashboard,
+  .teacher-dashboard,
+  .page-container {
+    padding: 14px;
+  }
+
+  .student-dashboard-header h1,
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .student-profile-left {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .form-modal {
+    max-height: calc(100vh - 20px);
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .modal-overlay {
+    padding: 10px;
+  }
+
+  .course-form-actions,
+  .modal-actions,
+  .page-header-actions,
+  .enrollment-toolbar,
+  .search-bar-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .course-form-actions button,
+  .modal-actions button,
+  .page-header-actions button {
+    width: 100%;
   }
 }
