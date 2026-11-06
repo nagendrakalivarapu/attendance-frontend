@@ -6723,3 +6723,469 @@ img {
     width: 100%;
   }
 }
+/* ============================================================
+   ADMIN MANAGEMENT
+   ============================================================ */
+
+.admin-page {
+  min-height: 100vh;
+  padding: 32px;
+  background: #f7f9fc;
+}
+
+.admin-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.admin-page-eyebrow {
+  margin: 0 0 6px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.admin-page-header h1 {
+  margin: 0;
+  color: #111827;
+  font-size: 30px;
+  font-weight: 750;
+}
+
+.admin-page-header p {
+  margin: 8px 0 0;
+  color: #6b7280;
+}
+
+.admin-page-header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.admin-primary-button,
+.admin-secondary-button {
+  min-height: 42px;
+  padding: 0 17px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: 0.18s ease;
+}
+
+.admin-primary-button {
+  border: 1px solid #2563eb;
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.admin-primary-button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.admin-secondary-button {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #374151;
+}
+
+.admin-secondary-button:hover:not(:disabled) {
+  background: #f3f4f6;
+}
+
+.admin-primary-button:disabled,
+.admin-secondary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Alerts */
+
+.admin-management-alert {
+  margin-bottom: 18px;
+  padding: 13px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 550;
+}
+
+.admin-management-alert-error {
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #b42318;
+}
+
+.admin-management-alert-success {
+  border: 1px solid #bbf7d0;
+  background: #f0fdf4;
+  color: #166534;
+}
+
+/* Statistics */
+
+.admin-management-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.admin-management-stat-card {
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+}
+
+.admin-management-stat-card span {
+  display: block;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.admin-management-stat-card strong {
+  display: block;
+  margin-top: 7px;
+  color: #111827;
+  font-size: 27px;
+}
+
+/* Form */
+
+.admin-management-form-card,
+.admin-management-list-card {
+  margin-bottom: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+}
+
+.admin-management-form-card {
+  padding: 24px;
+}
+
+.admin-management-section-header,
+.admin-management-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.admin-management-section-header {
+  margin-bottom: 22px;
+}
+
+.admin-management-section-header h2,
+.admin-management-list-header h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 19px;
+}
+
+.admin-management-section-header p,
+.admin-management-list-header p {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.admin-form-close-button {
+  border: 0;
+  background: transparent;
+  color: #6b7280;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-management-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.admin-management-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.admin-management-field label {
+  color: #374151;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.admin-field-hint {
+  display: block;
+  margin-top: 4px;
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.admin-management-field input,
+.admin-management-search input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+  background: #ffffff;
+  color: #111827;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.admin-management-field input:focus,
+.admin-management-search input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.admin-management-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+/* Admin list */
+
+.admin-management-list-card {
+  overflow: hidden;
+}
+
+.admin-management-list-header {
+  padding: 22px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-management-search {
+  width: min(320px, 100%);
+}
+
+.admin-management-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-management-table {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: collapse;
+}
+
+.admin-management-table th {
+  padding: 13px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8fafc;
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.admin-management-table td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eef0f3;
+  color: #374151;
+  font-size: 14px;
+}
+
+.admin-management-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.admin-management-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+.admin-table-user {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.admin-table-avatar {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 38px;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.admin-table-user strong {
+  display: block;
+  color: #111827;
+}
+
+.admin-table-user span {
+  display: block;
+  margin-top: 2px;
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+.admin-role-badge,
+.admin-status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 27px;
+  padding: 0 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.admin-role-badge {
+  background: #eef2ff;
+  color: #4338ca;
+}
+
+.admin-status-active {
+  background: #ecfdf3;
+  color: #067647;
+}
+
+.admin-status-disabled {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.admin-table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-table-edit-button,
+.admin-table-delete-button {
+  min-height: 34px;
+  padding: 0 11px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.admin-table-edit-button {
+  border: 1px solid #dbeafe;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.admin-table-delete-button {
+  border: 1px solid #fecaca;
+  background: #fff5f5;
+  color: #b42318;
+}
+
+.admin-table-edit-button:disabled,
+.admin-table-delete-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.admin-management-state {
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.admin-management-state h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 17px;
+}
+
+.admin-management-state p {
+  margin: 7px 0 0;
+  color: #6b7280;
+}
+
+.admin-management-spinner {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 12px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: adminManagementSpin 0.8s linear infinite;
+}
+
+@keyframes adminManagementSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+
+  .admin-management-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-management-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-page-header {
+    flex-direction: column;
+  }
+
+  .admin-page-header-actions {
+    width: 100%;
+  }
+
+  .admin-page-header-actions button {
+    flex: 1;
+  }
+
+  .admin-management-list-header {
+    flex-direction: column;
+  }
+
+  .admin-management-search {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .admin-page {
+    padding: 18px;
+  }
+
+  .admin-management-form-card {
+    padding: 18px;
+  }
+
+  .admin-management-list-header {
+    padding: 18px;
+  }
+
+  .admin-management-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .admin-management-form-actions button {
+    width: 100%;
+  }
+}

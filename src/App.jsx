@@ -16,6 +16,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminAttendanceReports from "./pages/AdminAttendanceReports";
 import AdminLowAttendance from "./pages/AdminLowAttendance";
 import AdminAttendanceHistory from "./pages/AdminAttendanceHistory";
+import AdminManagement from "./pages/AdminManagement";
 import AttendanceEmail from "./pages/AttendanceEmail";
 
 import TeacherDashboard from "./pages/TeacherDashboard";
@@ -97,6 +98,16 @@ function App() {
                     }
                 />
 
+                <Route
+                    path="/admin/admins"
+                    element={
+                        <ProtectedRoute
+                            allowedRoles={["ADMIN"]}
+                        >
+                            <AdminManagement />
+                        </ProtectedRoute>
+                    }
+                />
 
                 {/* =====================================
                     ADMIN STUDENTS

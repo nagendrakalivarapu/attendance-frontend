@@ -300,6 +300,14 @@ function AdminDashboard() {
 
                     <button
                         className="sidebar-link"
+                        onClick={() => navigate("/admin/admins")}
+                    >
+                        <span>  </span>
+                        Admin Management
+                    </button>
+
+                    <button
+                        className="sidebar-link"
                         onClick={() => navigate("/admin/attendance")}
                     >
                         <span>📅</span>
