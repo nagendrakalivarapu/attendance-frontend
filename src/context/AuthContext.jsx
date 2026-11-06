@@ -1,57 +1,237 @@
-import { createContext, useContext, useState } from "react";
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useState
+} from "react";
+
 import api from "../services/api";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
+
     const [user, setUser] = useState(() => {
-        const token = localStorage.getItem("token");
-        const email = localStorage.getItem("email");
-        const role = localStorage.getItem("role");
 
-        if (token && email && role) {
-            return { token, email, role };
+        try {
+
+            const storedUser =
+                localStorage.getItem("user");
+
+            return storedUser
+                ? JSON.parse(storedUser)
+                : null;
+
+        } catch (error) {
+
+            console.error(
+                "Failed to restore user session:",
+                error
+            );
+
+            return null;
         }
-
-        return null;
     });
 
-    const login = async (email, password) => {
-        const response = await api.post("/auth/login", {
-            email,
-            password,
-        });
 
-        const data = response.data;
+    useEffect(() => {
 
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("email", data.email);
-        localStorage.setItem("role", data.role);
+        const token =
+            localStorage.getItem("token");
 
-        setUser({
-            token: data.token,
-            email: data.email,
-            role: data.role,
-        });
+        const storedUser =
+            localStorage.getItem("user");
+
+        if (!token || !storedUser) {
+            return;
+        }
+
+        try {
+
+            setUser(
+                JSON.parse(storedUser)
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Invalid stored user data:",
+                error
+            );
+
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+
+            setUser(null);
+        }
+
+    }, []);
+
+
+    // ============================================================
+    // LOGIN
+    // ============================================================
+
+    const login = async (
+        email,
+        password
+    ) => {
+
+        const response =
+            await api.post(
+                "/auth/login",
+                {
+                    email,
+                    password
+                }
+            );
+
+        const data =
+            response.data;
+
+
+        /*
+         * ADMIN / TEACHER
+         *
+         * Backend has authenticated the password,
+         * but JWT is not available until OTP
+         * verification.
+         */
+        if (data.requiresOtp) {
+
+            return data;
+        }
+
+
+        /*
+         * STUDENT
+         *
+         * Student receives JWT immediately.
+         */
+        if (data.token) {
+
+            const loggedInUser = {
+                email: data.email,
+                role: data.role
+            };
+
+            localStorage.setItem(
+                "token",
+                data.token
+            );
+
+            localStorage.setItem(
+                "user",
+                JSON.stringify(loggedInUser)
+            );
+
+            setUser(loggedInUser);
+        }
 
         return data;
     };
 
+
+    // ============================================================
+    // VERIFY OTP
+    // ============================================================
+
+    const verifyOtp = async (
+        email,
+        otp
+    ) => {
+
+        const response =
+            await api.post(
+                "/auth/verify-otp",
+                {
+                    email,
+                    otp
+                }
+            );
+
+        const data =
+            response.data;
+
+
+        if (!data.token) {
+
+            throw new Error(
+                "Authentication token was not returned."
+            );
+        }
+
+
+        const loggedInUser = {
+            email: data.email,
+            role: data.role
+        };
+
+
+        localStorage.setItem(
+            "token",
+            data.token
+        );
+
+        localStorage.setItem(
+            "user",
+            JSON.stringify(loggedInUser)
+        );
+
+
+        setUser(loggedInUser);
+
+
+        return data;
+    };
+
+
+    // ============================================================
+    // RESEND OTP
+    // ============================================================
+
+    const resendOtp = async (
+        email
+    ) => {
+
+        const response =
+            await api.post(
+                "/auth/resend-otp",
+                {
+                    email
+                }
+            );
+
+        return response.data;
+    };
+
+
+    // ============================================================
+    // LOGOUT
+    // ============================================================
+
     const logout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("email");
-        localStorage.removeItem("role");
+
+        localStorage.removeItem(
+            "token"
+        );
+
+        localStorage.removeItem(
+            "user"
+        );
 
         setUser(null);
     };
+
 
     return (
         <AuthContext.Provider
             value={{
                 user,
                 login,
-                logout,
-                isAuthenticated: !!user,
+                verifyOtp,
+                resendOtp,
+                logout
             }}
         >
             {children}
@@ -59,6 +239,18 @@ export function AuthProvider({ children }) {
     );
 }
 
+
 export function useAuth() {
-    return useContext(AuthContext);
+
+    const context =
+        useContext(AuthContext);
+
+    if (!context) {
+
+        throw new Error(
+            "useAuth must be used inside AuthProvider"
+        );
+    }
+
+    return context;
 }
