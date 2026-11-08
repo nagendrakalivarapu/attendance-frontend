@@ -865,11 +865,11 @@ export default function StudentAttendance() {
 
     if (loading) {
         return (
-            <div className="student-attendance-page">
+            <div >
 
-                <div className="student-attendance-loading">
+                <div >
 
-                    <div className="student-attendance-spinner"></div>
+                    <div ></div>
 
                     <p>
                         Loading attendance...
@@ -886,17 +886,17 @@ export default function StudentAttendance() {
     // ============================================================
 
     return (
-        <div className="student-attendance-page">
+        <div >
 
             {/* ================================================== */}
             {/* HEADER */}
             {/* ================================================== */}
 
-            <div className="student-attendance-header">
+            <div >
 
                 <div>
 
-                    <p className="student-attendance-label">
+                    <p >
                         ATTENDANCE
                     </p>
 
@@ -911,11 +911,11 @@ export default function StudentAttendance() {
 
                 </div>
 
-                <div className="student-attendance-header-actions">
+                <div >
 
                     <button
                         type="button"
-                        className="student-attendance-nav-button secondary"
+                        
                         onClick={() =>
                             navigate("/student")
                         }
@@ -925,7 +925,7 @@ export default function StudentAttendance() {
 
                     <button
                         type="button"
-                        className="student-attendance-nav-button secondary"
+                        
                         onClick={() =>
                             navigate(
                                 "/student/attendance-history"
@@ -937,7 +937,7 @@ export default function StudentAttendance() {
 
                     <button
                         type="button"
-                        className="student-attendance-nav-button"
+                        
                         onClick={() =>
                             loadAttendanceData()
                         }
@@ -956,7 +956,7 @@ export default function StudentAttendance() {
             {/* ================================================== */}
 
             {error && (
-                <div className="student-attendance-alert error">
+                <div >
                     {error}
                 </div>
             )}
@@ -967,7 +967,7 @@ export default function StudentAttendance() {
             {/* ================================================== */}
 
             {success && (
-                <div className="student-attendance-alert success">
+                <div >
                     {success}
                 </div>
             )}
@@ -977,9 +977,9 @@ export default function StudentAttendance() {
             {/* CAMERA */}
             {/* ================================================== */}
 
-            <div className="student-attendance-camera-card">
+            <div >
 
-                <div className="student-attendance-section-header">
+                <div >
 
                     <div>
 
@@ -995,7 +995,7 @@ export default function StudentAttendance() {
                     </div>
 
                     {student?.faceRegistered && (
-                        <span className="student-face-ready">
+                        <span >
                             Face Registered
                         </span>
                     )}
@@ -1007,20 +1007,20 @@ export default function StudentAttendance() {
                 {/* CAMERA */}
                 {/* ================================================== */}
 
-                <div className="student-camera-wrapper">
+                <div >
 
                     <video
                         ref={videoRef}
-                        className="student-attendance-video"
+                        
                         autoPlay
                         muted
                         playsInline
                     />
 
                     {!streamRef.current && (
-                        <div className="student-camera-placeholder">
+                        <div >
 
-                            <div className="student-camera-icon">
+                            <div >
                                 Camera
                             </div>
 
@@ -1040,9 +1040,7 @@ export default function StudentAttendance() {
 
                 <canvas
                     ref={canvasRef}
-                    style={{
-                        display: "none",
-                    }}
+                    
                 />
 
 
@@ -1051,7 +1049,7 @@ export default function StudentAttendance() {
                 {/* ================================================== */}
 
                 {cameraError && (
-                    <div className="student-camera-error">
+                    <div >
                         {cameraError}
                     </div>
                 )}
@@ -1063,10 +1061,10 @@ export default function StudentAttendance() {
 
                 {streamRef.current && (
                     <div
-                        className={`student-face-status ${getFaceStatusClass()}`}
+                        
                     >
 
-                        <div className="student-face-status-indicator">
+                        <div >
                             {faceStatus === "ready"
                                 ? "READY"
                                 : faceStatus === "multiple"
@@ -1076,7 +1074,7 @@ export default function StudentAttendance() {
                                         : "!"}
                         </div>
 
-                        <div className="student-face-status-content">
+                        <div >
 
                             <strong>
                                 {getFaceStatusTitle()}
@@ -1113,13 +1111,13 @@ export default function StudentAttendance() {
                 {/* CAMERA ACTIONS */}
                 {/* ================================================== */}
 
-                <div className="student-camera-actions">
+                <div >
 
                     {!streamRef.current ? (
 
                         <button
                             type="button"
-                            className="student-camera-start-btn"
+                            
                             onClick={startCamera}
                             disabled={cameraLoading}
                         >
@@ -1132,7 +1130,7 @@ export default function StudentAttendance() {
 
                         <button
                             type="button"
-                            className="student-camera-stop-btn"
+                            
                             onClick={stopCamera}
                         >
                             Stop Camera
@@ -1149,9 +1147,9 @@ export default function StudentAttendance() {
             {/* ACTIVE SESSIONS */}
             {/* ================================================== */}
 
-            <div className="student-active-attendance">
+            <div >
 
-                <div className="student-attendance-section-header">
+                <div >
 
                     <div>
 
@@ -1171,9 +1169,9 @@ export default function StudentAttendance() {
 
                 {sessions.length === 0 ? (
 
-                    <div className="student-no-active-attendance">
+                    <div >
 
-                        <div className="student-no-attendance-icon">
+                        <div >
                             OK
                         </div>
 
@@ -1190,20 +1188,20 @@ export default function StudentAttendance() {
 
                 ) : (
 
-                    <div className="student-active-session-grid">
+                    <div >
 
                         {sessions.map((session) => (
 
                             <div
                                 key={session.id}
-                                className="student-active-session-card"
+                                
                             >
 
-                                <div className="student-active-session-top">
+                                <div >
 
-                                    <span className="student-live-badge">
+                                    <span >
 
-                                        <span className="student-live-dot"></span>
+                                        <span ></span>
 
                                         LIVE
 
@@ -1241,7 +1239,7 @@ export default function StudentAttendance() {
 
                                 <button
                                     type="button"
-                                    className="student-mark-attendance-btn"
+                                    
                                     onClick={() =>
                                         markAttendance(
                                             session.id

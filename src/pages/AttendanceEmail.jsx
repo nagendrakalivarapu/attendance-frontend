@@ -235,8 +235,8 @@ const AttendanceEmail = () => {
     };
 
     return (
-        <div className="admin-page">
-            <div className="admin-page-header">
+        <div >
+            <div >
                 <div>
                     <h1>Attendance Email Reports</h1>
 
@@ -247,8 +247,8 @@ const AttendanceEmail = () => {
                 </div>
             </div>
 
-            <div className="admin-card">
-                <div className="admin-card-header">
+            <div >
+                <div >
                     <div>
                         <h2>Report Configuration</h2>
 
@@ -258,8 +258,8 @@ const AttendanceEmail = () => {
                     </div>
                 </div>
 
-                <div className="admin-form-grid">
-                    <div className="admin-form-group">
+                <div >
+                    <div >
                         <label>Department</label>
 
                         <select
@@ -281,7 +281,7 @@ const AttendanceEmail = () => {
                         </select>
                     </div>
 
-                    <div className="admin-form-group">
+                    <div >
                         <label>Semester</label>
 
                         <select
@@ -303,7 +303,7 @@ const AttendanceEmail = () => {
                         </select>
                     </div>
 
-                    <div className="admin-form-group">
+                    <div >
                         <label>Section</label>
 
                         <select
@@ -329,7 +329,7 @@ const AttendanceEmail = () => {
                         </select>
                     </div>
 
-                    <div className="admin-form-group">
+                    <div >
                         <label>Course</label>
 
                         <select
@@ -359,12 +359,12 @@ const AttendanceEmail = () => {
                         </select>
                     </div>
 
-                    <div className="admin-form-group">
+                    <div >
                         <label>
                             Required Attendance
                         </label>
 
-                        <div className="attendance-email-threshold">
+                        <div >
                             <input
                                 type="range"
                                 min="0"
@@ -385,21 +385,21 @@ const AttendanceEmail = () => {
                 </div>
 
                 {error && (
-                    <div className="admin-alert error">
+                    <div >
                         {error}
                     </div>
                 )}
 
                 {success && (
-                    <div className="admin-alert success">
+                    <div >
                         {success}
                     </div>
                 )}
 
-                <div className="admin-form-actions">
+                <div >
                     <button
                         type="button"
-                        className="admin-primary-button"
+                        
                         onClick={handlePreview}
                         disabled={
                             previewLoading ||
@@ -417,8 +417,8 @@ const AttendanceEmail = () => {
             </div>
 
             {preview && (
-                <div className="admin-card attendance-email-preview">
-                    <div className="admin-card-header">
+                <div >
+                    <div >
                         <div>
                             <h2>
                                 {preview.courseCode} -{" "}
@@ -433,29 +433,29 @@ const AttendanceEmail = () => {
                         </div>
                     </div>
 
-                    <div className="attendance-email-summary">
-                        <div className="attendance-email-stat">
+                    <div >
+                        <div >
                             <span>Total Students</span>
                             <strong>
                                 {preview.totalStudents}
                             </strong>
                         </div>
 
-                        <div className="attendance-email-stat good">
+                        <div >
                             <span>Good Attendance</span>
                             <strong>
                                 {preview.goodAttendanceStudents}
                             </strong>
                         </div>
 
-                        <div className="attendance-email-stat low">
+                        <div >
                             <span>Low Attendance</span>
                             <strong>
                                 {preview.lowAttendanceStudents}
                             </strong>
                         </div>
 
-                        <div className="attendance-email-stat">
+                        <div >
                             <span>Required</span>
                             <strong>
                                 {preview.requiredPercentage}%
@@ -463,8 +463,8 @@ const AttendanceEmail = () => {
                         </div>
                     </div>
 
-                    <div className="attendance-email-table-wrapper">
-                        <table className="attendance-email-table">
+                    <div >
+                        <table >
                             <thead>
                             <tr>
                                 <th>Student</th>
@@ -516,9 +516,7 @@ const AttendanceEmail = () => {
 
                                         <td>
                         <span
-                            className={getStatusClass(
-                                student.status
-                            )}
+                            
                         >
                           {student.status ===
                           "LOW_ATTENDANCE"
@@ -532,7 +530,7 @@ const AttendanceEmail = () => {
                                 <tr>
                                     <td
                                         colSpan="8"
-                                        className="attendance-email-empty"
+                                        
                                     >
                                         No students found for the
                                         selected section.
@@ -543,10 +541,10 @@ const AttendanceEmail = () => {
                         </table>
                     </div>
 
-                    <div className="attendance-email-actions">
+                    <div >
                         <button
                             type="button"
-                            className="admin-primary-button"
+                            
                             onClick={handleSend}
                             disabled={
                                 sendLoading ||
@@ -562,8 +560,8 @@ const AttendanceEmail = () => {
             )}
 
             {sendResult && (
-                <div className="admin-card">
-                    <div className="admin-card-header">
+                <div >
+                    <div >
                         <div>
                             <h2>Email Delivery Result</h2>
 
@@ -571,22 +569,22 @@ const AttendanceEmail = () => {
                         </div>
                     </div>
 
-                    <div className="attendance-email-summary">
-                        <div className="attendance-email-stat">
+                    <div >
+                        <div >
                             <span>Total</span>
                             <strong>
                                 {sendResult.totalStudents}
                             </strong>
                         </div>
 
-                        <div className="attendance-email-stat good">
+                        <div >
                             <span>Sent</span>
                             <strong>
                                 {sendResult.sentCount}
                             </strong>
                         </div>
 
-                        <div className="attendance-email-stat low">
+                        <div >
                             <span>Failed</span>
                             <strong>
                                 {sendResult.failedCount}

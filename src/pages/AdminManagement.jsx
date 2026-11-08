@@ -270,16 +270,16 @@ function AdminManagement() {
     // ============================================================
 
     return (
-        <div className="admin-page">
+        <div >
 
             {/* ====================================================
                 HEADER
             ==================================================== */}
 
-            <div className="admin-page-header">
+            <div >
 
                 <div>
-                    <p className="admin-page-eyebrow">
+                    <p >
                         ADMINISTRATION
                     </p>
 
@@ -292,11 +292,11 @@ function AdminManagement() {
                     </p>
                 </div>
 
-                <div className="admin-page-header-actions">
+                <div >
 
                     <button
                         type="button"
-                        className="admin-secondary-button"
+                        
                         onClick={() => navigate("/admin")}
                     >
                         Dashboard
@@ -304,7 +304,7 @@ function AdminManagement() {
 
                     <button
                         type="button"
-                        className="admin-primary-button"
+                        
                         onClick={handleAddAdmin}
                     >
                         Add Administrator
@@ -320,13 +320,13 @@ function AdminManagement() {
             ==================================================== */}
 
             {error && (
-                <div className="admin-management-alert admin-management-alert-error">
+                <div >
                     {error}
                 </div>
             )}
 
             {success && (
-                <div className="admin-management-alert admin-management-alert-success">
+                <div >
                     {success}
                 </div>
             )}
@@ -336,19 +336,19 @@ function AdminManagement() {
                 STATISTICS
             ==================================================== */}
 
-            <div className="admin-management-stats">
+            <div >
 
-                <div className="admin-management-stat-card">
+                <div >
                     <span>Total Administrators</span>
                     <strong>{admins.length}</strong>
                 </div>
 
-                <div className="admin-management-stat-card">
+                <div >
                     <span>Search Results</span>
                     <strong>{filteredAdmins.length}</strong>
                 </div>
 
-                <div className="admin-management-stat-card">
+                <div >
                     <span>Active Administrators</span>
                     <strong>
                         {
@@ -367,9 +367,9 @@ function AdminManagement() {
             ==================================================== */}
 
             {showForm && (
-                <section className="admin-management-form-card">
+                <section >
 
-                    <div className="admin-management-section-header">
+                    <div >
 
                         <div>
                             <h2>
@@ -387,7 +387,7 @@ function AdminManagement() {
 
                         <button
                             type="button"
-                            className="admin-form-close-button"
+                            
                             onClick={resetForm}
                             disabled={saving}
                         >
@@ -399,9 +399,9 @@ function AdminManagement() {
 
                     <form onSubmit={handleSubmit}>
 
-                        <div className="admin-management-form-grid">
+                        <div >
 
-                            <div className="admin-management-field">
+                            <div >
 
                                 <label htmlFor="admin-full-name">
                                     Full Name
@@ -420,7 +420,7 @@ function AdminManagement() {
                             </div>
 
 
-                            <div className="admin-management-field">
+                            <div >
 
                                 <label htmlFor="admin-email">
                                     Email
@@ -439,14 +439,14 @@ function AdminManagement() {
                             </div>
 
 
-                            <div className="admin-management-field">
+                            <div >
 
                                 <label htmlFor="admin-password">
 
                                     Password
 
                                     {editingAdmin && (
-                                        <span className="admin-field-hint">
+                                        <span >
                                             Leave blank to keep current password
                                         </span>
                                     )}
@@ -472,11 +472,11 @@ function AdminManagement() {
                         </div>
 
 
-                        <div className="admin-management-form-actions">
+                        <div >
 
                             <button
                                 type="button"
-                                className="admin-secondary-button"
+                                
                                 onClick={resetForm}
                                 disabled={saving}
                             >
@@ -485,7 +485,7 @@ function AdminManagement() {
 
                             <button
                                 type="submit"
-                                className="admin-primary-button"
+                                
                                 disabled={saving}
                             >
                                 {saving
@@ -507,9 +507,9 @@ function AdminManagement() {
                 ADMIN LIST
             ==================================================== */}
 
-            <section className="admin-management-list-card">
+            <section >
 
-                <div className="admin-management-list-header">
+                <div >
 
                     <div>
                         <h2>
@@ -521,7 +521,7 @@ function AdminManagement() {
                         </p>
                     </div>
 
-                    <div className="admin-management-search">
+                    <div >
 
                         <input
                             type="search"
@@ -539,14 +539,14 @@ function AdminManagement() {
 
                 {loading ? (
 
-                    <div className="admin-management-state">
-                        <div className="admin-management-spinner"></div>
+                    <div >
+                        <div ></div>
                         <p>Loading administrators...</p>
                     </div>
 
                 ) : filteredAdmins.length === 0 ? (
 
-                    <div className="admin-management-state">
+                    <div >
                         <h3>
                             No administrators found
                         </h3>
@@ -560,9 +560,9 @@ function AdminManagement() {
 
                 ) : (
 
-                    <div className="admin-management-table-wrapper">
+                    <div >
 
-                        <table className="admin-management-table">
+                        <table >
 
                             <thead>
                             <tr>
@@ -585,9 +585,9 @@ function AdminManagement() {
                                     <tr key={admin.id}>
 
                                         <td>
-                                            <div className="admin-table-user">
+                                            <div >
 
-                                                <div className="admin-table-avatar">
+                                                <div >
                                                     {admin.fullName
                                                         ?.charAt(0)
                                                         .toUpperCase() || "A"}
@@ -615,7 +615,7 @@ function AdminManagement() {
 
 
                                         <td>
-                                                <span className="admin-role-badge">
+                                                <span >
                                                     {admin.role}
                                                 </span>
                                         </td>
@@ -624,11 +624,7 @@ function AdminManagement() {
                                         <td>
 
                                                 <span
-                                                    className={
-                                                        admin.enabled
-                                                            ? "admin-status-badge admin-status-active"
-                                                            : "admin-status-badge admin-status-disabled"
-                                                    }
+                                                    
                                                 >
                                                     {admin.enabled
                                                         ? "Active"
@@ -640,11 +636,11 @@ function AdminManagement() {
 
                                         <td>
 
-                                            <div className="admin-table-actions">
+                                            <div >
 
                                                 <button
                                                     type="button"
-                                                    className="admin-table-edit-button"
+                                                    
                                                     onClick={() =>
                                                         handleEditAdmin(admin)
                                                     }
@@ -660,7 +656,7 @@ function AdminManagement() {
 
                                                 <button
                                                     type="button"
-                                                    className="admin-table-delete-button"
+                                                    
                                                     onClick={() =>
                                                         handleDeleteAdmin(admin)
                                                     }

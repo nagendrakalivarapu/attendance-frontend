@@ -235,17 +235,17 @@ function AdminDashboard() {
     };
 
     return (
-        <div className="admin-layout">
+        <div >
 
             {/* ================================
                 SIDEBAR
             ================================= */}
 
-            <aside className="admin-sidebar">
+            <aside >
 
-                <div className="sidebar-brand">
+                <div >
 
-                    <div className="brand-icon">
+                    <div >
                         SA
                     </div>
 
@@ -256,50 +256,50 @@ function AdminDashboard() {
 
                 </div>
 
-                <nav className="sidebar-nav">
+                <nav >
 
                     <button
-                        className="sidebar-link active"
+                        
                         onClick={() => navigate("/admin")}
                     >
-                        <span>📊</span>
+                        <span></span>
                         Dashboard
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() => navigate("/admin/students")}
                     >
-                        <span>👨‍🎓</span>
+                        <span></span>
                         Students
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() => navigate("/admin/teachers")}
                     >
-                        <span>👨‍🏫</span>
+                        <span></span>
                         Teachers
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() => navigate("/admin/courses")}
                     >
-                        <span>📚</span>
+                        <span></span>
                         Courses
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() => navigate("/admin/enrollments")}
                     >
-                        <span>📝</span>
+                        <span></span>
                         Enrollments
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() => navigate("/admin/admins")}
                     >
                         <span>  </span>
@@ -307,30 +307,30 @@ function AdminDashboard() {
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() => navigate("/admin/attendance")}
                     >
-                        <span>📅</span>
+                        <span></span>
                         Attendance
                     </button>
 
                 </nav>
 
-                <div className="sidebar-bottom">
+                <div >
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() => refreshDashboard()}
                     >
-                        <span>🔄</span>
+                        <span></span>
                         Refresh Dashboard
                     </button>
 
                     <button
-                        className="sidebar-link logout-link"
+                        
                         onClick={logout}
                     >
-                        <span>🚪</span>
+                        <span></span>
                         Logout
                     </button>
 
@@ -342,13 +342,13 @@ function AdminDashboard() {
                 MAIN CONTENT
             ================================= */}
 
-            <main className="admin-main">
+            <main >
 
                 {/* ================================
                     TOPBAR
                 ================================= */}
 
-                <header className="admin-topbar">
+                <header >
 
                     <div>
                         <h2>Dashboard</h2>
@@ -358,9 +358,9 @@ function AdminDashboard() {
                         </p>
                     </div>
 
-                    <div className="admin-profile">
+                    <div >
 
-                        <div className="profile-avatar">
+                        <div >
                             {user?.email
                                 ?.charAt(0)
                                 .toUpperCase()}
@@ -384,12 +384,12 @@ function AdminDashboard() {
                     WELCOME CARD
                 ================================= */}
 
-                <section className="welcome-card">
+                <section >
 
                     <div>
 
                         <h3>
-                            Welcome back, Admin 👋
+                            Welcome back, Admin 
                         </h3>
 
                         <p>
@@ -400,8 +400,8 @@ function AdminDashboard() {
 
                     </div>
 
-                    <div className="welcome-icon">
-                        🎓
+                    <div >
+                        
                     </div>
 
                 </section>
@@ -410,14 +410,14 @@ function AdminDashboard() {
                     STATISTICS
                 ================================= */}
 
-                <section className="stats-grid">
+                <section >
 
                     {/* Students */}
 
-                    <div className="stat-card">
+                    <div >
 
-                        <div className="stat-icon students-icon">
-                            👨‍🎓
+                        <div >
+                            
                         </div>
 
                         <div>
@@ -446,10 +446,10 @@ function AdminDashboard() {
 
                     {/* Teachers */}
 
-                    <div className="stat-card">
+                    <div >
 
-                        <div className="stat-icon teachers-icon">
-                            👨‍🏫
+                        <div >
+                            
                         </div>
 
                         <div>
@@ -478,10 +478,10 @@ function AdminDashboard() {
 
                     {/* Courses */}
 
-                    <div className="stat-card">
+                    <div >
 
-                        <div className="stat-icon courses-icon">
-                            📚
+                        <div >
+                            
                         </div>
 
                         <div>
@@ -510,10 +510,10 @@ function AdminDashboard() {
 
                     {/* Attendance */}
 
-                    <div className="stat-card">
+                    <div >
 
-                        <div className="stat-icon attendance-icon">
-                            📊
+                        <div >
+                            
                         </div>
 
                         <div>
@@ -545,7 +545,7 @@ function AdminDashboard() {
                 </section>
 
                 {statsError && (
-                    <div className="attendance-dashboard-error">
+                    <div >
                         <strong>
                             Unable to load dashboard counts
                         </strong>
@@ -555,7 +555,7 @@ function AdminDashboard() {
                         </p>
 
                         <button
-                            className="attendance-retry-button"
+                            
                             onClick={() => void loadDashboardStats()}
                         >
                             Try Again
@@ -567,9 +567,9 @@ function AdminDashboard() {
                     ATTENDANCE OVERVIEW
                 ================================= */}
 
-                <section className="dashboard-section">
+                <section >
 
-                    <div className="section-header">
+                    <div >
 
                         <div>
 
@@ -588,7 +588,7 @@ function AdminDashboard() {
                             !attendanceError && (
 
                                 <button
-                                    className="attendance-refresh-button"
+                                    
                                     onClick={() =>
                                         void loadAttendanceDashboard()
                                     }
@@ -604,9 +604,9 @@ function AdminDashboard() {
 
                     {attendanceLoading && (
 
-                        <div className="attendance-dashboard-message">
+                        <div >
 
-                            <div className="attendance-loading-spinner">
+                            <div >
                                 ⟳
                             </div>
 
@@ -627,10 +627,10 @@ function AdminDashboard() {
                     {!attendanceLoading &&
                         attendanceError && (
 
-                            <div className="attendance-dashboard-error">
+                            <div >
 
-                                <div className="attendance-state-icon">
-                                    ⚠️
+                                <div >
+                                    ️
                                 </div>
 
                                 <strong>
@@ -642,7 +642,7 @@ function AdminDashboard() {
                                 </p>
 
                                 <button
-                                    className="attendance-retry-button"
+                                    
                                     onClick={() =>
                                         void loadAttendanceDashboard()
                                     }
@@ -660,14 +660,14 @@ function AdminDashboard() {
                         !attendanceError &&
                         attendanceDashboard && (
 
-                            <div className="attendance-overview-grid">
+                            <div >
 
                                 {/* Total Sessions */}
 
-                                <div className="attendance-overview-card">
+                                <div >
 
-                                    <div className="attendance-overview-icon">
-                                        📅
+                                    <div >
+                                        
                                     </div>
 
                                     <div>
@@ -692,10 +692,10 @@ function AdminDashboard() {
 
                                 {/* Open Sessions */}
 
-                                <div className="attendance-overview-card open">
+                                <div >
 
-                                    <div className="attendance-overview-icon">
-                                        🟢
+                                    <div >
+                                        
                                     </div>
 
                                     <div>
@@ -720,10 +720,10 @@ function AdminDashboard() {
 
                                 {/* Closed Sessions */}
 
-                                <div className="attendance-overview-card closed">
+                                <div >
 
-                                    <div className="attendance-overview-icon">
-                                        🔒
+                                    <div >
+                                        
                                     </div>
 
                                     <div>
@@ -748,10 +748,10 @@ function AdminDashboard() {
 
                                 {/* Attendance Records */}
 
-                                <div className="attendance-overview-card">
+                                <div >
 
-                                    <div className="attendance-overview-icon">
-                                        📝
+                                    <div >
+                                        
                                     </div>
 
                                     <div>
@@ -776,10 +776,10 @@ function AdminDashboard() {
 
                                 {/* Present */}
 
-                                <div className="attendance-overview-card present">
+                                <div >
 
-                                    <div className="attendance-overview-icon">
-                                        ✓
+                                    <div >
+                                        
                                     </div>
 
                                     <div>
@@ -804,10 +804,10 @@ function AdminDashboard() {
 
                                 {/* Absent */}
 
-                                <div className="attendance-overview-card absent">
+                                <div >
 
-                                    <div className="attendance-overview-icon">
-                                        ✕
+                                    <div >
+                                        
                                     </div>
 
                                     <div>
@@ -832,9 +832,9 @@ function AdminDashboard() {
 
                                 {/* Overall Percentage */}
 
-                                <div className="attendance-percentage-card">
+                                <div >
 
-                                    <div className="attendance-percentage-content">
+                                    <div >
 
                                         <div>
 
@@ -855,27 +855,19 @@ function AdminDashboard() {
 
                                         </div>
 
-                                        <div className="attendance-percentage-icon">
-                                            📊
+                                        <div >
+                                            
                                         </div>
 
                                     </div>
 
                                     {/* Progress Bar */}
 
-                                    <div className="attendance-progress-track">
+                                    <div >
 
                                         <div
-                                            className="attendance-progress-fill"
-                                            style={{
-                                                width: `${Math.min(
-                                                    Math.max(
-                                                        attendanceDashboard.attendancePercentage || 0,
-                                                        0
-                                                    ),
-                                                    100
-                                                )}%`
-                                            }}
+                                            
+                                            
                                         />
 
                                     </div>
@@ -892,16 +884,16 @@ function AdminDashboard() {
                     RECENT ATTENDANCE SESSIONS
                 ================================= */}
 
-                <section className="dashboard-section admin-recent-attendance-section">
+                <section >
 
-                    <div className="section-header">
+                    <div >
                         <div>
                             <h3>Recent Attendance Sessions</h3>
                             <p>Latest attendance activity across the system</p>
                         </div>
 
                         <button
-                            className="attendance-refresh-button"
+                            
                             onClick={() => void loadRecentSessions()}
                             disabled={recentSessionsLoading}
                         >
@@ -910,11 +902,11 @@ function AdminDashboard() {
                     </div>
 
                     {recentSessionsError && (
-                        <div className="attendance-dashboard-error">
+                        <div >
                             <strong>Unable to load recent sessions</strong>
                             <p>{recentSessionsError}</p>
                             <button
-                                className="attendance-retry-button"
+                                
                                 onClick={() => void loadRecentSessions()}
                             >
                                 Try Again
@@ -923,7 +915,7 @@ function AdminDashboard() {
                     )}
 
                     {!recentSessionsLoading && !recentSessionsError && recentSessions.length === 0 && (
-                        <div className="attendance-dashboard-message">
+                        <div >
                             <strong>No attendance sessions found</strong>
                             <small>Recent sessions will appear here when attendance is started.</small>
                         </div>
@@ -931,8 +923,8 @@ function AdminDashboard() {
 
                     {!recentSessionsLoading && !recentSessionsError && recentSessions.length > 0 && (
                         <>
-                            <div className="admin-attendance-trend">
-                                <div className="admin-attendance-trend-header">
+                            <div >
+                                <div >
                                     <div>
                                         <strong>Recent Attendance Trend</strong>
                                         <small>Attendance percentage for the latest sessions</small>
@@ -940,20 +932,20 @@ function AdminDashboard() {
                                     <span>100%</span>
                                 </div>
 
-                                <div className="admin-attendance-trend-chart">
+                                <div >
                                     {recentSessions.map((session) => {
                                         const percentage = getSessionPercentage(session);
                                         return (
                                             <button
                                                 key={session.sessionId}
                                                 type="button"
-                                                className="admin-attendance-trend-bar"
+                                                
                                                 title={`${session.courseCode || "Course"}: ${percentage.toFixed(2)}%`}
                                                 onClick={() => navigate("/admin/attendance/history")}
                                             >
                                                 <span
-                                                    className="admin-attendance-trend-fill"
-                                                    style={{ height: getTrendHeight(session) }}
+                                                    
+                                                    
                                                 />
                                                 <small>{Math.round(percentage)}%</small>
                                             </button>
@@ -962,8 +954,8 @@ function AdminDashboard() {
                                 </div>
                             </div>
 
-                            <div className="admin-recent-sessions-table-wrap">
-                                <table className="admin-recent-sessions-table">
+                            <div >
+                                <table >
                                     <thead>
                                     <tr>
                                         <th>Session</th>
@@ -1000,14 +992,14 @@ function AdminDashboard() {
                                                     <strong>{percentage.toFixed(2)}%</strong>
                                                 </td>
                                                 <td>
-                                                        <span className={`admin-session-status ${status.toLowerCase()}`}>
+                                                        <span >
                                                             {status}
                                                         </span>
                                                 </td>
                                                 <td>
                                                     <button
                                                         type="button"
-                                                        className="admin-session-view-button"
+                                                        
                                                         onClick={() => navigate("/admin/attendance/history")}
                                                     >
                                                         View History
@@ -1028,9 +1020,9 @@ function AdminDashboard() {
                     QUICK ACTIONS
                 ================================= */}
 
-                <section className="dashboard-section">
+                <section >
 
-                    <div className="section-header">
+                    <div >
 
                         <div>
 
@@ -1046,19 +1038,19 @@ function AdminDashboard() {
 
                     </div>
 
-                    <div className="quick-actions">
+                    <div >
 
                         {/* Students */}
 
                         <button
-                            className="action-card"
+                            
                             onClick={() =>
                                 navigate("/admin/students")
                             }
                         >
 
-                            <div className="action-icon">
-                                👨‍🎓
+                            <div >
+                                
                             </div>
 
                             <div>
@@ -1074,7 +1066,7 @@ function AdminDashboard() {
 
                             </div>
 
-                            <span className="action-arrow">
+                            <span >
                                 →
                             </span>
 
@@ -1083,14 +1075,14 @@ function AdminDashboard() {
                         {/* Teachers */}
 
                         <button
-                            className="action-card"
+                            
                             onClick={() =>
                                 navigate("/admin/teachers")
                             }
                         >
 
-                            <div className="action-icon">
-                                👨‍🏫
+                            <div >
+                                
                             </div>
 
                             <div>
@@ -1106,7 +1098,7 @@ function AdminDashboard() {
 
                             </div>
 
-                            <span className="action-arrow">
+                            <span >
                                 →
                             </span>
 
@@ -1115,14 +1107,14 @@ function AdminDashboard() {
                         {/* Courses */}
 
                         <button
-                            className="action-card"
+                            
                             onClick={() =>
                                 navigate("/admin/courses")
                             }
                         >
 
-                            <div className="action-icon">
-                                📚
+                            <div >
+                                
                             </div>
 
                             <div>
@@ -1137,7 +1129,7 @@ function AdminDashboard() {
 
                             </div>
 
-                            <span className="action-arrow">
+                            <span >
                                 →
                             </span>
 
@@ -1146,14 +1138,14 @@ function AdminDashboard() {
                         {/* Attendance */}
 
                         <button
-                            className="action-card"
+                            
                             onClick={() =>
                                 navigate("/admin/attendance")
                             }
                         >
 
-                            <div className="action-icon">
-                                📊
+                            <div >
+                                
                             </div>
 
                             <div>
@@ -1169,7 +1161,7 @@ function AdminDashboard() {
 
                             </div>
 
-                            <span className="action-arrow">
+                            <span >
                                 →
                             </span>
 
@@ -1183,9 +1175,9 @@ function AdminDashboard() {
                     SYSTEM STATUS
                 ================================= */}
 
-                <section className="dashboard-section">
+                <section >
 
-                    <div className="section-header">
+                    <div >
 
                         <div>
 
@@ -1200,7 +1192,7 @@ function AdminDashboard() {
                         </div>
 
                         <button
-                            className="attendance-refresh-button"
+                            
                             onClick={() => void checkSystemStatus()}
                             disabled={statusLoading}
                         >
@@ -1209,14 +1201,14 @@ function AdminDashboard() {
 
                     </div>
 
-                    <div className="status-grid">
+                    <div >
 
                         {/* Spring Boot */}
 
-                        <div className="status-card">
+                        <div >
 
                             <div
-                                className={`status-dot ${systemStatus.backend}`}
+                                
                             ></div>
 
                             <div>
@@ -1232,7 +1224,7 @@ function AdminDashboard() {
                             </div>
 
                             <span
-                                className={getStatusClass(systemStatus.backend)}
+                                
                             >
                                 {getStatusLabel(systemStatus.backend)}
                             </span>
@@ -1241,10 +1233,10 @@ function AdminDashboard() {
 
                         {/* MySQL */}
 
-                        <div className="status-card">
+                        <div >
 
                             <div
-                                className={`status-dot ${systemStatus.database}`}
+                                
                             ></div>
 
                             <div>
@@ -1260,7 +1252,7 @@ function AdminDashboard() {
                             </div>
 
                             <span
-                                className={getStatusClass(systemStatus.database)}
+                                
                             >
                                 {getStatusLabel(systemStatus.database)}
                             </span>
@@ -1269,10 +1261,10 @@ function AdminDashboard() {
 
                         {/* Face Recognition */}
 
-                        <div className="status-card">
+                        <div >
 
                             <div
-                                className={`status-dot ${systemStatus.faceApi}`}
+                                
                             ></div>
 
                             <div>
@@ -1288,7 +1280,7 @@ function AdminDashboard() {
                             </div>
 
                             <span
-                                className={getStatusClass(systemStatus.faceApi)}
+                                
                             >
                                 {getStatusLabel(systemStatus.faceApi)}
                             </span>

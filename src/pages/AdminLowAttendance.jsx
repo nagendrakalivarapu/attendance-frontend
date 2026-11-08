@@ -95,117 +95,117 @@ function AdminLowAttendance() {
     };
 
     return (
-        <div className="admin-layout">
+        <div >
             {/* Sidebar */}
-            <aside className="admin-sidebar">
-                <div className="admin-sidebar-brand">
-                    <div className="admin-brand-icon">SA</div>
+            <aside >
+                <div >
+                    <div >SA</div>
                     <div>
                         <h2>Smart Attendance</h2>
                         <span>Admin Panel</span>
                     </div>
                 </div>
 
-                <nav className="admin-sidebar-nav">
+                <nav >
                     <button
-                        className="admin-nav-item"
+                        
                         onClick={() => navigate("/admin")}
                     >
-                        <span>📊</span>
+                        <span></span>
                         Dashboard
                     </button>
 
                     <button
-                        className="admin-nav-item"
+                        
                         onClick={() => navigate("/admin/students")}
                     >
-                        <span>👨‍🎓</span>
+                        <span></span>
                         Students
                     </button>
 
                     <button
-                        className="admin-nav-item"
+                        
                         onClick={() => navigate("/admin/teachers")}
                     >
-                        <span>👨‍🏫</span>
+                        <span></span>
                         Teachers
                     </button>
 
                     <button
-                        className="admin-nav-item"
+                        
                         onClick={() => navigate("/admin/courses")}
                     >
-                        <span>📚</span>
+                        <span></span>
                         Courses
                     </button>
 
                     <button
-                        className="admin-nav-item"
+                        
                         onClick={() => navigate("/admin/enrollments")}
                     >
-                        <span>📝</span>
+                        <span></span>
                         Enrollments
                     </button>
 
                     <button
-                        className="admin-nav-item active"
+                        
                         onClick={() => navigate("/admin/attendance")}
                     >
-                        <span>📋</span>
+                        <span></span>
                         Attendance
                     </button>
 
                     <button
-                        className="admin-nav-item"
+                        
                         onClick={() => navigate("/admin/attendance")}
                     >
-                        <span>📊</span>
+                        <span></span>
                         Attendance Reports
                     </button>
 
                     <button
-                        className="admin-nav-item"
+                        
                         onClick={() => navigate("/admin/attendance/history")}
                     >
-                        <span>🕘</span>
+                        <span></span>
                         Attendance History
                     </button>
                 </nav>
 
-                <div className="admin-sidebar-footer">
+                <div >
                     <button
-                        className="admin-nav-item"
+                        
                         onClick={() => navigate("/login")}
                     >
-                        <span>🚪</span>
+                        <span></span>
                         Logout
                     </button>
                 </div>
             </aside>
 
             {/* Main */}
-            <main className="admin-main">
-                <header className="admin-topbar">
+            <main >
+                <header >
                     <div>
                         <h1>Low Attendance Report</h1>
                         <p>Identify students below the required attendance threshold.</p>
                     </div>
 
-                    <div className="admin-topbar-actions">
+                    <div >
                         <button
-                            className="attendance-report-back-button"
+                            
                             onClick={() => navigate("/admin/attendance")}
                         >
                             Reports
                         </button>
                         <button
-                            className="attendance-report-back-button"
+                            
                             onClick={() => navigate("/admin/attendance/history")}
                         >
                             History
                         </button>
-                        <div className="admin-topbar-user">
-                            <div className="admin-user-avatar">
+                        <div >
+                            <div >
                                 {user?.email?.charAt(0)?.toUpperCase() || "A"}
                             </div>
 
@@ -217,11 +217,11 @@ function AdminLowAttendance() {
                     </div>
                 </header>
 
-                <section className="admin-content">
+                <section >
                     {/* Filters */}
-                    <div className="attendance-report-filter-card">
-                        <div className="attendance-report-filter">
-                            <div className="attendance-report-field">
+                    <div >
+                        <div >
+                            <div >
                                 <label>Course</label>
 
                                 <select
@@ -241,7 +241,7 @@ function AdminLowAttendance() {
                                 </select>
                             </div>
 
-                            <div className="attendance-report-field">
+                            <div >
                                 <label>Attendance Threshold</label>
 
                                 <select
@@ -260,7 +260,7 @@ function AdminLowAttendance() {
                             </div>
 
                             <button
-                                className="attendance-report-generate-button"
+                                
                                 onClick={loadLowAttendance}
                                 disabled={loadingReport || !selectedCourse}
                             >
@@ -268,7 +268,7 @@ function AdminLowAttendance() {
                             </button>
 
                             <button
-                                className="attendance-report-refresh-button"
+                                
                                 onClick={loadCourses}
                                 disabled={loadingCourses}
                             >
@@ -278,16 +278,16 @@ function AdminLowAttendance() {
                     </div>
 
                     {error && (
-                        <div className="attendance-report-error">
+                        <div >
                             {error}
                         </div>
                     )}
 
                     {/* Course Header */}
                     {selectedCourseData && (
-                        <div className="low-attendance-course-header">
+                        <div >
                             <div>
-                <span className="low-attendance-course-code">
+                <span >
                   {selectedCourseData.courseCode}
                 </span>
 
@@ -299,7 +299,7 @@ function AdminLowAttendance() {
                                 </p>
                             </div>
 
-                            <div className="low-attendance-threshold">
+                            <div >
                                 <span>Required Attendance</span>
                                 <strong>{threshold}%</strong>
                             </div>
@@ -307,9 +307,9 @@ function AdminLowAttendance() {
                     )}
 
                     {/* Statistics */}
-                    <div className="low-attendance-stat-grid">
-                        <div className="low-attendance-stat-card">
-                            <div className="low-attendance-stat-icon">⚠️</div>
+                    <div >
+                        <div >
+                            <div >️</div>
 
                             <div>
                                 <span>Low Attendance Students</span>
@@ -317,8 +317,8 @@ function AdminLowAttendance() {
                             </div>
                         </div>
 
-                        <div className="low-attendance-stat-card">
-                            <div className="low-attendance-stat-icon">📉</div>
+                        <div >
+                            <div ></div>
 
                             <div>
                                 <span>Average of Flagged Students</span>
@@ -326,8 +326,8 @@ function AdminLowAttendance() {
                             </div>
                         </div>
 
-                        <div className="low-attendance-stat-card">
-                            <div className="low-attendance-stat-icon">🎯</div>
+                        <div >
+                            <div ></div>
 
                             <div>
                                 <span>Attendance Threshold</span>
@@ -337,8 +337,8 @@ function AdminLowAttendance() {
                     </div>
 
                     {/* Table */}
-                    <div className="attendance-report-table-card">
-                        <div className="attendance-report-table-header">
+                    <div >
+                        <div >
                             <div>
                                 <h2>Students Requiring Attention</h2>
                                 <p>
@@ -346,18 +346,18 @@ function AdminLowAttendance() {
                                 </p>
                             </div>
 
-                            <span className="low-attendance-count">
+                            <span >
                 {students.length} student{students.length !== 1 ? "s" : ""}
               </span>
                         </div>
 
                         {loadingReport ? (
-                            <div className="attendance-report-loading">
+                            <div >
                                 Loading low attendance report...
                             </div>
                         ) : students.length === 0 ? (
-                            <div className="attendance-report-empty">
-                                <div className="attendance-empty-icon">✓</div>
+                            <div >
+                                <div ></div>
                                 <h3>No Low Attendance Students</h3>
                                 <p>
                                     All students in this course are meeting the selected
@@ -365,8 +365,8 @@ function AdminLowAttendance() {
                                 </p>
                             </div>
                         ) : (
-                            <div className="attendance-report-table-wrapper">
-                                <table className="attendance-report-table">
+                            <div >
+                                <table >
                                     <thead>
                                     <tr>
                                         <th>Student</th>
@@ -388,8 +388,8 @@ function AdminLowAttendance() {
                                         return (
                                             <tr key={student.studentId}>
                                                 <td>
-                                                    <div className="attendance-student-cell">
-                                                        <div className="attendance-student-avatar">
+                                                    <div >
+                                                        <div >
                                                             {student.studentName
                                                                 ?.charAt(0)
                                                                 ?.toUpperCase() || "S"}
@@ -403,26 +403,24 @@ function AdminLowAttendance() {
 
                                                 <td>{student.totalSessions}</td>
 
-                                                <td className="attendance-present-text">
+                                                <td >
                                                     {student.presentCount}
                                                 </td>
 
-                                                <td className="attendance-absent-text">
+                                                <td >
                                                     {student.absentCount}
                                                 </td>
 
                                                 <td>
                             <span
-                                className={`low-attendance-percentage ${getAttendanceClass(
-                                    percentage
-                                )}`}
+                                
                             >
                               {percentage.toFixed(2)}%
                             </span>
                                                 </td>
 
                                                 <td>
-                            <span className="low-attendance-status">
+                            <span >
                               LOW ATTENDANCE
                             </span>
                                                 </td>

@@ -152,17 +152,17 @@ function AdminAttendanceHistory() {
     };
 
     return (
-        <div className="admin-layout">
+        <div >
 
             {/* =========================================
                 SIDEBAR
             ========================================= */}
 
-            <aside className="admin-sidebar">
+            <aside >
 
-                <div className="sidebar-brand">
+                <div >
 
-                    <div className="brand-icon">
+                    <div >
                         SA
                     </div>
 
@@ -173,65 +173,65 @@ function AdminAttendanceHistory() {
 
                 </div>
 
-                <nav className="sidebar-nav">
+                <nav >
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() =>
                             navigate("/admin")
                         }
                     >
-                        <span>📊</span>
+                        <span></span>
                         Dashboard
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() =>
                             navigate("/admin/students")
                         }
                     >
-                        <span>👨‍🎓</span>
+                        <span></span>
                         Students
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() =>
                             navigate("/admin/teachers")
                         }
                     >
-                        <span>👨‍🏫</span>
+                        <span></span>
                         Teachers
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() =>
                             navigate("/admin/courses")
                         }
                     >
-                        <span>📚</span>
+                        <span></span>
                         Courses
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() =>
                             navigate("/admin/enrollments")
                         }
                     >
-                        <span>📝</span>
+                        <span></span>
                         Enrollments
                     </button>
 
                     <button
-                        className="sidebar-link active"
+                        
                         onClick={() =>
                             navigate("/admin/attendance")
                         }
                     >
-                        <span>📅</span>
+                        <span></span>
                         Attendance
                     </button>
 
@@ -244,11 +244,11 @@ function AdminAttendanceHistory() {
                 MAIN
             ========================================= */}
 
-            <main className="admin-main">
+            <main >
 
                 {/* TOPBAR */}
 
-                <header className="admin-topbar">
+                <header >
 
                     <div>
                         <h2>
@@ -262,15 +262,11 @@ function AdminAttendanceHistory() {
                     </div>
 
                     <div
-                        style={{
-                            display: "flex",
-                            gap: "10px",
-                            flexWrap: "wrap",
-                        }}
+                        
                     >
 
                         <button
-                            className="attendance-report-back-button"
+                            
                             onClick={() =>
                                 navigate(
                                     "/admin/attendance"
@@ -281,7 +277,7 @@ function AdminAttendanceHistory() {
                         </button>
 
                         <button
-                            className="attendance-report-back-button"
+                            
                             onClick={() =>
                                 navigate(
                                     "/admin/attendance/low"
@@ -292,7 +288,7 @@ function AdminAttendanceHistory() {
                         </button>
 
                         <button
-                            className="attendance-report-refresh-button"
+                            
                             onClick={() =>
                                 void loadHistory()
                             }
@@ -308,18 +304,18 @@ function AdminAttendanceHistory() {
 
                 {/* CONTENT */}
 
-                <section className="admin-content">
+                <section >
 
                     {/* =====================================
                         STATISTICS
                     ===================================== */}
 
-                    <section className="attendance-report-stat-grid">
+                    <section >
 
-                        <div className="attendance-report-stat-card">
+                        <div >
 
-                            <div className="report-stat-icon blue">
-                                📅
+                            <div >
+                                
                             </div>
 
                             <div>
@@ -335,9 +331,9 @@ function AdminAttendanceHistory() {
                         </div>
 
 
-                        <div className="attendance-report-stat-card">
+                        <div >
 
-                            <div className="report-stat-icon green">
+                            <div >
                                 ●
                             </div>
 
@@ -354,10 +350,10 @@ function AdminAttendanceHistory() {
                         </div>
 
 
-                        <div className="attendance-report-stat-card">
+                        <div >
 
-                            <div className="report-stat-icon purple">
-                                ✓
+                            <div >
+                                
                             </div>
 
                             <div>
@@ -373,10 +369,10 @@ function AdminAttendanceHistory() {
                         </div>
 
 
-                        <div className="attendance-report-stat-card present">
+                        <div >
 
-                            <div className="report-stat-icon green">
-                                👤
+                            <div >
+                                
                             </div>
 
                             <div>
@@ -392,10 +388,10 @@ function AdminAttendanceHistory() {
                         </div>
 
 
-                        <div className="attendance-report-stat-card warning">
+                        <div >
 
-                            <div className="report-stat-icon orange">
-                                📊
+                            <div >
+                                
                             </div>
 
                             <div>
@@ -418,12 +414,12 @@ function AdminAttendanceHistory() {
                     ===================================== */}
 
                     <section
-                        className="attendance-report-filter-card"
-                        style={{ marginTop: "20px" }}
+                        
+                        
                     >
 
                         <div
-                            className="attendance-report-filter"
+                            
                         >
 
                             <label>
@@ -445,7 +441,7 @@ function AdminAttendanceHistory() {
 
 
                         <div
-                            className="attendance-report-filter"
+                            
                         >
 
                             <label>
@@ -479,7 +475,7 @@ function AdminAttendanceHistory() {
 
 
                         <button
-                            className="attendance-report-refresh-button"
+                            
                             onClick={() => {
                                 setSearch("");
                                 setStatusFilter("ALL");
@@ -497,10 +493,10 @@ function AdminAttendanceHistory() {
 
                     {error && (
 
-                        <div className="attendance-report-error">
+                        <div >
 
                             <span>
-                                ⚠️
+                                ️
                             </span>
 
                             <div>
@@ -526,9 +522,9 @@ function AdminAttendanceHistory() {
 
                     {loading && (
 
-                        <div className="attendance-report-loading">
+                        <div >
 
-                            <div className="attendance-loading-spinner">
+                            <div >
                                 ⟳
                             </div>
 
@@ -552,11 +548,11 @@ function AdminAttendanceHistory() {
                     {!loading && !error && (
 
                         <section
-                            className="attendance-report-table-card"
-                            style={{ marginTop: "20px" }}
+                            
+                            
                         >
 
-                            <div className="attendance-report-table-header">
+                            <div >
 
                                 <div>
 
@@ -571,7 +567,7 @@ function AdminAttendanceHistory() {
 
                                 </div>
 
-                                <span className="attendance-report-count">
+                                <span >
                                     {filteredSessions.length} Sessions
                                 </span>
 
@@ -580,10 +576,10 @@ function AdminAttendanceHistory() {
 
                             {filteredSessions.length === 0 ? (
 
-                                <div className="attendance-report-no-data">
+                                <div >
 
                                     <div>
-                                        📭
+                                        
                                     </div>
 
                                     <h4>
@@ -600,9 +596,9 @@ function AdminAttendanceHistory() {
 
                             ) : (
 
-                                <div className="attendance-report-table-wrapper">
+                                <div >
 
-                                    <table className="attendance-report-table">
+                                    <table >
 
                                         <thead>
 
@@ -695,11 +691,11 @@ function AdminAttendanceHistory() {
                                                         <td>
 
                                                             <div
-                                                                className="attendance-student-cell"
+                                                                
                                                             >
 
                                                                 <div
-                                                                    className="attendance-student-avatar"
+                                                                    
                                                                 >
                                                                     {session.courseCode
                                                                             ?.charAt(
@@ -735,11 +731,11 @@ function AdminAttendanceHistory() {
                                                         <td>
 
                                                             <div
-                                                                className="attendance-student-cell"
+                                                                
                                                             >
 
                                                                 <div
-                                                                    className="attendance-student-avatar"
+                                                                    
                                                                 >
                                                                     {getInitials(
                                                                         session.teacherName
@@ -812,7 +808,7 @@ function AdminAttendanceHistory() {
 
                                                         <td>
 
-                                                                <span className="present-number">
+                                                                <span >
                                                                     {
                                                                         session.presentCount
                                                                     }
@@ -825,7 +821,7 @@ function AdminAttendanceHistory() {
 
                                                         <td>
 
-                                                                <span className="absent-number">
+                                                                <span >
                                                                     {
                                                                         session.absentCount
                                                                     }
@@ -838,33 +834,21 @@ function AdminAttendanceHistory() {
 
                                                         <td>
 
-                                                            <div className="attendance-percentage-cell">
+                                                            <div >
 
                                                                 <strong
-                                                                    className={getAttendanceClass(
-                                                                        percentage
-                                                                    )}
+                                                                    
                                                                 >
                                                                     {
                                                                         percentage
                                                                     }%
                                                                 </strong>
 
-                                                                <div className="mini-progress">
+                                                                <div >
 
                                                                     <div
-                                                                        className={getAttendanceClass(
-                                                                            percentage
-                                                                        )}
-                                                                        style={{
-                                                                            width: `${Math.min(
-                                                                                Math.max(
-                                                                                    percentage,
-                                                                                    0
-                                                                                ),
-                                                                                100
-                                                                            )}%`,
-                                                                        }}
+                                                                        
+                                                                        
                                                                     />
 
                                                                 </div>
@@ -881,14 +865,14 @@ function AdminAttendanceHistory() {
                                                             {session.status ===
                                                             "OPEN" ? (
 
-                                                                <span className="attendance-status-badge good">
+                                                                <span >
                                                                         ● Open
                                                                     </span>
 
                                                             ) : (
 
-                                                                <span className="attendance-status-badge">
-                                                                        ✓ Closed
+                                                                <span >
+                                                                         Closed
                                                                     </span>
 
                                                             )}

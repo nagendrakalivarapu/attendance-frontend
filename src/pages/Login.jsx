@@ -345,34 +345,32 @@ function Login() {
     if (step === "login") {
 
         return (
-            <div className="container d-flex justify-content-center align-items-center min-vh-100">
+            <div >
 
                 <div
-                    className="card shadow p-4"
-                    style={{
-                        width: "400px"
-                    }}
+                    
+                    
                 >
 
-                    <h2 className="text-center mb-4">
+                    <h2 >
                         Smart Attendance
                     </h2>
 
 
-                    <h5 className="text-center mb-4">
+                    <h5 >
                         Login
                     </h5>
 
 
                     {error && (
-                        <div className="alert alert-danger">
+                        <div >
                             {error}
                         </div>
                     )}
 
 
                     {success && (
-                        <div className="alert alert-success">
+                        <div >
                             {success}
                         </div>
                     )}
@@ -384,15 +382,15 @@ function Login() {
 
                         {/* EMAIL */}
 
-                        <div className="mb-3">
+                        <div >
 
-                            <label className="form-label">
+                            <label >
                                 Email
                             </label>
 
                             <input
                                 type="email"
-                                className="form-control"
+                                
                                 value={email}
                                 onChange={(event) =>
                                     setEmail(
@@ -409,14 +407,14 @@ function Login() {
 
                         {/* PASSWORD */}
 
-                        <div className="mb-3">
+                        <div >
 
-                            <label className="form-label">
+                            <label >
                                 Password
                             </label>
 
 
-                            <div className="login-password-field">
+                            <div >
 
                                 <input
                                     type={
@@ -424,7 +422,7 @@ function Login() {
                                             ? "text"
                                             : "password"
                                     }
-                                    className="form-control"
+                                    
                                     value={password}
                                     onChange={(event) =>
                                         setPassword(
@@ -439,7 +437,7 @@ function Login() {
 
                                 <button
                                     type="button"
-                                    className="login-password-toggle"
+                                    
                                     onClick={() =>
                                         setShowPassword(
                                             previous =>
@@ -461,7 +459,7 @@ function Login() {
 
                         <button
                             type="submit"
-                            className="btn btn-primary w-100"
+                            
                             disabled={loading}
                         >
 
@@ -485,32 +483,30 @@ function Login() {
     // ============================================================
 
     return (
-        <div className="container d-flex justify-content-center align-items-center min-vh-100">
+        <div >
 
             <div
-                className="card shadow p-4"
-                style={{
-                    width: "400px"
-                }}
+                
+                
             >
 
-                <div className="text-center mb-4">
+                <div >
 
                     <h2>
                         Verify Your Identity
                     </h2>
 
-                    <p className="text-muted mb-1">
+                    <p >
                         {role === "ADMIN"
                             ? "Administrator verification"
                             : "Teacher verification"}
                     </p>
 
-                    <small className="text-muted">
+                    <small >
                         Enter the 6-digit code sent to
                     </small>
 
-                    <div className="fw-semibold mt-1">
+                    <div >
                         {email}
                     </div>
 
@@ -518,14 +514,14 @@ function Login() {
 
 
                 {error && (
-                    <div className="alert alert-danger">
+                    <div >
                         {error}
                     </div>
                 )}
 
 
                 {success && (
-                    <div className="alert alert-success">
+                    <div >
                         {success}
                     </div>
                 )}
@@ -535,15 +531,15 @@ function Login() {
                     onSubmit={handleVerifyOtp}
                 >
 
-                    <div className="mb-4">
+                    <div >
 
-                        <label className="form-label">
+                        <label >
                             Verification Code
                         </label>
 
                         <input
                             type="text"
-                            className="form-control text-center"
+                            
                             value={otp}
                             onChange={(event) => {
 
@@ -559,11 +555,7 @@ function Login() {
                             autoComplete="one-time-code"
                             maxLength={6}
                             required
-                            style={{
-                                fontSize: "24px",
-                                letterSpacing: "8px",
-                                fontWeight: "600"
-                            }}
+                            
                         />
 
                     </div>
@@ -571,7 +563,7 @@ function Login() {
 
                     <button
                         type="submit"
-                        className="btn btn-primary w-100"
+                        
                         disabled={
                             loading ||
                             otp.length !== 6
@@ -589,11 +581,11 @@ function Login() {
 
                 {/* RESEND */}
 
-                <div className="text-center mt-4">
+                <div >
 
                     {resendCountdown > 0 ? (
 
-                        <p className="text-muted mb-0">
+                        <p >
 
                             Resend available in{" "}
 
@@ -607,7 +599,7 @@ function Login() {
 
                         <button
                             type="button"
-                            className="btn btn-link"
+                            
                             onClick={handleResendOtp}
                             disabled={resending}
                         >
@@ -624,11 +616,11 @@ function Login() {
 
                 {/* BACK */}
 
-                <div className="text-center mt-2">
+                <div >
 
                     <button
                         type="button"
-                        className="btn btn-link text-secondary"
+                        
                         onClick={handleBackToLogin}
                     >
                         Back to Login

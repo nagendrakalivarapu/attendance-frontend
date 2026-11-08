@@ -266,13 +266,13 @@ function TeacherDashboard() {
     // =========================================================
 
     return (
-        <div className="teacher-dashboard">
+        <div >
 
             {/* =================================================
                 HEADER
             ================================================= */}
 
-            <div className="teacher-header">
+            <div >
 
                 <div>
                     <h1>
@@ -284,10 +284,10 @@ function TeacherDashboard() {
                     </p>
                 </div>
 
-                <div className="teacher-header-actions">
+                <div >
                     <button
                         type="button"
-                        className="teacher-nav-button"
+                        
                         onClick={() => navigate("/teacher")}
                     >
                         Dashboard
@@ -295,7 +295,7 @@ function TeacherDashboard() {
 
                     <button
                         type="button"
-                        className="teacher-nav-button"
+                        
                         onClick={() =>
                             document
                                 .getElementById("teacher-attendance-history")
@@ -307,7 +307,7 @@ function TeacherDashboard() {
 
                     <button
                         type="button"
-                        className="teacher-nav-button secondary"
+                        
                         onClick={loadAttendanceHistory}
                         disabled={historyLoading}
                     >
@@ -315,7 +315,7 @@ function TeacherDashboard() {
                     </button>
 
                     <button
-                        className="btn btn-danger"
+                        
                         onClick={logout}
                     >
                         Logout
@@ -329,9 +329,9 @@ function TeacherDashboard() {
                 MY COURSES SECTION
             ================================================= */}
 
-            <div className="teacher-section">
+            <div >
 
-                <div className="teacher-section-header">
+                <div >
 
                     <div>
                         <h2>
@@ -344,7 +344,7 @@ function TeacherDashboard() {
                     </div>
 
                     <button
-                        className="btn btn-outline-primary"
+                        
                         onClick={loadCourses}
                         disabled={loading}
                     >
@@ -361,7 +361,7 @@ function TeacherDashboard() {
                 ================================================= */}
 
                 {loading && (
-                    <div className="teacher-message">
+                    <div >
                         Loading your courses...
                     </div>
                 )}
@@ -372,7 +372,7 @@ function TeacherDashboard() {
                 ================================================= */}
 
                 {!loading && error && (
-                    <div className="alert alert-danger">
+                    <div >
                         {error}
                     </div>
                 )}
@@ -386,7 +386,7 @@ function TeacherDashboard() {
                     !error &&
                     courses.length === 0 && (
 
-                        <div className="teacher-message">
+                        <div >
                             No courses have been assigned
                             to you.
                         </div>
@@ -402,7 +402,7 @@ function TeacherDashboard() {
                     !error &&
                     courses.length > 0 && (
 
-                        <div className="teacher-course-grid">
+                        <div >
 
                             {courses.map((course) => {
 
@@ -423,7 +423,7 @@ function TeacherDashboard() {
                                 return (
 
                                     <div
-                                        className="teacher-course-card"
+                                        
                                         key={course.id}
                                     >
 
@@ -431,15 +431,15 @@ function TeacherDashboard() {
                                             COURSE HEADER
                                         ================================================= */}
 
-                                        <div className="course-card-top">
+                                        <div >
 
-                                            <span className="course-code">
+                                            <span >
                                                 {
                                                     course.courseCode
                                                 }
                                             </span>
 
-                                            <span className="course-semester">
+                                            <span >
                                                 Semester{" "}
                                                 {
                                                     course.semester
@@ -464,7 +464,7 @@ function TeacherDashboard() {
                                             COURSE DETAILS
                                         ================================================= */}
 
-                                        <div className="course-details">
+                                        <div >
 
                                             <div>
                                                 <span>
@@ -509,15 +509,15 @@ function TeacherDashboard() {
                                             STUDENTS
                                         ================================================= */}
 
-                                        <div className="course-students">
+                                        <div >
 
-                                            <div className="students-header">
+                                            <div >
 
                                                 <h4>
                                                     Students
                                                 </h4>
 
-                                                <span className="student-count">
+                                                <span >
                                                     {
                                                         students.length
                                                     }
@@ -529,7 +529,7 @@ function TeacherDashboard() {
                                             {students.length >
                                             0 ? (
 
-                                                <div className="student-list">
+                                                <div >
 
                                                     {students.map(
                                                         (
@@ -537,13 +537,13 @@ function TeacherDashboard() {
                                                         ) => (
 
                                                             <div
-                                                                className="student-item"
+                                                                
                                                                 key={
                                                                     enrollment.id
                                                                 }
                                                             >
 
-                                                                <div className="student-info">
+                                                                <div >
 
                                                                     <strong>
                                                                         {
@@ -560,9 +560,7 @@ function TeacherDashboard() {
                                                                 </div>
 
                                                                 <span
-                                                                    className={`student-status ${
-                                                                        enrollment.status?.toLowerCase()
-                                                                    }`}
+                                                                    
                                                                 >
                                                                     {
                                                                         enrollment.status
@@ -578,7 +576,7 @@ function TeacherDashboard() {
 
                                             ) : (
 
-                                                <div className="no-course-students">
+                                                <div >
                                                     No students
                                                     enrolled in
                                                     this course.
@@ -595,11 +593,11 @@ function TeacherDashboard() {
 
                                         {isOpen ? (
 
-                                            <div className="attendance-session-open">
+                                            <div >
 
-                                                <div className="attendance-open-header">
+                                                <div >
 
-                                                    <span className="attendance-live-dot"></span>
+                                                    <span ></span>
 
                                                     <strong>
                                                         Attendance
@@ -609,7 +607,7 @@ function TeacherDashboard() {
                                                 </div>
 
 
-                                                <div className="attendance-started-time">
+                                                <div >
 
                                                     Started at:{" "}
 
@@ -625,7 +623,7 @@ function TeacherDashboard() {
 
 
                                                 <button
-                                                    className="btn btn-danger w-100 mt-3"
+                                                    
                                                     onClick={() =>
                                                         closeAttendance(
                                                             course.id
@@ -640,7 +638,7 @@ function TeacherDashboard() {
                                         ) : (
 
                                             <button
-                                                className="btn btn-primary w-100 mt-3"
+                                                
                                                 onClick={() =>
                                                     startAttendance(
                                                         course.id
@@ -674,9 +672,9 @@ function TeacherDashboard() {
 
             <section
                 id="teacher-attendance-history"
-                className="teacher-section teacher-history-section"
+                
             >
-                <div className="teacher-section-header">
+                <div >
                     <div>
                         <h2>Attendance History</h2>
                         <p>Review your completed and active attendance sessions.</p>
@@ -684,7 +682,7 @@ function TeacherDashboard() {
 
                     <button
                         type="button"
-                        className="teacher-history-refresh-button"
+                        
                         onClick={loadAttendanceHistory}
                         disabled={historyLoading}
                     >
@@ -693,7 +691,7 @@ function TeacherDashboard() {
                 </div>
 
                 {historyError ? (
-                    <div className="teacher-history-error">
+                    <div >
                         <strong>Unable to load history</strong>
                         <p>{historyError}</p>
                         <button
@@ -704,12 +702,12 @@ function TeacherDashboard() {
                         </button>
                     </div>
                 ) : attendanceHistory.length === 0 ? (
-                    <div className="teacher-message">
+                    <div >
                         No attendance sessions have been recorded yet.
                     </div>
                 ) : (
-                    <div className="teacher-history-table-wrapper">
-                        <table className="teacher-history-table">
+                    <div >
+                        <table >
                             <thead>
                                 <tr>
                                     <th>Session</th>
@@ -732,10 +730,10 @@ function TeacherDashboard() {
                                         </td>
                                         <td>{session.attendanceDate || "—"}</td>
                                         <td>{session.totalStudents ?? 0}</td>
-                                        <td className="teacher-history-present">
+                                        <td >
                                             {session.presentCount ?? 0}
                                         </td>
-                                        <td className="teacher-history-absent">
+                                        <td >
                                             {session.absentCount ?? 0}
                                         </td>
                                         <td>
@@ -743,9 +741,7 @@ function TeacherDashboard() {
                                         </td>
                                         <td>
                                             <span
-                                                className={`teacher-history-status ${
-                                                    String(session.status || "").toLowerCase()
-                                                }`}
+                                                
                                             >
                                                 {session.status || "UNKNOWN"}
                                             </span>

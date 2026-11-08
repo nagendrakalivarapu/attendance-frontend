@@ -186,10 +186,10 @@ function Teachers() {
     });
 
     return (
-        <div className="page-container">
+        <div >
 
             {/* Header */}
-            <div className="page-header">
+            <div >
 
                 <div>
                     <h1>Teacher Management</h1>
@@ -198,45 +198,45 @@ function Teachers() {
                     </p>
                 </div>
 
-                <div className="page-header-actions">
+                <div >
 
                     <button
-                        className="btn-secondary"
+                        
                         onClick={() => navigate("/admin")}
                     >
                         ← Dashboard
                     </button>
 
                     <button
-                        className="btn-secondary"
+                        
                         onClick={() => navigate("/admin/students")}
                     >
                         Students
                     </button>
 
                     <button
-                        className="btn-secondary"
+                        
                         onClick={() => navigate("/admin/courses")}
                     >
                         Courses
                     </button>
 
                     <button
-                        className="btn-secondary"
+                        
                         onClick={() => navigate("/admin/enrollments")}
                     >
                         Enrollments
                     </button>
 
                     <button
-                        className="btn-secondary"
+                        
                         onClick={() => navigate("/admin/attendance")}
                     >
                         Attendance
                     </button>
 
                     <button
-                        className="btn-primary"
+                        
                         onClick={handleAdd}
                     >
                         + Add Teacher
@@ -246,11 +246,11 @@ function Teachers() {
             </div>
 
             {/* Statistics */}
-            <div className="stats-grid">
+            <div >
 
-                <div className="stat-card">
-                    <div className="stat-icon">
-                        👨‍🏫
+                <div >
+                    <div >
+                        
                     </div>
 
                     <div>
@@ -259,9 +259,9 @@ function Teachers() {
                     </div>
                 </div>
 
-                <div className="stat-card">
-                    <div className="stat-icon">
-                        🔎
+                <div >
+                    <div >
+                        
                     </div>
 
                     <div>
@@ -270,9 +270,9 @@ function Teachers() {
                     </div>
                 </div>
 
-                <div className="stat-card">
-                    <div className="stat-icon">
-                        🏫
+                <div >
+                    <div >
+                        
                     </div>
 
                     <div>
@@ -292,21 +292,21 @@ function Teachers() {
             </div>
 
             {/* Main content */}
-            <div className="content-card">
+            <div >
 
                 {/* Search */}
-                <div className="search-bar-container">
+                <div >
 
                     <input
                         type="text"
-                        className="search-input"
+                        
                         placeholder="Search by name, email, employee ID, department..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
 
                     <button
-                        className="btn-secondary"
+                        
                         onClick={loadTeachers}
                     >
                         Refresh
@@ -316,15 +316,15 @@ function Teachers() {
 
                 {/* Loading */}
                 {loading ? (
-                    <div className="loading-message">
+                    <div >
                         Loading teachers...
                     </div>
                 ) : filteredTeachers.length === 0 ? (
 
-                    <div className="empty-state">
+                    <div >
 
-                        <div className="empty-icon">
-                            👨‍🏫
+                        <div >
+                            
                         </div>
 
                         <h3>No teachers found</h3>
@@ -337,9 +337,9 @@ function Teachers() {
 
                 ) : (
 
-                    <div className="table-wrapper">
+                    <div >
 
-                        <table className="data-table">
+                        <table >
 
                             <thead>
                             <tr>
@@ -361,7 +361,7 @@ function Teachers() {
                                 <tr key={teacher.id}>
 
                                     <td>
-                                            <span className="id-badge">
+                                            <span >
                                                 {teacher.employeeId}
                                             </span>
                                     </td>
@@ -394,10 +394,10 @@ function Teachers() {
 
                                     <td>
 
-                                        <div className="action-buttons">
+                                        <div >
 
                                             <button
-                                                className="btn-edit"
+                                                
                                                 onClick={() =>
                                                     handleEdit(teacher)
                                                 }
@@ -406,7 +406,7 @@ function Teachers() {
                                             </button>
 
                                             <button
-                                                className="btn-delete"
+                                                
                                                 onClick={() =>
                                                     handleDelete(teacher.id)
                                                 }
@@ -434,11 +434,11 @@ function Teachers() {
             {/* Add / Edit Modal */}
             {showForm && (
 
-                <div className="modal-overlay">
+                <div >
 
-                    <div className="form-modal">
+                    <div >
 
-                        <div className="modal-header">
+                        <div >
 
                             <div>
 
@@ -457,7 +457,7 @@ function Teachers() {
                             </div>
 
                             <button
-                                className="modal-close"
+                                
                                 onClick={() => setShowForm(false)}
                             >
                                 ×
@@ -468,13 +468,13 @@ function Teachers() {
                         <form onSubmit={handleSubmit}>
 
                             {/* Account Information */}
-                            <div className="form-section-title">
+                            <div >
                                 Account Information
                             </div>
 
-                            <div className="form-grid">
+                            <div >
 
-                                <div className="form-group">
+                                <div >
 
                                     <label>
                                         Full Name *
@@ -491,7 +491,7 @@ function Teachers() {
 
                                 </div>
 
-                                <div className="form-group">
+                                <div >
 
                                     <label>
                                         Email *
@@ -508,7 +508,7 @@ function Teachers() {
 
                                 </div>
 
-                                <div className="form-group full-width">
+                                <div >
 
                                     <label>
                                         Password
@@ -529,7 +529,7 @@ function Teachers() {
                                     />
 
                                     {editingTeacher && (
-                                        <small className="form-help">
+                                        <small >
                                             Leave blank if you do not want to
                                             change the teacher's password.
                                         </small>
@@ -540,13 +540,13 @@ function Teachers() {
                             </div>
 
                             {/* Professional Information */}
-                            <div className="form-section-title">
+                            <div >
                                 Professional Information
                             </div>
 
-                            <div className="form-grid">
+                            <div >
 
-                                <div className="form-group">
+                                <div >
 
                                     <label>
                                         Employee ID *
@@ -563,7 +563,7 @@ function Teachers() {
 
                                 </div>
 
-                                <div className="form-group">
+                                <div >
 
                                     <label>
                                         Department *
@@ -580,7 +580,7 @@ function Teachers() {
 
                                 </div>
 
-                                <div className="form-group">
+                                <div >
 
                                     <label>
                                         Designation *
@@ -597,7 +597,7 @@ function Teachers() {
 
                                 </div>
 
-                                <div className="form-group">
+                                <div >
 
                                     <label>
                                         Phone *
@@ -614,7 +614,7 @@ function Teachers() {
 
                                 </div>
 
-                                <div className="form-group full-width">
+                                <div >
 
                                     <label>
                                         Qualification *
@@ -634,11 +634,11 @@ function Teachers() {
                             </div>
 
                             {/* Actions */}
-                            <div className="modal-actions">
+                            <div >
 
                                 <button
                                     type="button"
-                                    className="btn-secondary"
+                                    
                                     onClick={() => setShowForm(false)}
                                 >
                                     Cancel
@@ -646,7 +646,7 @@ function Teachers() {
 
                                 <button
                                     type="submit"
-                                    className="btn-primary"
+                                    
                                 >
                                     {editingTeacher
                                         ? "Update Teacher"

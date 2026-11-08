@@ -258,10 +258,10 @@ function Enrollments() {
         );
 
     return (
-        <div className="page-container">
+        <div >
 
             {/* Header */}
-            <div className="page-header">
+            <div >
 
                 <div>
                     <h1>Enrollment Management</h1>
@@ -271,45 +271,45 @@ function Enrollments() {
                     </p>
                 </div>
 
-                <div className="page-header-actions">
+                <div >
 
                     <button
-                        className="btn-secondary"
+                        
                         onClick={() => navigate("/admin")}
                     >
                         ← Dashboard
                     </button>
 
                     <button
-                        className="btn-secondary"
+                        
                         onClick={() => navigate("/admin/students")}
                     >
                         Students
                     </button>
 
                     <button
-                        className="btn-secondary"
+                        
                         onClick={() => navigate("/admin/teachers")}
                     >
                         Teachers
                     </button>
 
                     <button
-                        className="btn-secondary"
+                        
                         onClick={() => navigate("/admin/courses")}
                     >
                         Courses
                     </button>
 
                     <button
-                        className="btn-secondary"
+                        
                         onClick={() => navigate("/admin/attendance")}
                     >
                         Attendance
                     </button>
 
                     <button
-                        className="btn-primary"
+                        
                         onClick={handleAdd}
                     >
                         + Enroll Students
@@ -320,11 +320,11 @@ function Enrollments() {
             </div>
 
             {/* Statistics */}
-            <div className="stats-grid">
+            <div >
 
-                <div className="stat-card">
-                    <div className="stat-icon">
-                        📚
+                <div >
+                    <div >
+                        
                     </div>
 
                     <div>
@@ -333,9 +333,9 @@ function Enrollments() {
                     </div>
                 </div>
 
-                <div className="stat-card">
-                    <div className="stat-icon">
-                        ✅
+                <div >
+                    <div >
+                        
                     </div>
 
                     <div>
@@ -344,9 +344,9 @@ function Enrollments() {
                     </div>
                 </div>
 
-                <div className="stat-card">
-                    <div className="stat-icon">
-                        📋
+                <div >
+                    <div >
+                        
                     </div>
 
                     <div>
@@ -358,13 +358,13 @@ function Enrollments() {
             </div>
 
             {/* Main Content */}
-            <div className="content-card">
+            <div >
 
-                <div className="enrollment-toolbar">
+                <div >
 
                     <input
                         type="text"
-                        className="search-input"
+                        
                         placeholder="Search student, registration number, course..."
                         value={search}
                         onChange={(e) =>
@@ -373,7 +373,7 @@ function Enrollments() {
                     />
 
                     <select
-                        className="filter-select"
+                        
                         value={statusFilter}
                         onChange={(e) =>
                             setStatusFilter(e.target.value)
@@ -397,7 +397,7 @@ function Enrollments() {
                     </select>
 
                     <button
-                        className="btn-secondary"
+                        
                         onClick={loadData}
                     >
                         Refresh
@@ -407,16 +407,16 @@ function Enrollments() {
 
                 {loading ? (
 
-                    <div className="loading-message">
+                    <div >
                         Loading enrollments...
                     </div>
 
                 ) : filteredEnrollments.length === 0 ? (
 
-                    <div className="empty-state">
+                    <div >
 
-                        <div className="empty-icon">
-                            📚
+                        <div >
+                            
                         </div>
 
                         <h3>
@@ -431,9 +431,9 @@ function Enrollments() {
 
                 ) : (
 
-                    <div className="table-wrapper">
+                    <div >
 
-                        <table className="data-table">
+                        <table >
 
                             <thead>
                             <tr>
@@ -461,7 +461,7 @@ function Enrollments() {
                                         </td>
 
                                         <td>
-                                                <span className="id-badge">
+                                                <span >
                                                     {enrollment.registrationNumber}
                                                 </span>
                                         </td>
@@ -482,7 +482,7 @@ function Enrollments() {
 
                                         <td>
                                                 <span
-                                                    className={`status-badge status-${enrollment.status?.toLowerCase()}`}
+                                                    
                                                 >
                                                     {enrollment.status}
                                                 </span>
@@ -490,10 +490,10 @@ function Enrollments() {
 
                                         <td>
 
-                                            <div className="action-buttons">
+                                            <div >
 
                                                 <select
-                                                    className="status-select"
+                                                    
                                                     value={enrollment.status}
                                                     onChange={(e) =>
                                                         handleStatusChange(
@@ -512,7 +512,7 @@ function Enrollments() {
                                                 </select>
 
                                                 <button
-                                                    className="btn-delete"
+                                                    
                                                     onClick={() =>
                                                         handleDelete(
                                                             enrollment.id
@@ -543,11 +543,11 @@ function Enrollments() {
             {/* Multi Student Enrollment Modal */}
             {showForm && (
 
-                <div className="modal-overlay">
+                <div >
 
-                    <div className="form-modal bulk-enrollment-modal">
+                    <div >
 
-                        <div className="modal-header">
+                        <div >
 
                             <div>
                                 <h2>
@@ -561,7 +561,7 @@ function Enrollments() {
                             </div>
 
                             <button
-                                className="modal-close"
+                                
                                 onClick={() =>
                                     setShowForm(false)
                                 }
@@ -574,7 +574,7 @@ function Enrollments() {
                         <form onSubmit={handleSubmit}>
 
                             {/* Course */}
-                            <div className="form-group">
+                            <div >
 
                                 <label>
                                     Course *
@@ -613,7 +613,7 @@ function Enrollments() {
                             </div>
 
                             {/* Student Search */}
-                            <div className="form-group">
+                            <div >
 
                                 <label>
                                     Search Students
@@ -621,7 +621,7 @@ function Enrollments() {
 
                                 <input
                                     type="text"
-                                    className="search-input"
+                                    
                                     placeholder="Search by name, registration number or email..."
                                     value={studentSearch}
                                     onChange={(e) =>
@@ -634,7 +634,7 @@ function Enrollments() {
                             </div>
 
                             {/* Selection Header */}
-                            <div className="student-selection-header">
+                            <div >
 
                                 <div>
 
@@ -650,7 +650,7 @@ function Enrollments() {
 
                                 <button
                                     type="button"
-                                    className="select-all-btn"
+                                    
                                     onClick={handleSelectAll}
                                 >
                                     {allFilteredStudentsSelected
@@ -661,11 +661,11 @@ function Enrollments() {
                             </div>
 
                             {/* Student List */}
-                            <div className="student-selection-list">
+                            <div >
 
                                 {filteredStudents.length === 0 ? (
 
-                                    <div className="no-students">
+                                    <div >
                                         No students found.
                                     </div>
 
@@ -682,11 +682,7 @@ function Enrollments() {
                                             return (
                                                 <label
                                                     key={student.id}
-                                                    className={`student-selection-item ${
-                                                        selected
-                                                            ? "selected"
-                                                            : ""
-                                                    }`}
+                                                    
                                                 >
 
                                                     <input
@@ -699,7 +695,7 @@ function Enrollments() {
                                                         }
                                                     />
 
-                                                    <div className="student-selection-info">
+                                                    <div >
 
                                                         <strong>
                                                             {student.studentName}
@@ -726,7 +722,7 @@ function Enrollments() {
                             </div>
 
                             {/* Selection Summary */}
-                            <div className="selection-summary">
+                            <div >
 
                                 <span>
                                     {selectedStudents.length} student
@@ -752,11 +748,11 @@ function Enrollments() {
                             </div>
 
                             {/* Actions */}
-                            <div className="modal-actions">
+                            <div >
 
                                 <button
                                     type="button"
-                                    className="btn-secondary"
+                                    
                                     onClick={() =>
                                         setShowForm(false)
                                     }
@@ -767,7 +763,7 @@ function Enrollments() {
 
                                 <button
                                     type="submit"
-                                    className="btn-primary"
+                                    
                                     disabled={
                                         enrolling ||
                                         selectedStudents.length === 0 ||

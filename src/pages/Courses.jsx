@@ -264,14 +264,14 @@ function Courses() {
     };
 
     return (
-        <div className="admin-layout">
+        <div >
 
             {/* SIDEBAR */}
-            <aside className="admin-sidebar">
+            <aside >
 
-                <div className="sidebar-brand">
+                <div >
 
-                    <div className="brand-icon">
+                    <div >
                         SA
                     </div>
 
@@ -283,65 +283,65 @@ function Courses() {
                 </div>
 
 
-                <nav className="sidebar-nav">
+                <nav >
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() => navigate("/admin")}
                     >
-                        <span>📊</span>
+                        <span></span>
                         Dashboard
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() =>
                             navigate("/admin/students")
                         }
                     >
-                        <span>👨‍🎓</span>
+                        <span></span>
                         Students
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() => navigate("/admin/teachers")}
                     >
-                        <span>👨‍🏫</span>
+                        <span></span>
                         Teachers
                     </button>
 
-                    <button className="sidebar-link active">
-                        <span>📚</span>
+                    <button >
+                        <span></span>
                         Courses
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() => navigate("/admin/enrollments")}
                     >
-                        <span>📝</span>
+                        <span></span>
                         Enrollments
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() => navigate("/admin/attendance")}
                     >
-                        <span>📅</span>
+                        <span></span>
                         Attendance
                     </button>
 
                 </nav>
 
 
-                <div className="sidebar-bottom">
+                <div >
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() => navigate("/admin")}
                     >
-                        <span>⚙️</span>
+                        <span>️</span>
                         Dashboard
                     </button>
 
@@ -351,10 +351,10 @@ function Courses() {
 
 
             {/* MAIN CONTENT */}
-            <main className="admin-main">
+            <main >
 
                 {/* TOPBAR */}
-                <header className="admin-topbar">
+                <header >
 
                     <div>
                         <h2>Courses</h2>
@@ -365,7 +365,7 @@ function Courses() {
                     </div>
 
                     <button
-                        className="course-add-button"
+                        
                         onClick={() => {
 
                             if (showForm) {
@@ -379,7 +379,7 @@ function Courses() {
                         }}
                     >
                         {showForm
-                            ? "✕ Close"
+                            ? " Close"
                             : "+ Add Course"}
                     </button>
 
@@ -388,7 +388,7 @@ function Courses() {
 
                 {/* ERROR */}
                 {error && (
-                    <div className="course-alert">
+                    <div >
                         {error}
                     </div>
                 )}
@@ -397,9 +397,9 @@ function Courses() {
                 {/* ADD / EDIT FORM */}
                 {showForm && (
 
-                    <section className="course-form-card">
+                    <section >
 
-                        <div className="course-form-header">
+                        <div >
 
                             <div>
 
@@ -422,9 +422,9 @@ function Courses() {
 
                         <form onSubmit={handleSubmit}>
 
-                            <div className="course-form-grid">
+                            <div >
 
-                                <div className="course-field">
+                                <div >
 
                                     <label>
                                         Course Code
@@ -442,7 +442,7 @@ function Courses() {
                                 </div>
 
 
-                                <div className="course-field">
+                                <div >
 
                                     <label>
                                         Course Name
@@ -460,7 +460,7 @@ function Courses() {
                                 </div>
 
 
-                                <div className="course-field">
+                                <div >
 
                                     <label>
                                         Department
@@ -478,7 +478,7 @@ function Courses() {
                                 </div>
 
 
-                                <div className="course-field">
+                                <div >
 
                                     <label>
                                         Semester
@@ -513,7 +513,7 @@ function Courses() {
                                 </div>
 
 
-                                <div className="course-field">
+                                <div >
 
                                     <label>
                                         Credits
@@ -532,7 +532,7 @@ function Courses() {
                                 </div>
 
 
-                                <div className="course-field">
+                                <div >
 
                                     <label>
                                         Total Classes
@@ -550,7 +550,7 @@ function Courses() {
                                 </div>
 
 
-                                <div className="course-field full-width">
+                                <div >
 
                                     <label>
                                         Assign Teacher
@@ -589,11 +589,11 @@ function Courses() {
                             </div>
 
 
-                            <div className="course-form-actions">
+                            <div >
 
                                 <button
                                     type="button"
-                                    className="course-cancel-button"
+                                    
                                     onClick={handleCancel}
                                 >
                                     Cancel
@@ -602,7 +602,7 @@ function Courses() {
 
                                 <button
                                     type="submit"
-                                    className="course-save-button"
+                                    
                                     disabled={saving}
                                 >
                                     {saving
@@ -622,11 +622,11 @@ function Courses() {
 
 
                 {/* SEARCH / FILTERS */}
-                <section className="course-filter-card">
+                <section >
 
-                    <div className="course-search-box">
+                    <div >
 
-                        <span>🔎</span>
+                        <span></span>
 
                         <input
                             type="text"
@@ -723,7 +723,7 @@ function Courses() {
 
 
                     <button
-                        className="course-clear-button"
+                        
                         onClick={clearFilters}
                     >
                         Clear
@@ -733,9 +733,9 @@ function Courses() {
 
 
                 {/* COURSE LIST */}
-                <section className="course-list-card">
+                <section >
 
-                    <div className="course-list-header">
+                    <div >
 
                         <div>
 
@@ -752,7 +752,7 @@ function Courses() {
                         </div>
 
                         <button
-                            className="course-refresh-button"
+                            
                             onClick={loadCourses}
                         >
                             ↻ Refresh
@@ -763,16 +763,16 @@ function Courses() {
 
                     {loading ? (
 
-                        <div className="course-empty">
+                        <div >
                             Loading courses...
                         </div>
 
                     ) : filteredCourses.length === 0 ? (
 
-                        <div className="course-empty">
+                        <div >
 
                             <div>
-                                🔍
+                                
                             </div>
 
                             <h4>
@@ -787,9 +787,9 @@ function Courses() {
 
                     ) : (
 
-                        <div className="course-table-wrapper">
+                        <div >
 
-                            <table className="course-table">
+                            <table >
 
                                 <thead>
 
@@ -837,9 +837,9 @@ function Courses() {
 
                                             <td>
 
-                                                <div className="course-name-cell">
+                                                <div >
 
-                                                    <div className="course-code">
+                                                    <div >
                                                         {course.courseCode}
                                                     </div>
 
@@ -862,7 +862,7 @@ function Courses() {
 
                                             <td>
 
-                                                    <span className="course-badge">
+                                                    <span >
                                                         {course.department}
                                                     </span>
 
@@ -888,9 +888,9 @@ function Courses() {
 
                                                 {course.teacherName ? (
 
-                                                    <div className="teacher-cell">
+                                                    <div >
 
-                                                        <div className="teacher-avatar">
+                                                        <div >
                                                             {course.teacherName
                                                                 .charAt(0)
                                                                 .toUpperCase()}
@@ -904,7 +904,7 @@ function Courses() {
 
                                                 ) : (
 
-                                                    <span className="unassigned">
+                                                    <span >
                                                             Unassigned
                                                         </span>
 
@@ -915,21 +915,21 @@ function Courses() {
 
                                             <td>
 
-                                                <div className="course-actions">
+                                                <div >
 
                                                     <button
-                                                        className="course-edit-button"
+                                                        
                                                         onClick={() =>
                                                             handleEdit(course)
                                                         }
                                                         title="Edit course"
                                                     >
-                                                        ✏️
+                                                        ️
                                                     </button>
 
 
                                                     <button
-                                                        className="course-delete-button"
+                                                        
                                                         onClick={() =>
                                                             handleDelete(
                                                                 course.id
@@ -937,7 +937,7 @@ function Courses() {
                                                         }
                                                         title="Delete course"
                                                     >
-                                                        🗑️
+                                                        ️
                                                     </button>
 
                                                 </div>

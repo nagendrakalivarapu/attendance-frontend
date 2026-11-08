@@ -58,9 +58,9 @@ function StudentDashboard() {
 
     if (loading) {
         return (
-            <div className="student-dashboard">
-                <div className="student-loading">
-                    <div className="student-loading-spinner"></div>
+            <div >
+                <div >
+                    <div ></div>
                     <p>Loading your dashboard...</p>
                 </div>
             </div>
@@ -69,13 +69,13 @@ function StudentDashboard() {
 
     if (error) {
         return (
-            <div className="student-dashboard">
-                <div className="student-error">
+            <div >
+                <div >
                     <h3>Unable to load dashboard</h3>
                     <p>{error}</p>
 
                     <button
-                        className="student-retry-btn"
+                        
                         onClick={() => window.location.reload()}
                     >
                         Retry
@@ -87,8 +87,8 @@ function StudentDashboard() {
 
     if (!student) {
         return (
-            <div className="student-dashboard">
-                <div className="student-error">
+            <div >
+                <div >
                     <h3>Student information not found</h3>
                     <p>Please contact the administrator.</p>
                 </div>
@@ -109,44 +109,44 @@ function StudentDashboard() {
         attendanceSummary?.absentCount ?? 0;
 
     return (
-        <div className="student-dashboard">
+        <div >
 
             {/* ================= HEADER ================= */}
 
-            <div className="student-dashboard-header">
+            <div >
 
-                <div className="student-welcome">
+                <div >
 
-                    <p className="student-dashboard-label">
+                    <p >
                         STUDENT DASHBOARD
                     </p>
 
                     <h1>
-                        Welcome, {student.studentName} 👋
+                        Welcome, {student.studentName} 
                     </h1>
 
-                    <p className="student-dashboard-subtitle">
+                    <p >
                         Here's an overview of your academic information
                         and attendance.
                     </p>
 
                 </div>
 
-                <div className="student-header-actions">
+                <div >
                     <button
-                        className="student-attendance-nav-btn"
+                        
                         onClick={() => navigate("/student/attendance")}
                     >
                         Mark Attendance
                     </button>
                     <button
-                        className="student-history-nav-btn"
+                        
                         onClick={() => navigate("/student/attendance-history")}
                     >
                         Attendance History
                     </button>
                     <button
-                        className="student-logout-btn"
+                        
                         onClick={logout}
                     >
                         Logout
@@ -158,20 +158,20 @@ function StudentDashboard() {
 
             {/* ================= PROFILE / QUICK INFO ================= */}
 
-            <div className="student-dashboard-card student-profile-card">
+            <div >
 
-                <div className="student-profile-header">
+                <div >
 
-                    <div className="student-profile-left">
+                    <div >
 
                         {student.profilePicture ? (
                             <img
                                 src={`${PROFILE_IMAGE_BASE_URL}${student.profilePicture}`}
                                 alt={student.studentName}
-                                className="student-profile-image"
+                                
                             />
                         ) : (
-                            <div className="student-profile-icon">
+                            <div >
                                 {student.studentName
                                     ?.charAt(0)
                                     ?.toUpperCase()}
@@ -179,7 +179,7 @@ function StudentDashboard() {
                         )}
 
                         <div>
-                            <p className="student-card-label">
+                            <p >
                                 STUDENT
                             </p>
 
@@ -187,7 +187,7 @@ function StudentDashboard() {
                                 {student.studentName}
                             </h2>
 
-                            <p className="student-profile-email">
+                            <p >
                                 {student.email}
                             </p>
                         </div>
@@ -195,13 +195,9 @@ function StudentDashboard() {
                     </div>
 
                     <div
-                        className={
-                            student.faceRegistered
-                                ? "student-face-status registered"
-                                : "student-face-status pending"
-                        }
+                        
                     >
-                        <span className="student-status-dot"></span>
+                        <span ></span>
 
                         {student.faceRegistered
                             ? "Face Recognition Registered"
@@ -215,11 +211,11 @@ function StudentDashboard() {
 
             {/* ================= QUICK STATS ================= */}
 
-            <div className="student-stat-grid">
+            <div >
 
-                <div className="student-stat-card">
+                <div >
 
-                    <span className="student-stat-label">
+                    <span >
                         REGISTRATION NUMBER
                     </span>
 
@@ -230,9 +226,9 @@ function StudentDashboard() {
                 </div>
 
 
-                <div className="student-stat-card">
+                <div >
 
-                    <span className="student-stat-label">
+                    <span >
                         DEPARTMENT
                     </span>
 
@@ -243,9 +239,9 @@ function StudentDashboard() {
                 </div>
 
 
-                <div className="student-stat-card">
+                <div >
 
-                    <span className="student-stat-label">
+                    <span >
                         SEMESTER
                     </span>
 
@@ -256,9 +252,9 @@ function StudentDashboard() {
                 </div>
 
 
-                <div className="student-stat-card">
+                <div >
 
-                    <span className="student-stat-label">
+                    <span >
                         ENROLLED COURSES
                     </span>
 
@@ -273,12 +269,12 @@ function StudentDashboard() {
 
             {/* ================= ATTENDANCE OVERVIEW ================= */}
 
-            <div className="student-dashboard-card">
+            <div >
 
-                <div className="student-card-header">
+                <div >
 
                     <div>
-                        <p className="student-card-label">
+                        <p >
                             ATTENDANCE
                         </p>
 
@@ -287,25 +283,20 @@ function StudentDashboard() {
                         </h2>
                     </div>
 
-                    <div className="student-attendance-percentage">
+                    <div >
                         {attendancePercentage.toFixed(0)}%
                     </div>
 
                 </div>
 
 
-                <div className="student-attendance-progress">
+                <div >
 
-                    <div className="student-progress-track">
+                    <div >
 
                         <div
-                            className="student-progress-fill"
-                            style={{
-                                width: `${Math.min(
-                                    Math.max(attendancePercentage, 0),
-                                    100
-                                )}%`,
-                            }}
+                            
+                            
                         ></div>
 
                     </div>
@@ -313,9 +304,9 @@ function StudentDashboard() {
                 </div>
 
 
-                <div className="student-attendance-stats">
+                <div >
 
-                    <div className="student-attendance-stat">
+                    <div >
 
                         <span>Total Sessions</span>
 
@@ -326,7 +317,7 @@ function StudentDashboard() {
                     </div>
 
 
-                    <div className="student-attendance-stat">
+                    <div >
 
                         <span>Present</span>
 
@@ -337,7 +328,7 @@ function StudentDashboard() {
                     </div>
 
 
-                    <div className="student-attendance-stat">
+                    <div >
 
                         <span>Absent</span>
 
@@ -348,7 +339,7 @@ function StudentDashboard() {
                     </div>
 
 
-                    <div className="student-attendance-stat">
+                    <div >
 
                         <span>Attendance</span>
 
@@ -365,17 +356,17 @@ function StudentDashboard() {
 
             {/* ================= MAIN GRID ================= */}
 
-            <div className="student-dashboard-grid">
+            <div >
 
 
                 {/* ================= PERSONAL INFORMATION ================= */}
 
-                <div className="student-dashboard-card">
+                <div >
 
-                    <div className="student-card-header">
+                    <div >
 
                         <div>
-                            <p className="student-card-label">
+                            <p >
                                 PROFILE
                             </p>
 
@@ -387,9 +378,9 @@ function StudentDashboard() {
                     </div>
 
 
-                    <div className="student-info-grid">
+                    <div >
 
-                        <div className="student-info-item">
+                        <div >
 
                             <span>Full Name</span>
 
@@ -400,7 +391,7 @@ function StudentDashboard() {
                         </div>
 
 
-                        <div className="student-info-item">
+                        <div >
 
                             <span>Email</span>
 
@@ -411,7 +402,7 @@ function StudentDashboard() {
                         </div>
 
 
-                        <div className="student-info-item">
+                        <div >
 
                             <span>Phone</span>
 
@@ -422,7 +413,7 @@ function StudentDashboard() {
                         </div>
 
 
-                        <div className="student-info-item">
+                        <div >
 
                             <span>Gender</span>
 
@@ -433,7 +424,7 @@ function StudentDashboard() {
                         </div>
 
 
-                        <div className="student-info-item">
+                        <div >
 
                             <span>Date of Birth</span>
 
@@ -444,7 +435,7 @@ function StudentDashboard() {
                         </div>
 
 
-                        <div className="student-info-item">
+                        <div >
 
                             <span>Section</span>
 
@@ -455,7 +446,7 @@ function StudentDashboard() {
                         </div>
 
 
-                        <div className="student-info-item">
+                        <div >
 
                             <span>Department</span>
 
@@ -466,7 +457,7 @@ function StudentDashboard() {
                         </div>
 
 
-                        <div className="student-info-item">
+                        <div >
 
                             <span>Semester</span>
 
@@ -477,7 +468,7 @@ function StudentDashboard() {
                         </div>
 
 
-                        <div className="student-info-item student-info-full">
+                        <div >
 
                             <span>Address</span>
 
@@ -494,12 +485,12 @@ function StudentDashboard() {
 
                 {/* ================= FACE RECOGNITION ================= */}
 
-                <div className="student-dashboard-card student-face-card">
+                <div >
 
-                    <div className="student-card-header">
+                    <div >
 
                         <div>
-                            <p className="student-card-label">
+                            <p >
                                 SECURITY
                             </p>
 
@@ -512,15 +503,11 @@ function StudentDashboard() {
 
 
                     <div
-                        className={
-                            student.faceRegistered
-                                ? "student-face-status-box registered"
-                                : "student-face-status-box pending"
-                        }
+                        
                     >
 
-                        <div className="student-face-icon">
-                            {student.faceRegistered ? "✓" : "!"}
+                        <div >
+                            {student.faceRegistered ? "" : "!"}
                         </div>
 
                         <div>
@@ -548,12 +535,12 @@ function StudentDashboard() {
 
             {/* ================= COURSE ATTENDANCE ================= */}
 
-            <div className="student-dashboard-card">
+            <div >
 
-                <div className="student-card-header">
+                <div >
 
                     <div>
-                        <p className="student-card-label">
+                        <p >
                             ATTENDANCE
                         </p>
 
@@ -567,7 +554,7 @@ function StudentDashboard() {
 
                 {courseAttendance.length === 0 ? (
 
-                    <div className="student-empty-state">
+                    <div >
 
                         <p>
                             No attendance records available yet.
@@ -577,16 +564,16 @@ function StudentDashboard() {
 
                 ) : (
 
-                    <div className="student-course-attendance-list">
+                    <div >
 
                         {courseAttendance.map((course) => (
 
                             <div
-                                className="student-course-attendance"
+                                
                                 key={course.courseId}
                             >
 
-                                <div className="student-course-attendance-info">
+                                <div >
 
                                     <div>
 
@@ -607,25 +594,17 @@ function StudentDashboard() {
                                 </div>
 
 
-                                <div className="student-progress-track">
+                                <div >
 
                                     <div
-                                        className="student-progress-fill"
-                                        style={{
-                                            width: `${Math.min(
-                                                Math.max(
-                                                    course.attendancePercentage,
-                                                    0
-                                                ),
-                                                100
-                                            )}%`,
-                                        }}
+                                        
+                                        
                                     ></div>
 
                                 </div>
 
 
-                                <div className="student-course-attendance-stats">
+                                <div >
 
                                     <span>
                                         Sessions:{" "}
@@ -663,12 +642,12 @@ function StudentDashboard() {
 
             {/* ================= MY COURSES ================= */}
 
-            <div className="student-courses-section">
+            <div >
 
-                <div className="student-section-header">
+                <div >
 
                     <div>
-                        <p className="student-card-label">
+                        <p >
                             ACADEMICS
                         </p>
 
@@ -677,7 +656,7 @@ function StudentDashboard() {
                         </h2>
                     </div>
 
-                    <span className="student-course-count">
+                    <span >
                         {courses.length}{" "}
                         {courses.length === 1 ? "Course" : "Courses"}
                     </span>
@@ -687,7 +666,7 @@ function StudentDashboard() {
 
                 {courses.length === 0 ? (
 
-                    <div className="student-dashboard-card student-empty-state">
+                    <div >
 
                         <p>
                             You are not enrolled in any courses yet.
@@ -697,7 +676,7 @@ function StudentDashboard() {
 
                 ) : (
 
-                    <div className="student-course-grid">
+                    <div >
 
                         {courses.map((course) => {
 
@@ -709,17 +688,17 @@ function StudentDashboard() {
                             return (
 
                                 <div
-                                    className="student-course-card"
+                                    
                                     key={course.id}
                                 >
 
-                                    <div className="student-course-card-top">
+                                    <div >
 
-                                        <span className="student-course-code">
+                                        <span >
                                             {course.courseCode}
                                         </span>
 
-                                        <span className="student-course-status">
+                                        <span >
                                             {course.status}
                                         </span>
 
@@ -731,7 +710,7 @@ function StudentDashboard() {
                                     </h3>
 
 
-                                    <div className="student-course-details">
+                                    <div >
 
                                         <div>
                                             <span>Department</span>
@@ -752,7 +731,7 @@ function StudentDashboard() {
 
                                     {attendance && (
 
-                                        <div className="student-course-card-attendance">
+                                        <div >
 
                                             <div>
 
@@ -767,19 +746,11 @@ function StudentDashboard() {
                                             </div>
 
 
-                                            <div className="student-progress-track">
+                                            <div >
 
                                                 <div
-                                                    className="student-progress-fill"
-                                                    style={{
-                                                        width: `${Math.min(
-                                                            Math.max(
-                                                                attendance.attendancePercentage,
-                                                                0
-                                                            ),
-                                                            100
-                                                        )}%`,
-                                                    }}
+                                                    
+                                                    
                                                 ></div>
 
                                             </div>

@@ -53,9 +53,9 @@ function StudentAttendanceHistory() {
 
     if (loading) {
         return (
-            <div className="student-history-page">
-                <div className="student-history-loading">
-                    <div className="student-loading-spinner"></div>
+            <div >
+                <div >
+                    <div ></div>
                     <p>Loading your attendance history...</p>
                 </div>
             </div>
@@ -63,27 +63,27 @@ function StudentAttendanceHistory() {
     }
 
     return (
-        <div className="student-history-page">
-            <div className="student-history-header">
+        <div >
+            <div >
                 <div>
-                    <p className="student-dashboard-label">ATTENDANCE</p>
+                    <p >ATTENDANCE</p>
                     <h1>Attendance History</h1>
                     <p>
                         Review your attendance performance across all enrolled courses.
                     </p>
                 </div>
 
-                <div className="student-attendance-history-actions">
+                <div >
                     <button
                         type="button"
-                        className="student-history-back-btn"
+                        
                         onClick={() => navigate("/student/attendance")}
                     >
                         Mark Attendance
                     </button>
                     <button
                         type="button"
-                        className="student-history-back-btn"
+                        
                         onClick={() => navigate("/student")}
                     >
                         ← Dashboard
@@ -92,7 +92,7 @@ function StudentAttendanceHistory() {
             </div>
 
             {error && (
-                <div className="student-history-alert">
+                <div >
                     <strong>Unable to load history</strong>
                     <span>{error}</span>
                     <button type="button" onClick={loadHistory}>Retry</button>
@@ -101,37 +101,37 @@ function StudentAttendanceHistory() {
 
             {!error && (
                 <>
-                    <div className="student-history-summary-grid">
-                        <div className="student-history-summary-card">
+                    <div >
+                        <div >
                             <span>Total Sessions</span>
                             <strong>{totalSessions}</strong>
                         </div>
-                        <div className="student-history-summary-card">
+                        <div >
                             <span>Present</span>
                             <strong>{presentCount}</strong>
                         </div>
-                        <div className="student-history-summary-card">
+                        <div >
                             <span>Absent</span>
                             <strong>{absentCount}</strong>
                         </div>
-                        <div className="student-history-summary-card highlight">
+                        <div >
                             <span>Overall Attendance</span>
                             <strong>{overallPercentage.toFixed(1)}%</strong>
                         </div>
                     </div>
 
-                    <div className="student-history-card">
-                        <div className="student-history-card-header">
+                    <div >
+                        <div >
                             <div>
-                                <p className="student-card-label">COURSE BREAKDOWN</p>
+                                <p >COURSE BREAKDOWN</p>
                                 <h2>Attendance by Course</h2>
                             </div>
-                            <div className="student-history-filters">
+                            <div >
                                 {["ALL", "GOOD", "LOW"].map((option) => (
                                     <button
                                         key={option}
                                         type="button"
-                                        className={filter === option ? "active" : ""}
+                                        
                                         onClick={() => setFilter(option)}
                                     >
                                         {option === "ALL" ? "All" : option === "GOOD" ? "75%+" : "Below 75%"}
@@ -141,8 +141,8 @@ function StudentAttendanceHistory() {
                         </div>
 
                         {filteredCourses.length === 0 ? (
-                            <div className="student-history-empty">
-                                <div>📋</div>
+                            <div >
+                                <div></div>
                                 <h3>No attendance records</h3>
                                 <p>
                                     {courses.length === 0
@@ -151,15 +151,15 @@ function StudentAttendanceHistory() {
                                 </p>
                             </div>
                         ) : (
-                            <div className="student-history-list">
+                            <div >
                                 {filteredCourses.map((course) => {
                                     const percentage = course.attendancePercentage || 0;
                                     const statusClass = percentageClass(percentage);
 
                                     return (
-                                        <div className="student-history-course" key={course.courseId}>
-                                            <div className="student-history-course-main">
-                                                <div className="student-history-course-code">
+                                        <div  key={course.courseId}>
+                                            <div >
+                                                <div >
                                                     {course.courseCode}
                                                 </div>
                                                 <div>
@@ -170,7 +170,7 @@ function StudentAttendanceHistory() {
                                                 </div>
                                             </div>
 
-                                            <div className="student-history-course-stats">
+                                            <div >
                                                 <div>
                                                     <span>Present</span>
                                                     <strong>{course.presentCount}</strong>
@@ -179,14 +179,14 @@ function StudentAttendanceHistory() {
                                                     <span>Absent</span>
                                                     <strong>{course.absentCount}</strong>
                                                 </div>
-                                                <div className={`student-history-percentage ${statusClass}`}>
+                                                <div >
                                                     <span>Attendance</span>
                                                     <strong>{percentage.toFixed(1)}%</strong>
                                                 </div>
                                             </div>
 
-                                            <div className="student-history-progress">
-                                                <div style={{ width: `${Math.min(Math.max(percentage, 0), 100)}%` }}></div>
+                                            <div >
+                                                <div ></div>
                                             </div>
                                         </div>
                                     );

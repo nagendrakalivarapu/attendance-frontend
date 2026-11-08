@@ -299,67 +299,67 @@ function Students() {
 
     return (
 
-        <div className="container-fluid p-4">
+        <div >
 
 
             {/* ================================================= */}
             {/* HEADER */}
             {/* ================================================= */}
 
-            <div className="d-flex justify-content-between align-items-center mb-4">
+            <div >
 
                 <div>
 
-                    <h2 className="fw-bold mb-1">
+                    <h2 >
                         Students
                     </h2>
 
-                    <p className="text-muted mb-0">
+                    <p >
                         Manage registered students
                     </p>
 
                 </div>
 
 
-                <div className="d-flex gap-2 flex-wrap justify-content-end">
+                <div >
 
                     <button
-                        className="btn btn-outline-secondary"
+                        
                         onClick={() => navigate("/admin")}
                     >
                         Dashboard
                     </button>
 
                     <button
-                        className="btn btn-outline-secondary"
+                        
                         onClick={() => navigate("/admin/teachers")}
                     >
                         Teachers
                     </button>
 
                     <button
-                        className="btn btn-outline-secondary"
+                        
                         onClick={() => navigate("/admin/courses")}
                     >
                         Courses
                     </button>
 
                     <button
-                        className="btn btn-outline-secondary"
+                        
                         onClick={() => navigate("/admin/enrollments")}
                     >
                         Enrollments
                     </button>
 
                     <button
-                        className="btn btn-outline-secondary"
+                        
                         onClick={() => navigate("/admin/attendance")}
                     >
                         Attendance
                     </button>
 
                     <button
-                        className="btn btn-outline-secondary"
+                        
                         onClick={loadStudents}
                         disabled={loading}
                     >
@@ -367,7 +367,7 @@ function Students() {
                     </button>
 
                     <button
-                        className="btn btn-primary"
+                        
                         onClick={() =>
                             navigate(
                                 "/admin/students/add"
@@ -389,15 +389,15 @@ function Students() {
             {success && (
 
                 <div
-                    className="alert alert-success alert-dismissible"
+                    
                     role="alert"
                 >
 
-                    ✓ {success}
+                     {success}
 
                     <button
                         type="button"
-                        className="btn-close"
+                        
                         onClick={() =>
                             setSuccess("")
                         }
@@ -415,7 +415,7 @@ function Students() {
             {error && (
 
                 <div
-                    className="alert alert-danger alert-dismissible"
+                    
                     role="alert"
                 >
 
@@ -423,7 +423,7 @@ function Students() {
 
                     <button
                         type="button"
-                        className="btn-close"
+                        
                         onClick={() =>
                             setError("")
                         }
@@ -438,22 +438,22 @@ function Students() {
             {/* STATISTICS */}
             {/* ================================================= */}
 
-            <div className="row g-3 mb-4">
+            <div >
 
 
                 {/* TOTAL */}
 
-                <div className="col-md-4">
+                <div >
 
-                    <div className="card shadow-sm border-0">
+                    <div >
 
-                        <div className="card-body">
+                        <div >
 
-                            <div className="text-muted">
+                            <div >
                                 Total Students
                             </div>
 
-                            <h3 className="fw-bold mb-0">
+                            <h3 >
                                 {totalStudents}
                             </h3>
 
@@ -466,17 +466,17 @@ function Students() {
 
                 {/* REGISTERED */}
 
-                <div className="col-md-4">
+                <div >
 
-                    <div className="card shadow-sm border-0">
+                    <div >
 
-                        <div className="card-body">
+                        <div >
 
-                            <div className="text-muted">
+                            <div >
                                 Faces Registered
                             </div>
 
-                            <h3 className="fw-bold text-success mb-0">
+                            <h3 >
                                 {registeredFaces}
                             </h3>
 
@@ -489,17 +489,17 @@ function Students() {
 
                 {/* PENDING */}
 
-                <div className="col-md-4">
+                <div >
 
-                    <div className="card shadow-sm border-0">
+                    <div >
 
-                        <div className="card-body">
+                        <div >
 
-                            <div className="text-muted">
+                            <div >
                                 Face Registration Pending
                             </div>
 
-                            <h3 className="fw-bold text-warning mb-0">
+                            <h3 >
                                 {pendingFaces}
                             </h3>
 
@@ -516,21 +516,21 @@ function Students() {
             {/* SEARCH */}
             {/* ================================================= */}
 
-            <div className="card shadow-sm border-0 mb-4">
+            <div >
 
-                <div className="card-body">
+                <div >
 
-                    <div className="row">
+                    <div >
 
-                        <div className="col-md-6">
+                        <div >
 
-                            <label className="form-label fw-semibold">
+                            <label >
                                 Search Students
                             </label>
 
                             <input
                                 type="text"
-                                className="form-control"
+                                
                                 placeholder="Search by name, registration number, email..."
                                 value={search}
                                 onChange={(e) =>
@@ -553,20 +553,20 @@ function Students() {
             {/* STUDENT TABLE */}
             {/* ================================================= */}
 
-            <div className="card shadow-sm border-0">
+            <div >
 
-                <div className="card-body p-0">
+                <div >
 
                     {loading ? (
 
-                        <div className="text-center py-5">
+                        <div >
 
                             <div
-                                className="spinner-border text-primary"
+                                
                                 role="status"
                             />
 
-                            <p className="mt-3 text-muted">
+                            <p >
                                 Loading students...
                             </p>
 
@@ -574,13 +574,13 @@ function Students() {
 
                     ) : filteredStudents.length === 0 ? (
 
-                        <div className="text-center py-5">
+                        <div >
 
                             <h5>
                                 No students found
                             </h5>
 
-                            <p className="text-muted">
+                            <p >
                                 Try changing your search
                                 or add a new student.
                             </p>
@@ -589,14 +589,14 @@ function Students() {
 
                     ) : (
 
-                        <div className="table-responsive">
+                        <div >
 
-                            <table className="table table-hover align-middle mb-0">
+                            <table >
 
 
                                 {/* TABLE HEADER */}
 
-                                <thead className="table-dark">
+                                <thead >
 
                                 <tr>
 
@@ -686,7 +686,7 @@ function Students() {
                                                         }
                                                     </strong>
 
-                                                    <div className="small text-muted">
+                                                    <div >
                                                         {
                                                             student.email ||
                                                             "-"
@@ -740,17 +740,17 @@ function Students() {
 
                                                 {student.faceRegistered ? (
 
-                                                    <span className="badge bg-success">
+                                                    <span >
 
-                                                        ✓ Registered
+                                                         Registered
 
                                                     </span>
 
                                                 ) : (
 
-                                                    <span className="badge bg-warning text-dark">
+                                                    <span >
 
-                                                        ⚠ Pending
+                                                         Pending
 
                                                     </span>
 
@@ -763,13 +763,13 @@ function Students() {
 
                                             <td>
 
-                                                <div className="d-flex gap-1 flex-wrap">
+                                                <div >
 
 
                                                     {/* EDIT */}
 
                                                     <button
-                                                        className="btn btn-sm btn-outline-primary"
+                                                        
                                                         onClick={() =>
                                                             navigate(
                                                                 `/admin/students/edit/${student.id}`
@@ -788,10 +788,7 @@ function Students() {
                                                         type="file"
                                                         id={`face-${student.id}`}
                                                         accept="image/*"
-                                                        style={{
-                                                            display:
-                                                                "none"
-                                                        }}
+                                                        
                                                         onChange={(
                                                             e
                                                         ) => {
@@ -817,21 +814,8 @@ function Students() {
 
                                                     <label
                                                         htmlFor={`face-${student.id}`}
-                                                        className={`btn btn-sm ${
-                                                            uploadingId ===
-                                                            student.id
-                                                                ? "btn-secondary disabled"
-                                                                : student.faceRegistered
-                                                                    ? "btn-outline-success"
-                                                                    : "btn-success"
-                                                        }`}
-                                                        style={{
-                                                            cursor:
-                                                                uploadingId ===
-                                                                student.id
-                                                                    ? "not-allowed"
-                                                                    : "pointer"
-                                                        }}
+                                                        
+                                                        
                                                     >
 
                                                         {uploadingId ===
@@ -839,7 +823,7 @@ function Students() {
 
                                                             <>
                                                                 <span
-                                                                    className="spinner-border spinner-border-sm me-1"
+                                                                    
                                                                 />
 
                                                                 Uploading...
@@ -862,7 +846,7 @@ function Students() {
                                                     {/* DELETE */}
 
                                                     <button
-                                                        className="btn btn-sm btn-outline-danger"
+                                                        
                                                         disabled={
                                                             deletingId ===
                                                             student.id
@@ -878,7 +862,7 @@ function Students() {
                                                         student.id ? (
 
                                                             <span
-                                                                className="spinner-border spinner-border-sm"
+                                                                
                                                             />
 
                                                         ) : (
@@ -918,7 +902,7 @@ function Students() {
             {!loading &&
                 students.length > 0 && (
 
-                    <div className="text-muted small mt-3">
+                    <div >
 
                         Showing{" "}
                         <strong>

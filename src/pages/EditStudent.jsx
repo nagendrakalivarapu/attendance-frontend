@@ -157,11 +157,11 @@ function EditStudent() {
     if (loading) {
 
         return (
-            <div className="container mt-5 text-center">
+            <div >
 
-                <div className="spinner-border text-primary" />
+                <div  />
 
-                <p className="mt-3 text-muted">
+                <p >
                     Loading student...
                 </p>
 
@@ -176,11 +176,11 @@ function EditStudent() {
 
     return (
 
-        <div className="container mt-4">
+        <div >
 
             {/* HEADER */}
 
-            <div className="d-flex justify-content-between align-items-center mb-4">
+            <div >
 
                 <div>
 
@@ -188,21 +188,21 @@ function EditStudent() {
                         Edit Student
                     </h2>
 
-                    <p className="text-muted mb-0">
+                    <p >
                         Update student information
                     </p>
 
                 </div>
 
-                <div className="page-header-actions">
+                <div >
                     <button
-                        className="btn btn-secondary"
+                        
                         onClick={() => navigate("/admin")}
                     >
                         Dashboard
                     </button>
                     <button
-                        className="btn btn-secondary"
+                        
                         onClick={() => navigate("/admin/students")}
                     >
                         Students
@@ -216,7 +216,7 @@ function EditStudent() {
 
             {error && (
 
-                <div className="alert alert-danger">
+                <div >
 
                     {error}
 
@@ -229,18 +229,18 @@ function EditStudent() {
 
             {success && (
 
-                <div className="alert alert-success">
+                <div >
 
-                    ✓ {success}
+                     {success}
 
                 </div>
 
             )}
 
 
-            <div className="card shadow-sm">
+            <div >
 
-                <div className="card-body">
+                <div >
 
                     <form onSubmit={handleSubmit}>
 
@@ -248,24 +248,24 @@ function EditStudent() {
                         {/* USER ACCOUNT */}
                         {/* ================================================= */}
 
-                        <h5 className="mb-3">
+                        <h5 >
                             Student Account
                         </h5>
 
-                        <div className="row">
+                        <div >
 
                             {/* FULL NAME */}
 
-                            <div className="col-md-6 mb-3">
+                            <div >
 
-                                <label className="form-label">
+                                <label >
                                     Full Name
                                 </label>
 
                                 <input
                                     type="text"
                                     name="fullName"
-                                    className="form-control"
+                                    
                                     placeholder="Student full name"
                                     value={form.fullName}
                                     onChange={handleChange}
@@ -277,16 +277,16 @@ function EditStudent() {
 
                             {/* EMAIL */}
 
-                            <div className="col-md-6 mb-3">
+                            <div >
 
-                                <label className="form-label">
+                                <label >
                                     Email
                                 </label>
 
                                 <input
                                     type="email"
                                     name="email"
-                                    className="form-control"
+                                    
                                     placeholder="student@gmail.com"
                                     value={form.email}
                                     onChange={handleChange}
@@ -298,22 +298,22 @@ function EditStudent() {
 
                             {/* PASSWORD */}
 
-                            <div className="col-md-6 mb-4">
+                            <div >
 
-                                <label className="form-label">
+                                <label >
                                     New Password
                                 </label>
 
                                 <input
                                     type="password"
                                     name="password"
-                                    className="form-control"
+                                    
                                     placeholder="Leave blank to keep current password"
                                     value={form.password}
                                     onChange={handleChange}
                                 />
 
-                                <small className="text-muted">
+                                <small >
                                     Leave blank if you don't want
                                     to change the password.
                                 </small>
@@ -330,24 +330,24 @@ function EditStudent() {
                         {/* STUDENT INFORMATION */}
                         {/* ================================================= */}
 
-                        <h5 className="mb-3">
+                        <h5 >
                             Student Information
                         </h5>
 
-                        <div className="row">
+                        <div >
 
                             {/* REGISTRATION NUMBER */}
 
-                            <div className="col-md-6 mb-3">
+                            <div >
 
-                                <label className="form-label">
+                                <label >
                                     Registration Number
                                 </label>
 
                                 <input
                                     type="text"
                                     name="registrationNumber"
-                                    className="form-control"
+                                    
                                     value={
                                         form.registrationNumber
                                     }
@@ -360,16 +360,16 @@ function EditStudent() {
 
                             {/* DEPARTMENT */}
 
-                            <div className="col-md-6 mb-3">
+                            <div >
 
-                                <label className="form-label">
+                                <label >
                                     Department
                                 </label>
 
                                 <input
                                     type="text"
                                     name="department"
-                                    className="form-control"
+                                    
                                     value={form.department}
                                     onChange={handleChange}
                                     required
@@ -380,16 +380,16 @@ function EditStudent() {
 
                             {/* SEMESTER */}
 
-                            <div className="col-md-4 mb-3">
+                            <div >
 
-                                <label className="form-label">
+                                <label >
                                     Semester
                                 </label>
 
                                 <input
                                     type="number"
                                     name="semester"
-                                    className="form-control"
+                                    
                                     min="1"
                                     max="12"
                                     value={form.semester}
@@ -402,16 +402,16 @@ function EditStudent() {
 
                             {/* SECTION */}
 
-                            <div className="col-md-4 mb-3">
+                            <div >
 
-                                <label className="form-label">
+                                <label >
                                     Section
                                 </label>
 
                                 <input
                                     type="text"
                                     name="section"
-                                    className="form-control"
+                                    
                                     value={form.section}
                                     onChange={handleChange}
                                     required
@@ -422,16 +422,16 @@ function EditStudent() {
 
                             {/* PHONE */}
 
-                            <div className="col-md-4 mb-3">
+                            <div >
 
-                                <label className="form-label">
+                                <label >
                                     Phone
                                 </label>
 
                                 <input
                                     type="tel"
                                     name="phone"
-                                    className="form-control"
+                                    
                                     value={form.phone}
                                     onChange={handleChange}
                                     required
@@ -442,16 +442,16 @@ function EditStudent() {
 
                             {/* DATE OF BIRTH */}
 
-                            <div className="col-md-4 mb-3">
+                            <div >
 
-                                <label className="form-label">
+                                <label >
                                     Date of Birth
                                 </label>
 
                                 <input
                                     type="date"
                                     name="dateOfBirth"
-                                    className="form-control"
+                                    
                                     value={form.dateOfBirth}
                                     onChange={handleChange}
                                 />
@@ -461,15 +461,15 @@ function EditStudent() {
 
                             {/* GENDER */}
 
-                            <div className="col-md-4 mb-3">
+                            <div >
 
-                                <label className="form-label">
+                                <label >
                                     Gender
                                 </label>
 
                                 <select
                                     name="gender"
-                                    className="form-select"
+                                    
                                     value={form.gender}
                                     onChange={handleChange}
                                 >
@@ -497,15 +497,15 @@ function EditStudent() {
 
                             {/* ADDRESS */}
 
-                            <div className="col-12 mb-3">
+                            <div >
 
-                                <label className="form-label">
+                                <label >
                                     Address
                                 </label>
 
                                 <textarea
                                     name="address"
-                                    className="form-control"
+                                    
                                     rows="3"
                                     value={form.address}
                                     onChange={handleChange}
@@ -518,11 +518,11 @@ function EditStudent() {
 
                         {/* BUTTONS */}
 
-                        <div className="d-flex gap-2">
+                        <div >
 
                             <button
                                 type="submit"
-                                className="btn btn-primary"
+                                
                                 disabled={saving}
                             >
 
@@ -535,7 +535,7 @@ function EditStudent() {
 
                             <button
                                 type="button"
-                                className="btn btn-secondary"
+                                
                                 onClick={() =>
                                     navigate(
                                         "/admin/students"

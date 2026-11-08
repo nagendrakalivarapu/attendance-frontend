@@ -156,17 +156,17 @@ function AdminAttendanceReports() {
     };
 
     return (
-        <div className="admin-layout">
+        <div >
 
             {/* =========================================
                 SIDEBAR
             ========================================= */}
 
-            <aside className="admin-sidebar">
+            <aside >
 
-                <div className="sidebar-brand">
+                <div >
 
-                    <div className="brand-icon">
+                    <div >
                         SA
                     </div>
 
@@ -177,65 +177,65 @@ function AdminAttendanceReports() {
 
                 </div>
 
-                <nav className="sidebar-nav">
+                <nav >
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() =>
                             navigate("/admin")
                         }
                     >
-                        <span>📊</span>
+                        <span></span>
                         Dashboard
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() =>
                             navigate("/admin/students")
                         }
                     >
-                        <span>👨‍🎓</span>
+                        <span></span>
                         Students
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() =>
                             navigate("/admin/teachers")
                         }
                     >
-                        <span>👨‍🏫</span>
+                        <span></span>
                         Teachers
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() =>
                             navigate("/admin/courses")
                         }
                     >
-                        <span>📚</span>
+                        <span></span>
                         Courses
                     </button>
 
                     <button
-                        className="sidebar-link"
+                        
                         onClick={() =>
                             navigate("/admin/enrollments")
                         }
                     >
-                        <span>📝</span>
+                        <span></span>
                         Enrollments
                     </button>
 
                     <button
-                        className="sidebar-link active"
+                        
                         onClick={() =>
                             navigate("/admin/attendance")
                         }
                     >
-                        <span>📅</span>
+                        <span></span>
                         Attendance
                     </button>
 
@@ -248,13 +248,13 @@ function AdminAttendanceReports() {
                 MAIN
             ========================================= */}
 
-            <main className="admin-main">
+            <main >
 
                 {/* =========================================
                     TOPBAR
                 ========================================= */}
 
-                <header className="admin-topbar">
+                <header >
 
                     <div>
 
@@ -274,48 +274,43 @@ function AdminAttendanceReports() {
                     ===================================== */}
 
                     <div
-                        className="attendance-report-navigation"
-                        style={{
-                            display: "flex",
-                            gap: "10px",
-                            alignItems: "center",
-                            flexWrap: "wrap",
-                        }}
+                        
+                        
                     >
 
                         <button
-                            className="attendance-report-generate-button"
+                            
                             onClick={() =>
                                 navigate(
                                     "/admin/attendance/low"
                                 )
                             }
                         >
-                            ⚠ Low Attendance
+                             Low Attendance
                         </button>
 
                         <button
-                            className="attendance-report-refresh-button"
+                            
                             onClick={() =>
                                 navigate(
                                     "/admin/attendance/history"
                                 )
                             }
                         >
-                            🕘 Attendance History
+                             Attendance History
                         </button>
 
                         <button
-                            className="attendance-report-generate-button"
+                            
                             onClick={() =>
                                 navigate("/admin/attendance/email")
                             }
                         >
-                            ✉ Send Attendance Report
+                             Send Attendance Report
                         </button>
 
                         <button
-                            className="attendance-report-back-button"
+                            
                             onClick={() =>
                                 navigate("/admin")
                             }
@@ -332,16 +327,16 @@ function AdminAttendanceReports() {
                     CONTENT
                 ========================================= */}
 
-                <section className="admin-content">
+                <section >
 
 
                     {/* =====================================
                         FILTERS
                     ===================================== */}
 
-                    <section className="attendance-report-filter-card">
+                    <section >
 
-                        <div className="attendance-report-filter">
+                        <div >
 
                             <label>
                                 Select Course
@@ -376,7 +371,7 @@ function AdminAttendanceReports() {
                         </div>
 
 
-                        <div className="attendance-report-filter">
+                        <div >
 
                             <label>
                                 Required Attendance
@@ -421,7 +416,7 @@ function AdminAttendanceReports() {
 
 
                         <button
-                            className="attendance-report-generate-button"
+                            
                             onClick={() =>
                                 void loadAttendanceReport()
                             }
@@ -437,7 +432,7 @@ function AdminAttendanceReports() {
 
 
                         <button
-                            className="attendance-report-refresh-button"
+                            
                             onClick={() => {
 
                                 void loadCourses();
@@ -464,10 +459,10 @@ function AdminAttendanceReports() {
 
                     {error && (
 
-                        <div className="attendance-report-error">
+                        <div >
 
                             <span>
-                                ⚠️
+                                ️
                             </span>
 
                             <div>
@@ -494,10 +489,10 @@ function AdminAttendanceReports() {
                     {!selectedCourseId &&
                         !loadingCourses && (
 
-                            <div className="attendance-report-empty">
+                            <div >
 
-                                <div className="attendance-report-empty-icon">
-                                    📊
+                                <div >
+                                    
                                 </div>
 
                                 <h3>
@@ -521,9 +516,9 @@ function AdminAttendanceReports() {
 
                     {loadingReport && (
 
-                        <div className="attendance-report-loading">
+                        <div >
 
-                            <div className="attendance-loading-spinner">
+                            <div >
                                 ⟳
                             </div>
 
@@ -554,11 +549,11 @@ function AdminAttendanceReports() {
                                     COURSE HEADER
                                 ================================= */}
 
-                                <section className="attendance-report-course-header">
+                                <section >
 
                                     <div>
 
-                                        <div className="attendance-report-course-code">
+                                        <div >
                                             {analytics.courseCode}
                                         </div>
 
@@ -576,7 +571,7 @@ function AdminAttendanceReports() {
 
                                     </div>
 
-                                    <div className="attendance-report-overall">
+                                    <div >
 
                                         <span>
                                             Overall Attendance
@@ -597,12 +592,12 @@ function AdminAttendanceReports() {
                                     STATISTICS
                                 ================================= */}
 
-                                <section className="attendance-report-stat-grid">
+                                <section >
 
-                                    <div className="attendance-report-stat-card">
+                                    <div >
 
-                                        <div className="report-stat-icon blue">
-                                            👨‍🎓
+                                        <div >
+                                            
                                         </div>
 
                                         <div>
@@ -622,10 +617,10 @@ function AdminAttendanceReports() {
                                     </div>
 
 
-                                    <div className="attendance-report-stat-card">
+                                    <div >
 
-                                        <div className="report-stat-icon purple">
-                                            📅
+                                        <div >
+                                            
                                         </div>
 
                                         <div>
@@ -645,10 +640,10 @@ function AdminAttendanceReports() {
                                     </div>
 
 
-                                    <div className="attendance-report-stat-card present">
+                                    <div >
 
-                                        <div className="report-stat-icon green">
-                                            ✓
+                                        <div >
+                                            
                                         </div>
 
                                         <div>
@@ -668,10 +663,10 @@ function AdminAttendanceReports() {
                                     </div>
 
 
-                                    <div className="attendance-report-stat-card absent">
+                                    <div >
 
-                                        <div className="report-stat-icon red">
-                                            ✕
+                                        <div >
+                                            
                                         </div>
 
                                         <div>
@@ -691,10 +686,10 @@ function AdminAttendanceReports() {
                                     </div>
 
 
-                                    <div className="attendance-report-stat-card warning">
+                                    <div >
 
-                                        <div className="report-stat-icon orange">
-                                            ⚠
+                                        <div >
+                                            
                                         </div>
 
                                         <div>
@@ -720,12 +715,12 @@ function AdminAttendanceReports() {
                                     SUMMARY
                                 ================================= */}
 
-                                <section className="attendance-report-summary-grid">
+                                <section >
 
-                                    <div className="attendance-summary-good">
+                                    <div >
 
-                                        <div className="summary-icon">
-                                            ✓
+                                        <div >
+                                            
                                         </div>
 
                                         <div>
@@ -743,10 +738,10 @@ function AdminAttendanceReports() {
                                     </div>
 
 
-                                    <div className="attendance-summary-low">
+                                    <div >
 
-                                        <div className="summary-icon">
-                                            ⚠
+                                        <div >
+                                            
                                         </div>
 
                                         <div>
@@ -771,46 +766,41 @@ function AdminAttendanceReports() {
                                 ================================= */}
 
                                 <section
-                                    className="attendance-report-quick-actions"
-                                    style={{
-                                        display: "flex",
-                                        gap: "12px",
-                                        marginTop: "20px",
-                                        flexWrap: "wrap",
-                                    }}
+                                    
+                                    
                                 >
 
                                     <button
-                                        className="attendance-report-generate-button"
+                                        
                                         onClick={() =>
                                             navigate(
                                                 "/admin/attendance/low"
                                             )
                                         }
                                     >
-                                        ⚠ View Low Attendance
+                                         View Low Attendance
                                     </button>
 
                                     <button
-                                        className="attendance-report-refresh-button"
+                                        
                                         onClick={() =>
                                             navigate(
                                                 "/admin/attendance/history"
                                             )
                                         }
                                     >
-                                        🕘 View Attendance History
+                                         View Attendance History
                                     </button>
 
                                     <button
-                                        className="attendance-report-generate-button"
+                                        
                                         onClick={() =>
                                             navigate(
                                                 "/admin/attendance/email"
                                             )
                                         }
                                     >
-                                        ✉ Send Attendance Report
+                                         Send Attendance Report
                                     </button>
 
                                 </section>
@@ -820,9 +810,9 @@ function AdminAttendanceReports() {
                                     STUDENT REPORT
                                 ================================= */}
 
-                                <section className="attendance-report-table-card">
+                                <section >
 
-                                    <div className="attendance-report-table-header">
+                                    <div >
 
                                         <div>
 
@@ -839,7 +829,7 @@ function AdminAttendanceReports() {
 
                                         </div>
 
-                                        <span className="attendance-report-count">
+                                        <span >
                                             {studentReports.length} Students
                                         </span>
 
@@ -848,10 +838,10 @@ function AdminAttendanceReports() {
 
                                     {studentReports.length === 0 ? (
 
-                                        <div className="attendance-report-no-data">
+                                        <div >
 
                                             <div>
-                                                📭
+                                                
                                             </div>
 
                                             <h4>
@@ -868,9 +858,9 @@ function AdminAttendanceReports() {
 
                                     ) : (
 
-                                        <div className="attendance-report-table-wrapper">
+                                        <div >
 
-                                            <table className="attendance-report-table">
+                                            <table >
 
                                                 <thead>
 
@@ -922,9 +912,9 @@ function AdminAttendanceReports() {
 
                                                             <td>
 
-                                                                <div className="attendance-student-cell">
+                                                                <div >
 
-                                                                    <div className="attendance-student-avatar">
+                                                                    <div >
 
                                                                         {
                                                                             getInitials(
@@ -955,7 +945,7 @@ function AdminAttendanceReports() {
 
                                                             <td>
 
-                                                                    <span className="attendance-registration">
+                                                                    <span >
                                                                         {
                                                                             student.registrationNumber
                                                                         }
@@ -973,7 +963,7 @@ function AdminAttendanceReports() {
 
                                                             <td>
 
-                                                                    <span className="present-number">
+                                                                    <span >
                                                                         {
                                                                             student.presentCount
                                                                         }
@@ -984,7 +974,7 @@ function AdminAttendanceReports() {
 
                                                             <td>
 
-                                                                    <span className="absent-number">
+                                                                    <span >
                                                                         {
                                                                             student.absentCount
                                                                         }
@@ -995,40 +985,21 @@ function AdminAttendanceReports() {
 
                                                             <td>
 
-                                                                <div className="attendance-percentage-cell">
+                                                                <div >
 
                                                                     <strong
-                                                                        className={
-                                                                            getPercentageClass(
-                                                                                student.attendancePercentage
-                                                                            )
-                                                                        }
+                                                                        
                                                                     >
                                                                         {
                                                                             student.attendancePercentage
                                                                         }%
                                                                     </strong>
 
-                                                                    <div className="mini-progress">
+                                                                    <div >
 
                                                                         <div
-                                                                            className={
-                                                                                getPercentageClass(
-                                                                                    student.attendancePercentage
-                                                                                )
-                                                                            }
-                                                                            style={{
-                                                                                width: `${Math.min(
-                                                                                    Math.max(
-                                                                                        Number(
-                                                                                            student.attendancePercentage ||
-                                                                                            0
-                                                                                        ),
-                                                                                        0
-                                                                                    ),
-                                                                                    100
-                                                                                )}%`,
-                                                                            }}
+                                                                            
+                                                                            
                                                                         />
 
                                                                     </div>
@@ -1043,14 +1014,14 @@ function AdminAttendanceReports() {
                                                                 {student.status ===
                                                                 "LOW_ATTENDANCE" ? (
 
-                                                                    <span className="attendance-status-badge low">
-                                                                            ⚠ Low Attendance
+                                                                    <span >
+                                                                             Low Attendance
                                                                         </span>
 
                                                                 ) : (
 
-                                                                    <span className="attendance-status-badge good">
-                                                                            ✓ Good
+                                                                    <span >
+                                                                             Good
                                                                         </span>
 
                                                                 )}
