@@ -1,16 +1,34 @@
-# React + Vite
+# Smart Attendance Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+This is the JavaScript React frontend for the Smart Attendance System. It keeps the existing page layouts, colors, components, and routes, and connects to the Java Spring Boot API.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Install Node.js 22.12 or newer.
+2. In this folder, install dependencies and start the development server:
 
-## React Compiler
+   ```sh
+   npm install
+   npm run dev
+   ```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+3. Open the local address printed by Vite, usually `http://localhost:5173`.
 
-## Expanding the Oxlint configuration
+## Backend addresses
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+By default, the frontend uses the Spring Boot API at `http://localhost:8080/api` and the optional face preview service at `http://127.0.0.1:8000`. You can override these with `VITE_API_URL` and `VITE_FACE_API_URL`, or use **Server settings** on the sign-in screen to save per-browser addresses.
+
+The Java API must allow requests from the frontend's origin through CORS. Face attendance recognition is submitted to the Spring Boot API; the face preview service is used for the existing live camera check.
+
+## Production build
+
+```sh
+npm run build
+npm run preview
+```
+
+The production files are written to `dist/`. Configure a static host to serve `index.html` for unknown routes so nested pages continue to load on refresh.
+
+## API compatibility
+
+See [API-COMPATIBILITY.md](./API-COMPATIBILITY.md) for the verified Spring Boot routes and the separate face preview service that was not included in the Java source archive.

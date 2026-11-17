@@ -1,0 +1,257 @@
+/*
+ * Tailwind v4 entry: config lives here, with no tailwind.config.js or PostCSS plugin.
+ * Keep every @import in this top block. Web fonts load from index.html.
+ */
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system: "Paper White and Police Blue".
+ * Paper white canvas, pure white panels, deep police blue for primary actions and
+ * active navigation, slate/ice blue for secondary surfaces. All colors are oklch.
+ */
+
+@theme inline {
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 2px);
+  --radius-2xl: calc(var(--radius) + 6px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-slate-blue: var(--slate-blue);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-soft: var(--warning-soft);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-overlay: var(--overlay);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --shadow-panel: var(--shadow-panel);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-pop: var(--shadow-pop);
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* Surfaces */
+  --background: oklch(0.982 0.002 247.8); /* paper white #F8F9FA */
+  --card: oklch(1 0 0);
+  --popover: oklch(1 0 0);
+
+  /* Text */
+  --foreground: oklch(0.218 0.036 251.3); /* navy slate #0D1B2A */
+  --card-foreground: oklch(0.218 0.036 251.3);
+  --popover-foreground: oklch(0.218 0.036 251.3);
+  --muted-foreground: oklch(0.53 0.016 244.9); /* #6C757D, nudged for AA */
+
+  /* Police blue */
+  --primary: oklch(0.3 0.088 259.1); /* #0F2C59 */
+  --primary-foreground: oklch(0.985 0.004 250);
+  --primary-soft: oklch(0.955 0.016 254); /* ice wash for active nav */
+
+  /* Slate / ice blue */
+  --slate-blue: oklch(0.52 0.076 254.4); /* #4A6B94 */
+  --secondary: oklch(0.962 0.01 252.8);
+  --secondary-foreground: oklch(0.333 0.077 257.7);
+  --muted: oklch(0.962 0.008 252.8);
+  --accent: oklch(0.943 0.014 254.6);
+  --accent-foreground: oklch(0.3 0.088 259.1);
+
+  /* Status */
+  --success: oklch(0.518 0.11 157.7);
+  --success-foreground: oklch(0.985 0.004 157);
+  --success-soft: oklch(0.96 0.03 160);
+  --warning: oklch(0.56 0.12 65);
+  --warning-foreground: oklch(0.99 0.01 80);
+  --warning-soft: oklch(0.965 0.04 85);
+  --destructive: oklch(0.543 0.174 29.7);
+  --destructive-foreground: oklch(0.985 0.004 30);
+  --destructive-soft: oklch(0.96 0.025 25);
+
+  /* Lines */
+  --border: oklch(0.929 0.013 255.5); /* #E2E8F0 */
+  --input: oklch(0.9 0.016 255.5);
+  --ring: oklch(0.52 0.076 254.4);
+  --overlay: oklch(0.218 0.036 251.3 / 0.4);
+
+  /* Elevation */
+  --shadow-panel: 0 2px 8px oklch(0.3 0.088 259.1 / 0.04);
+  --shadow-raised: 0 6px 18px -6px oklch(0.3 0.088 259.1 / 0.14);
+  --shadow-pop: 0 16px 40px -12px oklch(0.3 0.088 259.1 / 0.22);
+
+  --chart-1: oklch(0.3 0.088 259.1);
+  --chart-2: oklch(0.52 0.076 254.4);
+  --chart-3: oklch(0.7 0.06 250);
+  --chart-4: oklch(0.518 0.11 157.7);
+  --chart-5: oklch(0.543 0.174 29.7);
+
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.333 0.04 252);
+  --sidebar-primary: oklch(0.3 0.088 259.1);
+  --sidebar-primary-foreground: oklch(0.985 0.004 250);
+  --sidebar-accent: oklch(0.962 0.01 252.8);
+  --sidebar-accent-foreground: oklch(0.3 0.088 259.1);
+  --sidebar-border: oklch(0.929 0.013 255.5);
+  --sidebar-ring: oklch(0.52 0.076 254.4);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "tnum";
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+  }
+
+  /* Consistent 1.5px vector strokes across every Lucide icon. */
+  svg.lucide {
+    stroke-width: 1.5;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-primary);
+  }
+}
+
+/* Fade-and-slide-up motion for mounted content (150ms). */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-rise {
+  animation: rise-in 150ms ease-out both;
+}
+
+/* Shared micro-interaction for pressable controls. */
+@utility pressable {
+  transition: all 200ms ease-in-out;
+  &:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+}
+
+/* Ice-blue pulse used by skeleton loaders. */
+@keyframes ice-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@utility animate-ice-pulse {
+  animation: ice-pulse 1.4s ease-in-out infinite;
+}
+
+@utility eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-slate-blue);
+}
+
+@keyframes caret-blink {
+  0%,
+  70%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  50% {
+    opacity: 0;
+  }
+}
+
+@utility animate-caret-blink {
+  animation: caret-blink 1.25s ease-out infinite;
+}
+
+/* Fine grid used on the police-blue sign-in panel. */
+@utility bg-grid-faint {
+  background-image:
+    linear-gradient(to right, oklch(1 0 0 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(1 0 0 / 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Slate-blue chevron for native selects. */
+@utility select-chevron {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A6B94' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px;
+}

@@ -1,15 +1,17 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { RouterProvider } from "@tanstack/react-router";
 
-import "./index.css";
+import { router } from "./router.jsx";
 
-import App from "./App";
-import { AuthProvider } from "./context/AuthContext";
+const mountPoint = document.getElementById("root");
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
-        <AuthProvider>
-            <App />
-        </AuthProvider>
-    </React.StrictMode>
+if (!mountPoint) {
+  throw new Error('Could not find the app mount point "#root".');
+}
+
+createRoot(mountPoint).render(
+  <StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>,
 );
